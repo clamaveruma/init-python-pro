@@ -4,13 +4,26 @@
 
 ## Lo que necesitas
 
+Casi nada. Solo estas dos cosas:
+
 | Programa | Para qué | Cómo conseguirlo |
 |---|---|---|
 | **Claude Code**, en su última versión | Ejecuta el comando de inicio | Extensión de VS Code o terminal ([documentación](https://code.claude.com/docs/en/overview)) |
-| **uv** | Gestiona Python, el entorno y las dependencias | No hace falta instalarlo antes: si falta, `/python-pro:init` te pregunta y lo instala con su instalador oficial. También puedes hacerlo tú: <https://docs.astral.sh/uv/getting-started/installation/> |
-| **Git** | Guarda el historial del proyecto | <https://git-scm.com/downloads> |
-| **GitHub CLI (`gh`)** | Solo si quieres subir el proyecto a GitHub | <https://cli.github.com/> (después: `gh auth login`) |
 | **VS Code** con las extensiones *Python* y *Ruff* | Botones de Run/Debug y formato al guardar | VS Code las recomienda al abrir el proyecto |
+
+**`uv`** (gestiona Python, el entorno y las dependencias) no hace falta instalarlo antes: si falta, `/python-pro:init` te pregunta y lo instala con su instalador oficial.
+
+### Git y GitHub
+
+El proyecto guarda su historial con **Git**. VS Code **no** lo incluye, aunque sí lo usa si lo encuentra en tu equipo, y sus extensiones no lo instalan. Comprueba si ya lo tienes con `git --version` en una terminal. Si no:
+
+- **Linux** (Mint, Ubuntu…): `sudo apt install git`
+- **macOS**: `xcode-select --install`
+- **Windows con WSL**: `sudo apt install git`, dentro de WSL
+
+Si falta, `/python-pro:init` te lo dice antes de tocar nada. Git necesita también tu nombre y tu correo, una sola vez: `git config --global user.name "Tu Nombre"` y `git config --global user.email "tu@correo"`.
+
+**GitHub** es opcional: solo si quieres guardar una copia en internet. Para subir el proyecto desde el comando de inicio necesitas la herramienta `gh` (<https://cli.github.com/>, y después `gh auth login`). Si no la tienes, el proyecto se crea igual y te digo los comandos para hacerlo después.
 
 Funciona en Linux, macOS y Windows con WSL. En Windows sin WSL no está probado.
 

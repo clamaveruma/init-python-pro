@@ -10,6 +10,7 @@ Talk to the user in the language they write in. Do the steps in order and do not
 ## 1. Checks
 
 - The current folder must be empty (a `.git` folder is fine). If it contains anything else, stop and tell the user to open a completely empty folder.
+- Run `git --version`. If it fails, or if `git config user.name` or `git config user.email` is empty, stop before changing anything and tell the user exactly what is missing and how to fix it, in one message: install Git (Linux and WSL: `sudo apt install git`; macOS: `xcode-select --install`; Windows: https://git-scm.com/downloads) and/or set the name and email once with `git config --global user.name "Name"` and `git config --global user.email "mail"`. Then ask them to run the command again. Do not install Git or change their Git settings yourself.
 - Run `uv --version`. If it fails, also try `"$HOME/.local/bin/uv" --version`: uv may be installed but missing from the PATH of this session. If found there, add `$HOME/.local/bin` to the PATH of every command in this procedure (for example `PATH="$HOME/.local/bin:$PATH" uv init --package`). If uv is not found anywhere, remember it: you will offer to install it in step 2.
 
 ## 2. Ask the user (before changing anything)
