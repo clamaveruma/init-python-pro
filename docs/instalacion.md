@@ -18,9 +18,10 @@ Funciona en Linux, macOS y Windows con WSL. En Windows sin WSL no está probado.
 
 ### En VS Code (lo habitual)
 
-1. En el panel de Claude Code, escribe `/plugins` y pulsa Enter. Se abre **Manage plugins** (gestionar complementos).
-2. Abre la pestaña **Marketplaces** y añade `clamaveruma/init-python-pro`.
-3. Vuelve a la pestaña **Plugins**, busca `python-pro` y pulsa **Install**.
+1. En el panel de Claude Code, escribe `/plugins` y elígelo de la lista. No ejecuta nada: solo abre la ventana **Manage plugins** (gestionar complementos).
+2. En esa ventana, conecta el repositorio: pestaña **Marketplaces**, añade `clamaveruma/init-python-pro` (es un repositorio de GitHub).
+3. Pasa a la pestaña **Plugins**, busca `python-pro` y pulsa **Install** (alcance «Install for you»).
+4. Escribe `/` y comprueba que aparece **`/python-pro:init`**.
 
 ### En la terminal
 
@@ -31,16 +32,16 @@ claude plugin marketplace add clamaveruma/init-python-pro
 claude plugin install python-pro@init-python-pro
 ```
 
-En una sesión de Claude Code en terminal también vale, en un solo paso: `/plugin install python-pro --marketplace clamaveruma/init-python-pro` (necesita Claude Code 2.1.275 o posterior). En la extensión de VS Code el comando se llama `/plugins`, con «s».
+En una sesión de Claude Code en terminal también vale, en un solo paso: `/plugin install python-pro --marketplace clamaveruma/init-python-pro` (necesita Claude Code 2.1.275 o posterior).
 
-Al instalar, Claude Code te pide el alcance: *usuario* (todos tus proyectos) es lo habitual.
+En la terminal, Claude Code te pide el alcance: *usuario* (todos tus proyectos) es lo habitual.
 
 El comando que tendrás es **`/python-pro:init`**.
 
 ## Actualizar y desinstalar
 
-- **Actualizar:** en `/plugins` (VS Code), pestaña *Marketplaces* → elige el marketplace → *Update marketplace*; o en terminal `claude plugin marketplace update init-python-pro`.
-- **Desinstalar:** en `/plugins`, pestaña *Installed*; o en terminal `claude plugin uninstall python-pro@init-python-pro`.
+- **Actualizar:** en la ventana *Manage plugins* (`/plugins`), pestaña *Marketplaces* → elige el marketplace → *Update marketplace*; o en terminal `claude plugin marketplace update init-python-pro`.
+- **Desinstalar:** en *Manage plugins*, pestaña *Installed*; o en terminal `claude plugin uninstall python-pro@init-python-pro`.
 
 Los proyectos que ya creaste no cambian: sus reglas viven en el propio proyecto.
 
