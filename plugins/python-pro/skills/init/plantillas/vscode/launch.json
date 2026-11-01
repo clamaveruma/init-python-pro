@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run: {{PKG}}",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "{{PKG}}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Debug tests (pytest)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": ["tests"],
+      "console": "integratedTerminal"
+    }
+  ]
+}

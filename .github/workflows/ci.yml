@@ -1,0 +1,16 @@
+name: Comprobaciones
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  prueba-de-humo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar uv
+        run: python3 -m pip install uv
+      - name: Montar proyectos de ejemplo y comprobarlos
+        run: bash scripts/smoke-test.sh

@@ -33,6 +33,7 @@
             border-bottom: 2px dashed #334155;
             padding-bottom: 20px;
         }
+        a { color: #38bdf8; }
         h1 { margin: 0; color: #fff; font-size: 2.2rem; }
         .subtitle { color: var(--text-muted); margin-top: 5px; }
         .badge {
@@ -103,6 +104,7 @@
             <h1>💡 Guía de Supervivencia Python</h1>
             <p class="subtitle">Entiende tu entorno de desarrollo en solo 5 minutos</p>
             <span class="badge">⏱️ Lectura rápida</span>
+            <p><a href="https://github.com/clamaveruma/init-python-pro">Ver el proyecto en GitHub</a></p>
         </header>
 
         <!-- 1. ENTORNO VIRTUAL -->
@@ -134,6 +136,9 @@
             <pre>mi-proyecto/
 ├── .venv/            → La burbuja aislada de Python (gestionada por uv).
 ├── .vscode/          → Tus botones visuales de Run/Debug en el editor.
+├── .claude/          → Los procedimientos de trabajo de Claude y el formato automático.
+├── CLAUDE.md         → Las reglas que Claude lee en cada sesión.
+├── DEVELOPMENT.md    → Comandos útiles a mano.
 ├── src/mi_proyecto/  → ¡Aquí va tu código! Todo ordenado dentro de un paquete.
 └── tests/            → Tus archivos de pruebas para asegurar que el código no se rompa.</pre>
             <p><strong>¿Por qué?</strong> Porque aísla el código real de los archivos de configuración de desarrollo, facilitando que herramientas como VS Code o Claude no se confundan de archivos al leer el espacio de trabajo.</p>
@@ -169,11 +174,11 @@
         <!-- 6. HERRAMIENTAS AUTOMÁTICAS -->
         <div class="card card-git">
             <h2>🛠️ 6. Git, GitHub y Automatizaciones</h2>
-            <p>Para quitarte trabajo de encima, el asistente cuenta con permisos de ejecución autónomos:</p>
+            <p>Para quitarte trabajo de encima, Claude hace algunas cosas por su cuenta. Lo importante lo decides tú:</p>
             <ul>
                 <li><strong>Git local:</strong> Funciona como una máquina del tiempo de tu código. Cada vez que Claude termine una tarea con éxito y los tests pasen, hará un <em>commit</em> por su cuenta para guardar el progreso de forma segura y te avisará en el chat.</li>
-                <li><strong>GitHub remoto:</strong> Si conectas tu proyecto, Claude subirá tu código a la nube (<em>push</em>) inmediatamente tras el commit para que nunca pierdas nada.</li>
-                <li><strong>Diario Secreto (.dev-journal.md):</strong> Claude mantendrá al día un cuaderno de bitácora oculto anotando qué ha hecho y qué falta por hacer, permitiéndole recordar el contexto entre sesiones sin desperdiciar tu memoria de tokens.</li>
+                <li><strong>GitHub remoto:</strong> Subir el código a la nube (<em>push</em>) lo decides tú. Al crear el proyecto Claude te pregunta si quieres que suba los cambios solo después de cada commit, y espera una respuesta clara. Si dices que no, solo sube cuando se lo pidas.</li>
+                <li><strong>Diario (.dev-journal.md):</strong> Claude mantiene al día un cuaderno de bitácora anotando qué ha hecho y qué falta por hacer, para recordar el contexto entre sesiones sin gastar tu memoria de tokens. Es un archivo personal: no se sube a Git.</li>
             </ul>
         </div>
     </div>

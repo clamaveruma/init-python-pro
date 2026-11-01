@@ -1,0 +1,9 @@
+{
+  "name": "python-pro",
+  "description": "Crea un proyecto Python profesional con uv, pytest, Ruff, Git y VS Code, y deja reglas de trabajo que Claude aplica siempre",
+  "author": {
+    "name": "clamaveruma"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/clamaveruma/init-python-pro"
+}

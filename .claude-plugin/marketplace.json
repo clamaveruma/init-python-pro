@@ -1,0 +1,14 @@
+{
+  "name": "init-python-pro",
+  "description": "Crea proyectos Python profesionales con un solo comando: uv, pytest, Ruff, Git y VS Code",
+  "owner": {
+    "name": "clamaveruma"
+  },
+  "plugins": [
+    {
+      "name": "python-pro",
+      "source": "./plugins/python-pro",
+      "description": "Crea un proyecto Python completo con /python-pro:init y deja reglas de trabajo que Claude aplica siempre"
+    }
+  ]
+}
