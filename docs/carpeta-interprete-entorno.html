@@ -148,7 +148,12 @@
 <span class="p">ana@equipo:~/mi-proyecto$</span> source .venv/bin/activate
 <span class="v">(.venv)</span> <span class="p">ana@equipo:~/mi-proyecto$</span> which python
 <span class="h">/home/ana/mi-proyecto/.venv/bin/python</span></pre>
-    <p>Esa es la señal que ya viste en el paso 1. VS Code hace el <code>source …/activate</code> por ti cada vez que abres una terminal <strong>nueva</strong> dentro de la ventana, si hay un intérprete elegido. Las terminales que ya estaban abiertas no cambian, así que si cambias de intérprete, abre una terminal nueva.</p>
+    <p>Esa es la señal que ya viste en el paso 1. Pero fíjate: tú no has escrito <code>source …/activate</code>. Lo hace la <strong>extensión Python</strong> por ti, <strong>escribiendo ese comando en la terminal</strong> como si lo tecleases. Lo habitual es que ocurra:</p>
+    <ul>
+      <li>al abrir una <strong>terminal nueva</strong> dentro de VS Code, si ya hay un intérprete elegido;</li>
+      <li>y, según tu versión, cuando la extensión <strong>se pone en marcha</strong>, lo que pasa al abrir o seleccionar un archivo <code>.py</code>. Por eso a veces ves aparecer <code>(.venv)</code> «de repente» en una terminal que ya estaba abierta.</li>
+    </ul>
+    <p>Si no quieres ese comportamiento, la opción se llama <code>python.terminal.activateEnvironment</code> (se desactiva poniéndola en <code>false</code>) y, en las versiones nuevas, <code>python-envs.terminal.autoActivationType</code>. Con <code>uv</code> no es necesario activar nada para ejecutar tu programa (paso 6), pero sí ayuda a que <code>pytest</code>, <code>ruff</code> y <code>python</code> sueltos usen el entorno del proyecto.</p>
 
     <h3>Y con el entorno activo, las herramientas son las del entorno</h3>
     <p>Esto explica el comportamiento que parecía magia. Con el entorno activo, <code>pytest</code>, <code>ruff</code> o <code>pip</code> se buscan primero en <code>.venv/bin</code> (recuerda el orden del <code>PATH</code> del paso 1). Por eso ejecutan la versión instalada en <strong>este</strong> proyecto, y no otra.</p>
@@ -181,7 +186,7 @@
     </details>
     <details>
       <summary>Abrí una terminal nueva y no sale <code>(.venv)</code>. ¿Por qué?</summary>
-      <p>Probablemente VS Code no tiene elegido el intérprete del proyecto, o el entorno aún no existe (ejecuta <code>uv sync</code>). Elige el intérprete en la barra de estado y abre otra terminal.</p>
+      <p>Probablemente VS Code no tiene elegido el intérprete del proyecto, o el entorno aún no existe (ejecuta <code>uv sync</code>). Elige el intérprete en la barra de estado y abre otra terminal. Si sigue sin salir, comprueba que la opción <code>python.terminal.activateEnvironment</code> no esté desactivada.</p>
     </details>
     <details>
       <summary>¿Hace falta activar el entorno para usar <code>uv</code>?</summary>
