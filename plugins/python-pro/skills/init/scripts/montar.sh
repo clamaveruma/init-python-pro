@@ -96,14 +96,14 @@ testpaths = ["tests"]
 EOF
 
 # Journal (kept out of Git)
-[ -f .claude/dev-journal.md ] || printf '# Project Development Journal\n' > .claude/dev-journal.md
+[ -f .dev-journal.md ] || printf '# Project Development Journal\n' > .dev-journal.md
 # uv only writes .gitignore when it creates the Git repository, so make sure the basics are there
 touch .gitignore
 add_ignore() { grep -qxF "$1" .gitignore || printf '%s\n' "$1" >> .gitignore; }
 add_ignore '__pycache__/'
 add_ignore '*.py[oc]'
 add_ignore '.venv'
-add_ignore '.claude/dev-journal.md'
+add_ignore '.dev-journal.md'
 add_ignore '.claude/settings.local.json'
 
 echo "Project files created for package '$pkg' (push mode: $push_mode)."

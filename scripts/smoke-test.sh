@@ -34,7 +34,7 @@ for mode in manual auto; do
 
   pkg="demo_app_$mode"
   [ -f "src/$pkg/__main__.py" ] || fail "missing __main__.py"
-  [ -f CLAUDE.md ] && [ -f .claude/dev-journal.md ] || fail "missing top-level files"
+  [ -f CLAUDE.md ] && [ -f .dev-journal.md ] || fail "missing top-level files"
   [ -f .claude/skills/py-tarea/SKILL.md ] && [ -f .claude/skills/py-refactor/SKILL.md ] || fail "missing skills"
   [ -x .claude/hooks/ruff.sh ] || fail "hook is not executable"
 
@@ -86,7 +86,7 @@ for mode in manual auto; do
 
   git add -A
   git commit -q -m "chore: initial project scaffold"
-  git ls-files | grep -q '^\.claude/dev-journal\.md$' && fail "journal must not be tracked"
+  git ls-files | grep -q '^\.dev-journal\.md$' && fail "journal must not be tracked"
   cd "$repo"
 done
 

@@ -9,7 +9,7 @@
       "Bash(git diff *)",
       "Bash(git log *)",
       "Bash(git add *)",
-      "Edit(/.claude/dev-journal.md)",
+      "Edit(/.dev-journal.md)",
       "Bash(git commit *)"{{PUSH_PERMISSION}}
     ]
   },

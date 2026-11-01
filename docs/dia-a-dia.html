@@ -225,7 +225,7 @@ help: Remove unused import: `os`</pre>
 
     <div class="recuadro dato">
       <span class="etiqueta">💡 El diario de trabajo</span>
-      Claude apunta cada trabajo importante en <code>.claude/dev-journal.md</code>: fecha, qué se hizo, decisiones y próximos pasos. Es tu cuaderno de bitácora y el suyo: si una conversación se corta, Claude lo lee para retomar el hilo. No se sube a Git, porque son notas personales.
+      Claude apunta cada tarea terminada en <code>.dev-journal.md</code>, en la raíz del proyecto (el punto inicial lo oculta en muchas listas de archivos): fecha, qué se hizo, decisiones y próximos pasos. Es tu cuaderno de bitácora y el suyo: si una conversación se corta, Claude lo lee para retomar el hilo. No se sube a Git, porque son notas personales.
     </div>
 
     <h3>Una conversación típica</h3>
@@ -255,8 +255,8 @@ help: Remove unused import: `os`</pre>
       <p>Sí. <code>CLAUDE.md</code> y los procedimientos de <code>.claude/skills/</code> son texto. Cambia lo que quieras (por ejemplo, el idioma de los comentarios) y Claude lo seguirá desde la siguiente sesión.</p>
     </details>
     <details>
-      <summary>¿Por qué el diario y los permisos están dentro de <code>.claude/</code>?</summary>
-      <p>Porque es la carpeta donde Claude Code guarda lo suyo. Los permisos (<code>settings.json</code>) sí se suben a Git, para que quien clone el proyecto tenga las mismas reglas; el diario (<code>dev-journal.md</code>) no.</p>
+      <summary>¿Por qué el diario no está dentro de <code>.claude/</code>, con lo demás de Claude?</summary>
+      <p>Porque Claude Code protege la carpeta <code>.claude/</code>: cualquier escritura ahí pide permiso, aunque esté autorizada en la configuración. Fuera de ella, el permiso de <code>.claude/settings.json</code> deja a Claude escribir el diario sin preguntar. Los permisos sí se suben a Git, para que quien clone el proyecto tenga las mismas reglas; el diario no.</p>
     </details>
 
     <nav class="navegacion" aria-label="Navegación entre páginas">

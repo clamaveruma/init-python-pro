@@ -16,7 +16,7 @@ Source code in `src/`, tests in `tests/`.
 - When asked to write, add, change or fix code, follow the `py-tarea` skill.
 - When asked to refactor, follow the `py-refactor` skill. Before touching any code, offer two modes: Fully Automated or Interactive.
 - A task is not done until `uv run pytest` and `uv run ruff check` both pass. Ruff formatting also runs by itself after every Python edit.
-- Use Conventional Commits (for example `feat(auth): add JWT validation`). When a unit of work is finished and verified, commit without asking and tell the user in one line. Stage only the files you changed for that task (`git add <files>`), never unrelated changes the user may have in progress.
+- Use Conventional Commits (for example `feat(auth): add JWT validation`). When a unit of work is finished and verified, commit without asking and tell the user in one line. Stage only the files you changed for that task (`git add <files>`), never unrelated changes the user may have in progress. Commit with a plain `git commit -m "type(scope): message"` (no heredoc or `$(...)`), so it runs without asking for permission.
 {{PUSH_RULE}}
 
 ## Code style
@@ -38,5 +38,5 @@ These rules apply to all code you write. Code the user writes is theirs: do not 
 
 ## Journal
 
-- Keep a short log in `.claude/dev-journal.md` (not tracked by Git): date, what was done, decisions, next steps. Add one short entry after each finished task (each commit you make).
+- Keep a short log in `.dev-journal.md` (not tracked by Git): date, what was done, decisions, next steps. Add one short entry after each finished task (each commit you make).
 - Do not read the journal on every turn. Read it only if you lose context.

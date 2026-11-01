@@ -26,8 +26,8 @@ mi-proyecto/
 ├── tests/             pruebas
 ├── docs/design.md     diseño documentado (lo crea Claude en la primera función nueva)
 ├── .vscode/           botones de Run/Debug y formato al guardar
-├── .claude/           procedimientos de trabajo, formato automático, permisos
-│                      y diario de trabajo (dev-journal.md, no se sube a Git)
+├── .claude/           procedimientos de trabajo, formato automático y permisos
+├── .dev-journal.md    diario de trabajo de Claude (no se sube a Git)
 ├── CLAUDE.md          reglas y comandos útiles que Claude lee en cada sesión
 └── pyproject.toml     configuración del proyecto
 ```
