@@ -47,7 +47,6 @@ fill .vscode/launch.json "{{PKG}}" "$pkg"
 
 # Claude Code: rules, skills, hook and permissions
 cp "$tpl/CLAUDE.md" CLAUDE.md
-cp "$tpl/DEVELOPMENT.md" DEVELOPMENT.md
 cp -R "$tpl/claude-skills/." .claude/skills/
 cp "$tpl/claude/hooks/ruff.sh" .claude/hooks/ruff.sh
 chmod +x .claude/hooks/ruff.sh

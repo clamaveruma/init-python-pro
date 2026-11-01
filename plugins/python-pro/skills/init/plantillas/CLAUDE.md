@@ -1,7 +1,15 @@
 # Project rules
 
 Python project managed with uv, tested with pytest, formatted and linted with Ruff.
-Source code in `src/`, tests in `tests/`. Useful commands are in `DEVELOPMENT.md`.
+Source code in `src/`, tests in `tests/`.
+
+## Commands
+
+- Run: `uv run start` (or F5 in VS Code)
+- Tests: `uv run pytest`
+- Lint and fix: `uv run ruff check --fix`
+- Format: `uv run ruff format`
+- Add a dependency: `uv add <package>` (development only: `uv add --dev <package>`)
 
 ## Always
 

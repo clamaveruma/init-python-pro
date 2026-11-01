@@ -34,7 +34,7 @@ The script copies the templates from `${CLAUDE_SKILL_DIR}/plantillas/` into the 
 - `src/<package>/__main__.py` and `tests/test_main.py`, so the first run and the first test work at once.
 - A `start` command in `pyproject.toml` (`uv run start`), plus Ruff and pytest settings.
 - `.vscode/` with the Run/Debug buttons, Ruff formatting on save and the recommended extensions.
-- `CLAUDE.md` (rules Claude follows every session) and `DEVELOPMENT.md` (useful commands).
+- `CLAUDE.md`: the rules Claude follows every session, plus the useful commands.
 - `.claude/skills/py-tarea` and `.claude/skills/py-refactor`: the procedures for code changes and refactoring.
 - `.claude/hooks/ruff.sh` and `.claude/settings.json`: Ruff runs after every Python edit, and the allowed commands are listed there. `git push` is allowed only if the user chose automatic push.
 - `.claude/dev-journal.md` (kept out of Git).
