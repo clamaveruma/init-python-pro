@@ -14,3 +14,5 @@ jobs:
         run: python3 -m pip install uv
       - name: Montar proyectos de ejemplo y comprobarlos
         run: bash scripts/smoke-test.sh
+      - name: Comprobar enlaces de la guía
+        run: python3 scripts/check-links.py

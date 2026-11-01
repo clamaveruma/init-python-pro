@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Entornos virtuales: qué son y por qué existen · De script a proyecto</title>
+  <meta name="description" content="Qué es un entorno virtual de Python, por qué lo necesitas y qué hay dentro, sin magia. Con ejemplos que puedes ejecutar tú.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧭%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="entornos">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="barra">
+    <div class="barra-interior">
+      <a class="marca" href="index.html">De script <span>→</span> proyecto</a>
+      <nav class="camino" aria-label="Pasos de la guía">
+        <a href="entornos-virtuales.html" aria-current="page" title="1. Entornos virtuales">1</a>
+        <span title="2. Preparar VS Code (próximamente)">2</span>
+        <span title="3. Carpeta, proyecto, intérprete y entorno (próximamente)">3</span>
+        <span title="4. Librerías y versiones (próximamente)">4</span>
+        <span title="5. pyproject.toml por dentro (próximamente)">5</span>
+        <span title="6. Cómo arrancar tu programa (próximamente)">6</span>
+        <span title="7. Git y GitHub (próximamente)">7</span>
+        <span title="8. El día a día (próximamente)">8</span>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <div class="cabecera-pagina">
+      <span class="paso">Paso 1 de 8</span>
+      <h1>Entornos virtuales: qué son y por qué existen</h1>
+      <p>Una carpeta, no un hechizo.</p>
+    </div>
+
+    <div class="recuadro esencial">
+      <span class="etiqueta">⭐ Lo esencial</span>
+      <ul>
+        <li>Un entorno virtual es una <strong>carpeta</strong> (normalmente <code>.venv</code>) dentro de tu proyecto, con su <strong>propio Python</strong> y sus <strong>propias librerías</strong>.</li>
+        <li>Existe para que cada proyecto tenga las versiones que necesita, sin molestar a los demás ni al sistema.</li>
+        <li>No es magia: «activarlo» solo cambia <strong>qué <code>python</code> encuentra primero</strong> tu terminal.</li>
+      </ul>
+    </div>
+
+    <h2>1. El problema: una sola caja para todos</h2>
+    <p>Cuando instalas Python en tu ordenador, tienes <strong>un</strong> Python con <strong>una</strong> carpeta de librerías. Todo lo que instalas con <code>pip install</code> va a esa carpeta común. Mientras solo tienes un programa, no pasa nada. El problema llega con el segundo.</p>
+    <p>Imagina el <strong>Proyecto A</strong>, escrito hace un año, que funciona con la versión 2.19 de una librería llamada <code>requests</code>, y el <strong>Proyecto B</strong>, nuevo, que necesita la 2.34. En una caja compartida solo cabe <strong>una</strong> versión de cada librería: instalar la nueva pisa a la antigua, y el Proyecto A deja de funcionar.</p>
+
+    <figure class="ilustracion">
+      <svg viewBox="0 0 940 436" role="img" aria-labelledby="f1-t f1-d">
+        <title id="f1-t">Un Python compartido frente a un entorno por proyecto</title>
+        <desc id="f1-d">A la izquierda, dos proyectos que necesitan versiones distintas de la misma librería comparten un único Python del sistema y se pisan. A la derecha, cada proyecto tiene su propio entorno con sus versiones.</desc>
+        <defs>
+          <marker id="f1-flecha" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto">
+            <path d="M1 1 L11 6 L1 11 z" fill="var(--muted)"/>
+          </marker>
+        </defs>
+
+        <text x="30" y="32" class="sv-titulo">Sin entornos: una caja para todos</text>
+        <rect x="50" y="52" width="170" height="46" rx="10" class="sv-azul"/>
+        <text x="66" y="72" class="sv-text">Proyecto A</text>
+        <text x="66" y="89" class="sv-pequeno">necesita requests 2.19</text>
+        <rect x="250" y="52" width="170" height="46" rx="10" class="sv-violeta"/>
+        <text x="266" y="72" class="sv-text">Proyecto B</text>
+        <text x="266" y="89" class="sv-pequeno">necesita requests 2.34</text>
+        <path d="M135 102 L135 128" class="sv-linea" marker-end="url(#f1-flecha)"/>
+        <path d="M335 102 L335 128" class="sv-linea" marker-end="url(#f1-flecha)"/>
+
+        <rect x="30" y="132" width="410" height="236" rx="16" class="sv-gris"/>
+        <text x="50" y="162" class="sv-titulo">Python del sistema</text>
+        <text x="50" y="182" class="sv-pequeno">uno solo, compartido por todos</text>
+        <rect x="56" y="204" width="358" height="72" rx="12" class="sv-rojo"/>
+        <text x="76" y="232" class="sv-mono-b">requests</text>
+        <text x="76" y="258" class="sv-text">¿2.19 o 2.34?</text>
+        <path d="M370 218 L394 242 M394 218 L370 242" class="sv-trazo-rojo"/>
+        <text x="50" y="312" class="sv-text">Solo cabe una versión.</text>
+        <text x="50" y="336" class="sv-pequeno">Instalar una pisa a la otra.</text>
+
+        <path d="M470 24 L470 384" class="sv-punteada"/>
+
+        <text x="500" y="32" class="sv-titulo">Con entornos: una caja por proyecto</text>
+        <rect x="500" y="52" width="170" height="46" rx="10" class="sv-azul"/>
+        <text x="516" y="72" class="sv-text">Proyecto A</text>
+        <text x="516" y="89" class="sv-pequeno">necesita requests 2.19</text>
+        <rect x="730" y="52" width="170" height="46" rx="10" class="sv-violeta"/>
+        <text x="746" y="72" class="sv-text">Proyecto B</text>
+        <text x="746" y="89" class="sv-pequeno">necesita requests 2.34</text>
+        <path d="M585 102 L585 128" class="sv-linea" marker-end="url(#f1-flecha)"/>
+        <path d="M815 102 L815 128" class="sv-linea" marker-end="url(#f1-flecha)"/>
+
+        <rect x="490" y="132" width="210" height="236" rx="16" class="sv-azul"/>
+        <text x="510" y="162" class="sv-titulo">.venv de A</text>
+        <rect x="510" y="182" width="170" height="36" rx="8" class="sv-caja"/><text x="524" y="205" class="sv-mono">Python 3.11</text>
+        <rect x="510" y="228" width="170" height="36" rx="8" class="sv-caja"/><text x="524" y="251" class="sv-mono">requests 2.19</text>
+        <rect x="510" y="274" width="170" height="36" rx="8" class="sv-caja"/><text x="524" y="297" class="sv-pequeno">y sus otras librerías</text>
+
+        <rect x="720" y="132" width="210" height="236" rx="16" class="sv-violeta"/>
+        <text x="740" y="162" class="sv-titulo">.venv de B</text>
+        <rect x="740" y="182" width="170" height="36" rx="8" class="sv-caja"/><text x="754" y="205" class="sv-mono">Python 3.13</text>
+        <rect x="740" y="228" width="170" height="36" rx="8" class="sv-caja"/><text x="754" y="251" class="sv-mono">requests 2.34</text>
+        <rect x="740" y="274" width="170" height="36" rx="8" class="sv-caja"/><text x="754" y="297" class="sv-pequeno">y sus otras librerías</text>
+
+        <path d="M500 392 l9 9 l18 -20" class="sv-trazo-verde"/>
+        <text x="540" y="398" class="sv-text">Cada uno con sus versiones</text>
+        <text x="500" y="420" class="sv-pequeno">Y el Python del sistema no se toca.</text>
+      </svg>
+      <figcaption>Izquierda: dos proyectos con necesidades distintas se pisan en una caja compartida. Derecha: cada proyecto tiene la suya.</figcaption>
+    </figure>
+
+    <h3>Y no es solo cuestión de librerías</h3>
+    <ul>
+      <li><strong>Versiones de librerías:</strong> lo que acabas de ver.</li>
+      <li><strong>Versión de Python:</strong> un proyecto puede necesitar Python 3.11 y otro, 3.13.</li>
+      <li><strong>El propio sistema:</strong> muchas herramientas de tu sistema operativo están escritas en Python y usan <em>ese</em> Python. Si les cambias las librerías, pueden dejar de funcionar. Por eso, en muchas distribuciones de Linux recientes, <code>pip</code> se niega a instalar fuera de un entorno y muestra el error <code>externally-managed-environment</code>.</li>
+    </ul>
+
+    <h2>2. La solución: una caja por proyecto</h2>
+    <p>Un <strong>entorno virtual</strong> es justo eso: una caja de herramientas propia para cada proyecto, con su Python y sus librerías. Lo que instalas en la caja del Proyecto A no existe para el Proyecto B, y el Python del sistema queda intacto.</p>
+    <p>Es como si cada habitación de tu casa tuviera su propia caja de herramientas, en lugar de una caja comunitaria donde todo se mezcla y se pierde.</p>
+    <p>La palabra «virtual» asusta, pero aquí no hay máquinas virtuales ni nada raro. A continuación vas a ver, literalmente, qué es.</p>
+
+    <h2>3. Quitarle la magia: ¿qué hay dentro?</h2>
+    <p>La forma más rápida de entenderlo es crear uno y mirar dentro. Python trae un comando para crearlo (<code>python3 -m venv</code>) y la costumbre es llamar a la carpeta <code>.venv</code>.</p>
+
+    <div class="recuadro pruebalo">
+      <span class="etiqueta">🧪 Pruébalo tú</span>
+      Abre una terminal en una carpeta vacía (en VS Code: <em>Terminal → Nueva terminal</em>) y ejecuta esto. Tus rutas y versiones serán distintas, no importa.
+<pre class="terminal"><span class="p">$</span> python3 -m venv .venv
+<span class="p">$</span> ls -a
+.  ..  .venv
+<span class="p">$</span> ls .venv
+bin  include  lib  lib64  pyvenv.cfg
+<span class="p">$</span> ls -l .venv/bin
+<span class="c"># (sin los detalles que no importan)</span>
+activate  activate.csh  activate.fish  Activate.ps1
+pip  pip3  pip3.13
+python <span class="h">-&gt; python3</span>
+python3 <span class="h">-&gt; /usr/local/bin/python3</span>
+python3.13 -&gt; python3
+<span class="p">$</span> cat .venv/pyvenv.cfg
+home = /usr/local/bin
+include-system-site-packages = false
+version = 3.13.18
+executable = /usr/local/bin/python3.13
+command = /usr/local/bin/python3 -m venv /home/ana/mi-proyecto/.venv</pre>
+    </div>
+
+    <p>Eso es un entorno virtual. Una carpeta con tres cosas que importan:</p>
+
+    <figure class="ilustracion">
+      <svg viewBox="0 0 940 340" role="img" aria-labelledby="f2-t f2-d">
+        <title id="f2-t">Qué hay dentro de la carpeta .venv</title>
+        <desc id="f2-d">Un árbol de carpetas con tres partes destacadas: bin/python, que es un enlace al Python real; lib/python3.13/site-packages, donde se instalan las librerías; y pyvenv.cfg, un archivo de texto que dice qué Python base se usa.</desc>
+
+        <rect x="20" y="20" width="440" height="304" rx="16" class="sv-caja"/>
+
+        <rect x="30" y="139" width="420" height="30" rx="8" class="sv-verde"/>
+        <rect x="30" y="203" width="420" height="30" rx="8" class="sv-naranja"/>
+        <rect x="30" y="267" width="420" height="30" rx="8" class="sv-violeta"/>
+
+        <rect x="40" y="46" width="18" height="13" rx="3" class="sv-amarillo"/><text x="66" y="58" class="sv-mono-b">mi-proyecto/</text>
+        <rect x="62" y="78" width="18" height="13" rx="3" class="sv-amarillo"/><text x="88" y="90" class="sv-mono-b">.venv/</text>
+        <rect x="84" y="110" width="18" height="13" rx="3" class="sv-amarillo"/><text x="110" y="122" class="sv-mono-b">bin/</text>
+        <rect x="106" y="143" width="13" height="16" rx="2" class="sv-caja"/><text x="128" y="159" class="sv-mono-b">python → python3</text>
+        <rect x="106" y="174" width="13" height="16" rx="2" class="sv-caja"/><text x="128" y="190" class="sv-mono">pip, activate, …</text>
+        <rect x="84" y="206" width="18" height="13" rx="3" class="sv-amarillo"/><text x="110" y="218" class="sv-mono-b">lib/python3.13/site-packages/</text>
+        <rect x="106" y="238" width="13" height="16" rx="2" class="sv-caja"/><text x="128" y="253" class="sv-mono">requests/, pip/, …</text>
+        <rect x="84" y="271" width="13" height="16" rx="2" class="sv-caja"/><text x="110" y="286" class="sv-mono-b">pyvenv.cfg</text>
+
+        <path d="M450 154 C490 154 490 104 520 104" class="sv-punteada"/>
+        <path d="M450 218 C490 218 490 202 520 202" class="sv-punteada"/>
+        <path d="M450 282 C490 282 490 290 520 290" class="sv-punteada"/>
+
+        <rect x="520" y="60" width="400" height="88" rx="14" class="sv-verde"/>
+        <text x="540" y="90" class="sv-text">python: un enlace</text>
+        <text x="540" y="112" class="sv-pequeno">Apunta al Python real de tu ordenador,</text>
+        <text x="540" y="130" class="sv-pequeno">así no copia el Python entero (en Windows sí lo copia).</text>
+
+        <rect x="520" y="158" width="400" height="88" rx="14" class="sv-naranja"/>
+        <text x="540" y="188" class="sv-text">site-packages: las librerías</text>
+        <text x="540" y="210" class="sv-pequeno">Aquí se instala lo que pides con pip o uv.</text>
+        <text x="540" y="228" class="sv-pequeno">Solo para este proyecto.</text>
+
+        <rect x="520" y="256" width="400" height="66" rx="14" class="sv-violeta"/>
+        <text x="540" y="284" class="sv-text">pyvenv.cfg: una nota</text>
+        <text x="540" y="305" class="sv-pequeno">Texto simple: qué Python base usa este entorno.</text>
+      </svg>
+      <figcaption>Dentro de <code>.venv</code> no hay nada misterioso: un enlace al Python, una carpeta de librerías y una nota.</figcaption>
+    </figure>
+
+    <ul>
+      <li><strong>Tu código no está ahí.</strong> El entorno solo contiene Python y librerías. Tus archivos <code>.py</code> viven en tu proyecto, fuera de <code>.venv</code>.</li>
+      <li><strong>Ocupa poco al principio:</strong> unos 13 MB recién creado, y casi todo es <code>pip</code>.</li>
+      <li><strong>El nombre <code>.venv</code> es una costumbre.</strong> Pero muy extendida: VS Code y <code>uv</code> lo buscan con ese nombre. El punto inicial lo oculta en muchas listas de archivos.</li>
+    </ul>
+
+    <div class="recuadro dato">
+      <span class="etiqueta">💡 En Windows</span>
+      La carpeta se llama <code>Scripts</code> en lugar de <code>bin</code>, el comando para crear el entorno suele ser <code>python -m venv .venv</code> y se activa con <code>.venv\Scripts\activate</code>. La idea es la misma.
+    </div>
+
+    <h2>4. ¿Y qué hace «activar»?</h2>
+    <p>Aquí está la parte que parece magia. Cuando escribes <code>python3</code> en una terminal, ella no sabe dónde está ese programa: lo <strong>busca</strong> en una lista de carpetas, <strong>en orden</strong>, y ejecuta el primero que encuentra. Esa lista se llama <code>PATH</code>.</p>
+
+    <div class="recuadro pruebalo">
+      <span class="etiqueta">🧪 Pruébalo tú</span>
+      Mira qué <code>python3</code> usa tu terminal antes y después de activar:
+<pre class="terminal"><span class="p">$</span> which python3
+/usr/local/bin/python3
+<span class="p">$</span> source .venv/bin/activate
+<span class="v">(.venv)</span> <span class="p">$</span> which python
+<span class="h">/home/ana/mi-proyecto/.venv/bin/python</span>
+<span class="v">(.venv)</span> <span class="p">$</span> python -c "import sys; print(sys.prefix)"
+/home/ana/mi-proyecto/.venv
+<span class="v">(.venv)</span> <span class="p">$</span> echo $VIRTUAL_ENV
+/home/ana/mi-proyecto/.venv
+<span class="v">(.venv)</span> <span class="p">$</span> deactivate
+<span class="p">$</span> which python3
+/usr/local/bin/python3</pre>
+    </div>
+
+    <figure class="ilustracion">
+      <svg viewBox="0 0 940 340" role="img" aria-labelledby="f3-t f3-d">
+        <title id="f3-t">Cómo cambia la búsqueda de python al activar el entorno</title>
+        <desc id="f3-d">Antes de activar, la terminal recorre las carpetas del PATH y encuentra python3 en /usr/local/bin. Después de activar, la carpeta bin del entorno pasa al primer puesto y es la que gana.</desc>
+        <defs>
+          <marker id="f3-flecha" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto">
+            <path d="M1 1 L11 6 L1 11 z" fill="var(--muted)"/>
+          </marker>
+        </defs>
+
+        <rect x="20" y="20" width="420" height="300" rx="16" class="sv-caja"/>
+        <text x="40" y="52" class="sv-titulo">Antes de activar</text>
+        <text x="40" y="74" class="sv-pequeno">Escribes python3 y la terminal busca, de arriba abajo:</text>
+
+        <rect x="40" y="92" width="380" height="50" rx="10" class="sv-naranja"/>
+        <text x="58" y="114" class="sv-mono-b">/usr/local/bin</text>
+        <text x="58" y="132" class="sv-pequeno">✔ aquí está python3: se ejecuta este</text>
+        <rect x="40" y="150" width="380" height="42" rx="10" class="sv-gris"/>
+        <text x="58" y="176" class="sv-mono">/home/ana/.local/bin</text>
+        <rect x="40" y="200" width="380" height="42" rx="10" class="sv-gris"/>
+        <text x="58" y="226" class="sv-mono">/usr/bin</text>
+        <text x="40" y="276" class="sv-pequeno">Resultado:</text>
+        <text x="40" y="298" class="sv-mono-b">/usr/local/bin/python3</text>
+
+        <path d="M448 170 L482 170" class="sv-linea" marker-end="url(#f3-flecha)"/>
+        <text x="465" y="156" text-anchor="middle" class="sv-pequeno">activate</text>
+
+        <rect x="490" y="20" width="430" height="300" rx="16" class="sv-caja"/>
+        <text x="510" y="52" class="sv-titulo">Después de activar</text>
+        <text x="510" y="74" class="sv-pequeno">activate pone la carpeta del entorno la primera:</text>
+
+        <rect x="510" y="92" width="390" height="50" rx="10" class="sv-verde"/>
+        <text x="528" y="114" class="sv-mono-b">…/mi-proyecto/.venv/bin</text>
+        <text x="528" y="132" class="sv-pequeno">✔ ahora gana este: aquí está python</text>
+        <rect x="510" y="150" width="390" height="42" rx="10" class="sv-gris"/>
+        <text x="528" y="176" class="sv-mono">/usr/local/bin</text>
+        <text x="760" y="176" class="sv-pequeno">ya no se llega</text>
+        <rect x="510" y="200" width="390" height="42" rx="10" class="sv-gris"/>
+        <text x="528" y="226" class="sv-mono">/home/ana/.local/bin</text>
+        <text x="510" y="276" class="sv-pequeno">Resultado:</text>
+        <text x="510" y="298" class="sv-mono-b">/home/ana/mi-proyecto/.venv/bin/python</text>
+      </svg>
+      <figcaption>Activar no cambia nada de tu ordenador: solo cambia el orden en que la terminal busca programas.</figcaption>
+    </figure>
+
+    <p>Eso es todo lo que hace <code>activate</code>: pone la carpeta <code>.venv/bin</code> la primera de la lista, define la variable <code>VIRTUAL_ENV</code> y cambia el indicador de tu terminal para que veas <code>(.venv)</code>. <code>deactivate</code> lo deshace. No instala nada, no copia nada y no «entra» en ningún sitio.</p>
+
+    <div class="recuadro dato">
+      <span class="etiqueta">💡 No hace falta activar</span>
+      Si escribes la ruta completa, el entorno funciona igual, sin activar nada. De hecho, el programa <code>pip</code> que está dentro del entorno lleva escrita, en su primera línea, la ruta del Python al que pertenece:
+<pre class="terminal"><span class="p">$</span> head -1 .venv/bin/pip
+<span class="h">#!/home/ana/mi-proyecto/.venv/bin/python3</span>
+<span class="p">$</span> .venv/bin/python -c "import requests; print(requests.__version__)"
+2.34.2</pre>
+      Más adelante verás que VS Code y <code>uv</code> hacen todo esto por ti.
+    </div>
+
+    <h2>5. Instalar librerías dentro</h2>
+    <p>Con el entorno activado, lo que instales con <code>pip</code> cae en <code>site-packages</code> de <strong>ese</strong> entorno y en ningún otro sitio:</p>
+
+    <div class="recuadro pruebalo">
+      <span class="etiqueta">🧪 Pruébalo tú</span>
+<pre class="terminal"><span class="v">(.venv)</span> <span class="p">$</span> pip list
+Package Version
+------- -------
+pip     26.2.2
+<span class="v">(.venv)</span> <span class="p">$</span> pip install requests
+<span class="v">(.venv)</span> <span class="p">$</span> pip list
+Package            Version
+------------------ ----------
+certifi            2026.10.23
+charset-normalizer 3.5.2
+idna               3.20
+pip                26.2.2
+<span class="h">requests           2.34.2</span>
+urllib3            2.8.0
+<span class="v">(.venv)</span> <span class="p">$</span> ls .venv/lib/python3.13/site-packages
+certifi  charset_normalizer  idna  pip  requests  urllib3  <span class="c">(y las carpetas .dist-info)</span></pre>
+    </div>
+
+    <p>Fíjate en que pediste <code>requests</code> y llegaron <strong>seis</strong> paquetes: <code>requests</code> necesita otras librerías para funcionar y <code>pip</code> las trae todas. Esas «librerías de tus librerías» se llaman <em>dependencias</em>, y son una de las razones por las que conviene que alguien (<code>uv</code>) lleve la cuenta de ellas.</p>
+
+    <p>Y si algo sale mal, no pasa nada: se borra la carpeta y se crea otra vez.</p>
+<pre class="terminal"><span class="p">$</span> rm -rf .venv
+<span class="p">$</span> ls -a
+.  ..</pre>
+    <p>Tu código sigue intacto, porque nunca estuvo ahí dentro.</p>
+
+    <div class="recuadro ojo">
+      <span class="etiqueta">⚠️ Ojo: no lo copies a otro sitio</span>
+      No copies la carpeta <code>.venv</code> a otro ordenador ni a otra carpeta. Dentro hay <strong>rutas absolutas</strong> (como la primera línea de <code>pip</code>) y enlaces a un Python concreto de <em>esta</em> máquina. Un entorno se <strong>vuelve a crear</strong> en cada sitio; en el paso 4 verás cómo hacerlo con un solo comando. Por la misma razón, <code>.venv</code> no se sube a Git.
+    </div>
+
+    <h2>❓ Compruébalo</h2>
+    <details>
+      <summary>Si borro la carpeta <code>.venv</code>, ¿pierdo mi código?</summary>
+      <p>No. El entorno solo contiene Python y librerías. Tu código vive fuera, en tu proyecto. Lo único que pierdes es lo instalado dentro, que se puede volver a instalar.</p>
+    </details>
+    <details>
+      <summary>¿Qué hace exactamente <code>source .venv/bin/activate</code>?</summary>
+      <p>Pone la carpeta <code>.venv/bin</code> la primera en el <code>PATH</code>, define <code>VIRTUAL_ENV</code> y cambia el indicador de la terminal a <code>(.venv)</code>. Nada más. Por eso <code>python</code> pasa a ser el del entorno, y por eso <code>deactivate</code> lo deshace todo.</p>
+    </details>
+    <details>
+      <summary>¿Puedo copiar <code>.venv</code> a otro ordenador para ahorrarme instalar?</summary>
+      <p>No. Contiene rutas absolutas y enlaces a un Python concreto de tu máquina, así que en otro ordenador no funcionaría. Se vuelve a crear allí a partir de la lista de librerías del proyecto, algo que veremos en el paso 4.</p>
+    </details>
+
+    <nav class="navegacion" aria-label="Navegación entre páginas">
+      <a href="index.html"><small>← Inicio</small>El mapa del camino</a>
+      <span class="sig"><small>Paso 2 · próximamente</small>Preparar VS Code →</span>
+    </nav>
+  </main>
+
+  <footer class="pie">
+    Guía del proyecto <a href="https://github.com/clamaveruma/init-python-pro">init-python-pro</a> · Licencia MIT
+  </footer>
+</body>
+</html>

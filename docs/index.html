@@ -1,185 +1,238 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guía Rápida de Desarrollo Python</title>
-    <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-color: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-uv: #10b981;
-            --accent-toml: #6366f1;
-            --accent-git: #f43f5e;
-        }
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.5;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 2px dashed #334155;
-            padding-bottom: 20px;
-        }
-        a { color: #38bdf8; }
-        h1 { margin: 0; color: #fff; font-size: 2.2rem; }
-        .subtitle { color: var(--text-muted); margin-top: 5px; }
-        .badge {
-            background-color: #334155;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: bold;
-        }
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 5px solid #334155;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .card-uv { border-left-color: var(--accent-uv); }
-        .card-toml { border-left-color: var(--accent-toml); }
-        .card-git { border-left-color: var(--accent-git); }
-        
-        h2 { margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px; }
-        h3 { color: #fff; font-size: 1.1rem; margin-bottom: 5px; }
-        p { margin: 5px 0 10px 0; color: var(--text-muted); font-size: 0.95rem; }
-        
-        .analogia {
-            background-color: rgba(255,255,255,0.03);
-            border-radius: 6px;
-            padding: 10px 15px;
-            margin-top: 10px;
-            border-left: 3px solid #64748b;
-            font-style: italic;
-            font-size: 0.9rem;
-        }
-        .flow-step {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        .step-num {
-            background-color: #334155;
-            color: #fff;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-        pre {
-            background-color: #020617;
-            padding: 12px;
-            border-radius: 6px;
-            font-family: monospace;
-            font-size: 0.85rem;
-            overflow-x: auto;
-            color: #e2e8f0;
-            margin: 5px 0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>De script a proyecto: Python profesional sin magia</title>
+  <meta name="description" content="Entornos virtuales, uv, VS Code y Git explicados desde cero, para quien ya sabe programar en Python y quiere hacer proyectos más profesionales.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧭%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="estilo.css">
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>💡 Guía de Supervivencia Python</h1>
-            <p class="subtitle">Entiende tu entorno de desarrollo en solo 5 minutos</p>
-            <span class="badge">⏱️ Lectura rápida</span>
-            <p><a href="https://github.com/clamaveruma/init-python-pro">Ver el proyecto en GitHub</a></p>
-        </header>
+<body data-pagina="inicio">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
 
-        <!-- 1. ENTORNO VIRTUAL -->
-        <div class="card card-uv">
-            <h2>📦 1. El Entorno Virtual (.venv)</h2>
-            <p><strong>¿Qué es?</strong> Es una burbuja aislada dentro de la carpeta de tu proyecto que contiene su propia copia de Python y sus librerías.</p>
-            <p><strong>¿Por qué es útil?</strong> Evita el "caos de dependencias". Si un proyecto viejo necesita la versión 1.0 de una librería y tu proyecto nuevo necesita la versión 3.0, el entorno virtual evita que se pisen entre si y rompan tu ordenador.</p>
-            <div class="analogia">📦 <strong>Analogía:</strong> Es como si cada habitación de tu casa tuviera su propia caja de herramientas independiente, en vez de compartir una sola caja comunitaria donde todo se pierde o se mezcla.</div>
-        </div>
-
-        <!-- 2. UV -->
-        <div class="card card-uv">
-            <h2>⚡ 2. ¿Qué es UV y por qué lo usamos?</h2>
-            <p><strong>¿Qué es?</strong> Es el gestor de herramientas de Python definitivo (creado en Rust). Reemplaza e integra herramientas antiguas como pip, poetry y pyenv en una sola herramienta ultrarrápida.</p>
-            <p><strong>¿Por qué es útil?</strong> Es entre 10 y 100 veces más rápido instalando cosas que el sistema tradicional. Además, se encarga de descargar la versión exacta de Python que necesites de forma invisible sin que tengas que instalar nada a mano.</p>
-        </div>
-
-        <!-- 3. PYPROJECT.TOML -->
-        <div class="card card-toml">
-            <h2>📋 3. El archivo pyproject.toml</h2>
-            <p><strong>¿Qué es?</strong> Es el centro de mando de tu proyecto. Un único archivo de texto donde se declara toda la información relevante de tu aplicación.</p>
-            <p><strong>¿Por qué es útil?</strong> En lugar de tener diez archivos de configuración sueltos (uno para tests, uno para estilo, uno para dependencias), todo se unifica aquí. Además, con <strong>uv</strong>, definimos comandos cortos como <code>uv run start</code> para no escribir rutas larguísimas en la consola.</p>
-        </div>
-
-        <!-- 4. ESTRUCTURA DE CARPETAS -->
-        <div class="card card-toml">
-            <h2>📁 4. Nuestra Estructura de Carpetas</h2>
-            <p>Tu proyecto se organiza bajo el estándar profesional de paquetes (<strong>src/ layout</strong>):</p>
-            <pre>mi-proyecto/
-├── .venv/            → La burbuja aislada de Python (gestionada por uv).
-├── .vscode/          → Tus botones visuales de Run/Debug en el editor.
-├── .claude/          → Los procedimientos de trabajo de Claude y el formato automático.
-├── CLAUDE.md         → Las reglas y los comandos útiles que Claude lee en cada sesión.
-├── src/mi_proyecto/  → ¡Aquí va tu código! Todo ordenado dentro de un paquete.
-└── tests/            → Tus archivos de pruebas para asegurar que el código no se rompa.</pre>
-            <p><strong>¿Por qué?</strong> Porque aísla el código real de los archivos de configuración de desarrollo, facilitando que herramientas como VS Code o Claude no se confundan de archivos al leer el espacio de trabajo.</p>
-        </div>
-
-        <!-- 5. FLUJO DE TRABAJO -->
-        <div class="card">
-            <h2>🔄 5. Flujo de Trabajo Diario</h2>
-            <p>Cuando trabajas con Claude Code y esta estructura, tu rutina diaria sigue un orden impecable:</p>
-            <div class="flow-step">
-                <div class="step-num">1</div>
-                <div>
-                    <h3>Diseño previo</h3>
-                    <p>Le pides una tarea a Claude. Él diseñará la solución en el chat y validará la lógica contra casos de uso simulados antes de tocar ningún archivo.</p>
-                </div>
-            </div>
-            <div class="flow-step">
-                <div class="step-num">2</div>
-                <div>
-                    <h3>TDD (Pruebas Primero)</h3>
-                    <p>Claude creará un test que falla en la carpeta <code>tests/</code> y luego escribirá el código justo dentro de <code>src/</code> para que el test se vuelva verde.</p>
-                </div>
-            </div>
-            <div class="flow-step">
-                <div class="step-num">3</div>
-                <div>
-                    <h3>Limpieza y Calidad</h3>
-                    <p>Se ejecuta <strong>Ruff</strong> automáticamente en segundo plano para formatear el código, limpiar importaciones y dejar el estilo impecable en inglés.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 6. HERRAMIENTAS AUTOMÁTICAS -->
-        <div class="card card-git">
-            <h2>🛠️ 6. Git, GitHub y Automatizaciones</h2>
-            <p>Para quitarte trabajo de encima, Claude hace algunas cosas por su cuenta. Lo importante lo decides tú:</p>
-            <ul>
-                <li><strong>Git local:</strong> Funciona como una máquina del tiempo de tu código. Cada vez que Claude termine una tarea con éxito y los tests pasen, hará un <em>commit</em> por su cuenta para guardar el progreso de forma segura y te avisará en el chat.</li>
-                <li><strong>GitHub remoto:</strong> Subir el código a la nube (<em>push</em>) lo decides tú. Al crear el proyecto Claude te pregunta si quieres que suba los cambios solo después de cada commit, y espera una respuesta clara. Si dices que no, solo sube cuando se lo pidas.</li>
-                <li><strong>Diario (.claude/dev-journal.md):</strong> Claude mantiene al día un cuaderno de bitácora anotando qué ha hecho y qué falta por hacer, para recordar el contexto entre sesiones sin gastar tu memoria de tokens. Es un archivo personal: no se sube a Git.</li>
-            </ul>
-        </div>
+  <header class="barra">
+    <div class="barra-interior">
+      <a class="marca" href="index.html" aria-current="page">De script <span>→</span> proyecto</a>
+      <nav class="camino" aria-label="Pasos de la guía">
+        <a href="entornos-virtuales.html" title="1. Entornos virtuales">1</a>
+        <span title="2. Preparar VS Code (próximamente)">2</span>
+        <span title="3. Carpeta, proyecto, intérprete y entorno (próximamente)">3</span>
+        <span title="4. Librerías y versiones (próximamente)">4</span>
+        <span title="5. pyproject.toml por dentro (próximamente)">5</span>
+        <span title="6. Cómo arrancar tu programa (próximamente)">6</span>
+        <span title="7. Git y GitHub (próximamente)">7</span>
+        <span title="8. El día a día (próximamente)">8</span>
+      </nav>
     </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-interior">
+      <h1>De script a proyecto: <em>Python profesional sin magia</em></h1>
+      <p class="sub">Entornos virtuales, uv, VS Code y Git explicados desde cero, para quien ya sabe programar en Python y quiere dar el salto a proyectos de verdad.</p>
+      <p>
+        <a class="boton principal" href="entornos-virtuales.html">Empezar por el paso 1 →</a>
+        <a class="boton" href="#mapa">Ver el mapa</a>
+      </p>
+
+      <figure class="ilustracion" style="margin-top: 26px;">
+        <svg viewBox="0 0 940 350" role="img" aria-labelledby="hero-t hero-d">
+          <title id="hero-t">De una carpeta con scripts sueltos a un proyecto ordenado</title>
+          <desc id="hero-d">A la izquierda, archivos con nombres como script_final y script_final_v2 mezclados sin orden. A la derecha, una carpeta de proyecto con entorno virtual, código, pruebas, la receta pyproject.toml y el historial de Git.</desc>
+          <defs>
+            <marker id="flecha-hero" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto">
+              <path d="M1 1 L11 6 L1 11 z" fill="var(--muted)"/>
+            </marker>
+          </defs>
+
+          <text x="30" y="34" class="sv-titulo">Hoy</text>
+          <g transform="rotate(-4 125 85)"><rect x="30" y="62" width="200" height="46" rx="10" class="sv-caja"/><text x="46" y="91" class="sv-mono">script_final.py</text></g>
+          <g transform="rotate(3 145 152)"><rect x="46" y="130" width="226" height="46" rx="10" class="sv-naranja"/><text x="62" y="159" class="sv-mono">script_final_v2.py</text></g>
+          <g transform="rotate(-2 125 222)"><rect x="24" y="198" width="214" height="46" rx="10" class="sv-caja"/><text x="40" y="227" class="sv-mono">datos (copia).csv</text></g>
+          <g transform="rotate(4 150 288)"><rect x="52" y="266" width="206" height="46" rx="10" class="sv-rojo"/><text x="68" y="295" class="sv-mono">prueba_NUEVO.py</text></g>
+          <text x="30" y="338" class="sv-pequeno">¿Cuál es la buena? ¿Con qué versión funcionaba?</text>
+
+          <path d="M330 175 L505 175" class="sv-linea" marker-end="url(#flecha-hero)"/>
+          <text x="418" y="150" text-anchor="middle" class="sv-text">uv + VS Code + Git</text>
+          <text x="418" y="200" text-anchor="middle" class="sv-pequeno">y esta guía</text>
+
+          <text x="548" y="34" class="sv-titulo">Con esta guía</text>
+          <rect x="540" y="48" width="380" height="288" rx="16" class="sv-azul"/>
+          <text x="562" y="82" class="sv-mono-b">mi-proyecto/</text>
+
+          <circle cx="572" cy="116" r="8" class="sv-s-verde"/>
+          <text x="590" y="121" class="sv-mono-b">.venv/</text>
+          <text x="700" y="121" class="sv-pequeno">su Python y sus librerías</text>
+
+          <circle cx="572" cy="152" r="8" class="sv-s-azul"/>
+          <text x="590" y="157" class="sv-mono-b">src/</text>
+          <text x="700" y="157" class="sv-pequeno">tu código, ordenado</text>
+
+          <circle cx="572" cy="188" r="8" class="sv-s-violeta"/>
+          <text x="590" y="193" class="sv-mono-b">tests/</text>
+          <text x="700" y="193" class="sv-pequeno">tus pruebas</text>
+
+          <circle cx="572" cy="224" r="8" class="sv-s-rosa"/>
+          <text x="590" y="229" class="sv-mono-b">pyproject.toml</text>
+          <text x="728" y="229" class="sv-pequeno">la receta</text>
+
+          <circle cx="572" cy="260" r="8" class="sv-s-naranja"/>
+          <text x="590" y="265" class="sv-mono-b">uv.lock</text>
+          <text x="680" y="265" class="sv-pequeno">las versiones exactas</text>
+
+          <circle cx="572" cy="296" r="8" class="sv-s-rojo"/>
+          <text x="590" y="301" class="sv-mono-b">.git/</text>
+          <text x="660" y="301" class="sv-pequeno">el historial de cambios</text>
+        </svg>
+        <figcaption>De «una carpeta con lo que fui guardando» a un proyecto que otra persona (o tú dentro de un año) puede abrir y ejecutar.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <main id="contenido">
+
+    <h2>¿Para quién es esta guía?</h2>
+    <div class="dos-columnas">
+      <div class="bien">
+        <h3>Se supone que…</h3>
+        <ul>
+          <li>Ya sabes programar en Python a nivel básico: variables, funciones, bucles, archivos.</li>
+          <li>Has usado un editor como <strong>Thonny</strong> o <strong>VS Code</strong> de forma sencilla.</li>
+          <li>Tienes instalada en VS Code la extensión <strong>Claude Code</strong>.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Y quieres…</h3>
+        <ul>
+          <li>Proyectos que funcionen igual en <strong>otro ordenador</strong>.</li>
+          <li>Código <strong>ordenado</strong>, con pruebas y sin sorpresas.</li>
+          <li>Entender lo que hacen las herramientas, <strong>sin magia</strong>.</li>
+          <li>Que Claude te ayude a programar <strong>siguiendo reglas claras</strong>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 id="ideas">Las cinco ideas, en un minuto</h2>
+    <p>Todo lo demás de la guía son detalles de estas cinco ideas.</p>
+    <div class="ideas">
+      <div class="idea" style="--tono: var(--c-venv)">
+        <svg viewBox="0 0 54 54" aria-hidden="true"><circle cx="27" cy="27" r="22" fill="none" stroke="var(--c-venv)" stroke-width="4"/><rect x="15" y="21" width="10" height="10" rx="2.5" fill="var(--c-venv)"/><rect x="29" y="30" width="10" height="10" rx="2.5" fill="var(--c-venv)" opacity="0.6"/></svg>
+        <h3>Una burbuja por proyecto</h3>
+        <p>Cada proyecto lleva su propio Python y sus propias librerías en una carpeta: el entorno virtual.</p>
+      </div>
+      <div class="idea" style="--tono: var(--c-vscode)">
+        <svg viewBox="0 0 54 54" aria-hidden="true"><rect x="5" y="8" width="44" height="38" rx="6" fill="none" stroke="var(--c-vscode)" stroke-width="4"/><line x1="5" y1="19" x2="49" y2="19" stroke="var(--c-vscode)" stroke-width="3"/><rect x="5" y="38" width="44" height="8" rx="3" fill="var(--c-vscode)"/></svg>
+        <h3>VS Code debe saber cuál usar</h3>
+        <p>El editor tiene que apuntar al Python de la burbuja. La barra inferior te dice a cuál apunta.</p>
+      </div>
+      <div class="idea" style="--tono: var(--c-toml)">
+        <svg viewBox="0 0 54 54" aria-hidden="true"><path d="M12 5h22l9 9v35H12z" fill="none" stroke="var(--c-toml)" stroke-width="4" stroke-linejoin="round"/><line x1="19" y1="26" x2="36" y2="26" stroke="var(--c-toml)" stroke-width="3.5" stroke-linecap="round"/><line x1="19" y1="34" x2="36" y2="34" stroke="var(--c-toml)" stroke-width="3.5" stroke-linecap="round"/><line x1="19" y1="42" x2="29" y2="42" stroke="var(--c-toml)" stroke-width="3.5" stroke-linecap="round"/></svg>
+        <h3>Una receta lo describe todo</h3>
+        <p>El archivo <code>pyproject.toml</code> dice qué librerías y qué versiones necesita tu proyecto.</p>
+      </div>
+      <div class="idea" style="--tono: var(--c-libs)">
+        <svg viewBox="0 0 54 54" aria-hidden="true"><path d="M31 4 L12 30 H25 L22 50 L42 22 H28 Z" fill="var(--c-libs)" stroke-linejoin="round"/></svg>
+        <h3>uv hace el trabajo pesado</h3>
+        <p>Crea la burbuja, instala lo que dice la receta y ejecuta tu programa dentro de ella, en un momento.</p>
+      </div>
+      <div class="idea" style="--tono: var(--c-git)">
+        <svg viewBox="0 0 54 54" aria-hidden="true"><path d="M14 18 V36" stroke="var(--c-git)" stroke-width="4" fill="none"/><path d="M14 32 C14 24 30 30 36 24" stroke="var(--c-git)" stroke-width="4" fill="none"/><circle cx="14" cy="12" r="7" fill="var(--c-git)"/><circle cx="14" cy="42" r="7" fill="var(--c-git)"/><circle cx="40" cy="22" r="7" fill="var(--c-git)"/></svg>
+        <h3>Git guarda el historial</h3>
+        <p>Cada cambio importante queda anotado. Puedes volver atrás y compartir el proyecto en GitHub.</p>
+      </div>
+    </div>
+
+    <h2 id="mapa">El mapa del camino</h2>
+    <p>Ocho paradas. Cada una se apoya en la anterior, así que lo mejor es seguirlas en orden. Cada página empieza con un recuadro <strong>«Lo esencial»</strong> de tres líneas: si te basta, no hace falta seguir leyendo.</p>
+
+    <ol class="mapa">
+      <li>
+        <a class="parada" style="--tono: var(--c-venv)" href="entornos-virtuales.html">
+          <span class="num">1</span>
+          <span><h3>Entornos virtuales: qué son y por qué</h3><p>El problema de las versiones y cómo se resuelve. Qué hay dentro de un entorno, sin magia.</p></span>
+        </a>
+      </li>
+      <li>
+        <div class="parada pronto" style="--tono: var(--c-vscode)">
+          <span class="num">2</span>
+          <span><h3>Preparar VS Code <span class="pronto-etiqueta">Próximamente</span></h3><p>Las extensiones recomendadas para Python y la vista Testing, que suele estar oculta.</p></span>
+        </div>
+      </li>
+      <li>
+        <div class="parada pronto" style="--tono: var(--c-conceptos)">
+          <span class="num">3</span>
+          <span><h3>Carpeta, proyecto, intérprete y entorno <span class="pronto-etiqueta">Próximamente</span></h3><p>Cuatro ideas casi iguales. Cómo elige Python VS Code y cómo cambiar de entorno.</p></span>
+        </div>
+      </li>
+      <li>
+        <div class="parada pronto" style="--tono: var(--c-libs)">
+          <span class="num">4</span>
+          <span><h3>Librerías y versiones: uv y pyproject.toml <span class="pronto-etiqueta">Próximamente</span></h3><p>Cómo reproducir tu proyecto en cualquier ordenador con un solo comando.</p></span>
+        </div>
+      </li>
+      <li>
+        <div class="parada pronto" style="--tono: var(--c-toml)">
+          <span class="num">5</span>
+          <span><h3>pyproject.toml por dentro <span class="pronto-etiqueta">Próximamente</span></h3><p>Un recorrido por el archivo, parte por parte, con el de un proyecto real.</p></span>
+        </div>
+      </li>
+      <li>
+        <div class="parada pronto" style="--tono: var(--c-arrancar)">
+          <span class="num">6</span>
+          <span><h3>Cómo arrancar tu programa <span class="pronto-etiqueta">Próximamente</span></h3><p>Puntos de entrada. <code>uv run</code>, <code>python archivo.py</code> o el script directo: pros y contras.</p></span>
+        </div>
+      </li>
+      <li>
+        <div class="parada pronto" style="--tono: var(--c-git)">
+          <span class="num">7</span>
+          <span><h3>Git y GitHub <span class="pronto-etiqueta">Próximamente</span></h3><p>Guardar el historial, volver atrás y compartir tu proyecto.</p></span>
+        </div>
+      </li>
+      <li>
+        <div class="parada pronto" style="--tono: var(--c-dia)">
+          <span class="num">8</span>
+          <span><h3>El día a día <span class="pronto-etiqueta">Próximamente</span></h3><p>Estructura del proyecto, pruebas, Ruff y cómo trabaja Claude con las reglas del proyecto.</p></span>
+        </div>
+      </li>
+    </ol>
+
+    <h2>Cómo está escrita la guía</h2>
+    <div class="dos-columnas">
+      <div class="recuadro esencial" style="margin:0">
+        <span class="etiqueta">⭐ Lo esencial</span>
+        Al principio de cada página: la idea en tres líneas.
+      </div>
+      <div class="recuadro pruebalo" style="margin:0">
+        <span class="etiqueta">🧪 Pruébalo tú</span>
+        Comandos cortos para ver con tus ojos lo que se explica.
+      </div>
+      <div class="recuadro ojo" style="margin:0">
+        <span class="etiqueta">⚠️ Ojo</span>
+        Errores típicos y cosas que confunden al principio.
+      </div>
+      <div class="recuadro dato" style="margin:0">
+        <span class="etiqueta">❓ Compruébalo</span>
+        Preguntas con la respuesta escondida, para ver si te ha quedado claro.
+      </div>
+    </div>
+
+    <h2>¿Solo quieres el proyecto montado?</h2>
+    <p>Si prefieres empezar por lo práctico, instala el complemento de Claude Code y crea tu primer proyecto con un solo comando. Las páginas de la guía te explicarán después qué ha hecho cada cosa.</p>
+    <p>
+      <a class="boton principal" href="https://github.com/clamaveruma/init-python-pro/blob/main/docs/instalacion.md">Instalación</a>
+      <a class="boton" href="https://github.com/clamaveruma/init-python-pro/blob/main/docs/uso.md">Uso</a>
+      <a class="boton" href="https://github.com/clamaveruma/init-python-pro">Código en GitHub</a>
+    </p>
+
+    <nav class="navegacion" aria-label="Siguiente página">
+      <a class="sig" href="entornos-virtuales.html" style="flex-basis: 100%;"><small>Paso 1</small>Entornos virtuales: qué son y por qué →</a>
+    </nav>
+  </main>
+
+  <footer class="pie">
+    Guía del proyecto <a href="https://github.com/clamaveruma/init-python-pro">init-python-pro</a> · Licencia MIT
+  </footer>
 </body>
 </html>
