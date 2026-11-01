@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Rápida de Desarrollo Python</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-uv: #10b981;
+            --accent-toml: #6366f1;
+            --accent-git: #f43f5e;
+        }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px dashed #334155;
+            padding-bottom: 20px;
+        }
+        h1 { margin: 0; color: #fff; font-size: 2.2rem; }
+        .subtitle { color: var(--text-muted); margin-top: 5px; }
+        .badge {
+            background-color: #334155;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #334155;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .card-uv { border-left-color: var(--accent-uv); }
+        .card-toml { border-left-color: var(--accent-toml); }
+        .card-git { border-left-color: var(--accent-git); }
+        
+        h2 { margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; gap: 10px; }
+        h3 { color: #fff; font-size: 1.1rem; margin-bottom: 5px; }
+        p { margin: 5px 0 10px 0; color: var(--text-muted); font-size: 0.95rem; }
+        
+        .analogia {
+            background-color: rgba(255,255,255,0.03);
+            border-radius: 6px;
+            padding: 10px 15px;
+            margin-top: 10px;
+            border-left: 3px solid #64748b;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+        .flow-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .step-num {
+            background-color: #334155;
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        pre {
+            background-color: #020617;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            color: #e2e8f0;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💡 Guía de Supervivencia Python</h1>
+            <p class="subtitle">Entiende tu entorno de desarrollo en solo 5 minutos</p>
+            <span class="badge">⏱️ Lectura rápida</span>
+        </header>
+
+        <!-- 1. ENTORNO VIRTUAL -->
+        <div class="card card-uv">
+            <h2>📦 1. El Entorno Virtual (.venv)</h2>
+            <p><strong>¿Qué es?</strong> Es una burbuja aislada dentro de la carpeta de tu proyecto que contiene su propia copia de Python y sus librerías.</p>
+            <p><strong>¿Por qué es útil?</strong> Evita el "caos de dependencias". Si un proyecto viejo necesita la versión 1.0 de una librería y tu proyecto nuevo necesita la versión 3.0, el entorno virtual evita que se pisen entre si y rompan tu ordenador.</p>
+            <div class="analogia">📦 <strong>Analogía:</strong> Es como si cada habitación de tu casa tuviera su propia caja de herramientas independiente, en vez de compartir una sola caja comunitaria donde todo se pierde o se mezcla.</div>
+        </div>
+
+        <!-- 2. UV -->
+        <div class="card card-uv">
+            <h2>⚡ 2. ¿Qué es UV y por qué lo usamos?</h2>
+            <p><strong>¿Qué es?</strong> Es el gestor de herramientas de Python definitivo (creado en Rust). Reemplaza e integra herramientas antiguas como pip, poetry y pyenv en una sola herramienta ultrarrápida.</p>
+            <p><strong>¿Por qué es útil?</strong> Es entre 10 y 100 veces más rápido instalando cosas que el sistema tradicional. Además, se encarga de descargar la versión exacta de Python que necesites de forma invisible sin que tengas que instalar nada a mano.</p>
+        </div>
+
+        <!-- 3. PYPROJECT.TOML -->
+        <div class="card card-toml">
+            <h2>📋 3. El archivo pyproject.toml</h2>
+            <p><strong>¿Qué es?</strong> Es el centro de mando de tu proyecto. Un único archivo de texto donde se declara toda la información relevante de tu aplicación.</p>
+            <p><strong>¿Por qué es útil?</strong> En lugar de tener diez archivos de configuración sueltos (uno para tests, uno para estilo, uno para dependencias), todo se unifica aquí. Además, con <strong>uv</strong>, definimos comandos cortos como <code>uv run start</code> para no escribir rutas larguísimas en la consola.</p>
+        </div>
+
+        <!-- 4. ESTRUCTURA DE CARPETAS -->
+        <div class="card card-toml">
+            <h2>📁 4. Nuestra Estructura de Carpetas</h2>
+            <p>Tu proyecto se organiza bajo el estándar profesional de paquetes (<strong>src/ layout</strong>):</p>
+            <pre>mi-proyecto/
+├── .venv/            → La burbuja aislada de Python (gestionada por uv).
+├── .vscode/          → Tus botones visuales de Run/Debug en el editor.
+├── src/mi_proyecto/  → ¡Aquí va tu código! Todo ordenado dentro de un paquete.
+└── tests/            → Tus archivos de pruebas para asegurar que el código no se rompa.</pre>
+            <p><strong>¿Por qué?</strong> Porque aísla el código real de los archivos de configuración de desarrollo, facilitando que herramientas como VS Code o Claude no se confundan de archivos al leer el espacio de trabajo.</p>
+        </div>
+
+        <!-- 5. FLUJO DE TRABAJO -->
+        <div class="card">
+            <h2>🔄 5. Flujo de Trabajo Diario</h2>
+            <p>Cuando trabajas con Claude Code y esta estructura, tu rutina diaria sigue un orden impecable:</p>
+            <div class="flow-step">
+                <div class="step-num">1</div>
+                <div>
+                    <h3>Diseño previo</h3>
+                    <p>Le pides una tarea a Claude. Él diseñará la solución en el chat y validará la lógica contra casos de uso simulados antes de tocar ningún archivo.</p>
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="step-num">2</div>
+                <div>
+                    <h3>TDD (Pruebas Primero)</h3>
+                    <p>Claude creará un test que falla en la carpeta <code>tests/</code> y luego escribirá el código justo dentro de <code>src/</code> para que el test se vuelva verde.</p>
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="step-num">3</div>
+                <div>
+                    <h3>Limpieza y Calidad</h3>
+                    <p>Se ejecuta <strong>Ruff</strong> automáticamente en segundo plano para formatear el código, limpiar importaciones y dejar el estilo impecable en inglés.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. HERRAMIENTAS AUTOMÁTICAS -->
+        <div class="card card-git">
+            <h2>🛠️ 6. Git, GitHub y Automatizaciones</h2>
+            <p>Para quitarte trabajo de encima, el asistente cuenta con permisos de ejecución autónomos:</p>
+            <ul>
+                <li><strong>Git local:</strong> Funciona como una máquina del tiempo de tu código. Cada vez que Claude termine una tarea con éxito y los tests pasen, hará un <em>commit</em> por su cuenta para guardar el progreso de forma segura y te avisará en el chat.</li>
+                <li><strong>GitHub remoto:</strong> Si conectas tu proyecto, Claude subirá tu código a la nube (<em>push</em>) inmediatamente tras el commit para que nunca pierdas nada.</li>
+                <li><strong>Diario Secreto (.dev-journal.md):</strong> Claude mantendrá al día un cuaderno de bitácora oculto anotando qué ha hecho y qué falta por hacer, permitiéndole recordar el contexto entre sesiones sin desperdiciar tu memoria de tokens.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
