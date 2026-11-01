@@ -10,16 +10,26 @@ Talk to the user in the language they write in. Do the steps in order and do not
 ## 1. Checks
 
 - The current folder must be empty (a `.git` folder is fine). If it contains anything else, stop and tell the user to open a completely empty folder.
-- Run `uv --version`. If `uv` is missing, tell the user to install it (https://docs.astral.sh/uv/getting-started/installation/) and stop.
+- Run `uv --version`. If it fails, also try `"$HOME/.local/bin/uv" --version`: uv may be installed but missing from the PATH of this session. If found there, add `$HOME/.local/bin` to the PATH of every command in this procedure (for example `PATH="$HOME/.local/bin:$PATH" uv init --package`). If uv is not found anywhere, remember it: you will offer to install it in step 2.
 
 ## 2. Ask the user (before changing anything)
 
-Ask both questions together, with the question tool if you have one, otherwise in plain text. Do not suggest an answer, do not mark any option as recommended, and do not assume anything.
+Ask the questions together, with the question tool if you have one, otherwise in plain text. Do not suggest an answer, do not mark any option as recommended, and do not assume anything.
 
 1. **GitHub**: no GitHub / private repository / public repository.
 2. **Automatic push**: after each commit Claude makes, should it run `git push` by itself without asking? Yes / No.
+3. **Only if uv is missing**: "uv is not installed. Do you want me to install it with its official installer?" Yes / No.
 
 The user must answer the push question explicitly. If the answer is missing, unclear or ambiguous, ask again and do not continue until it is clear. If the user chose "no GitHub", the push setting is still recorded (as the user answered), but nothing is pushed.
+
+If the user does not want uv installed, tell them where to install it themselves (https://docs.astral.sh/uv/getting-started/installation/) and stop.
+
+If the user said yes, install it before step 3:
+
+1. Run `curl -LsSf https://astral.sh/uv/install.sh | sh` (the official installer; Claude Code will also ask for confirmation).
+2. Find where it was installed (the installer prints it; normally `$HOME/.local/bin`). Check with `"$HOME/.local/bin/uv" --version`.
+3. The PATH of this session does not include that folder yet, so add it to the PATH of every command in the rest of this procedure, and tell the user in the final report to close and reopen the terminal (or VS Code) once.
+4. If the installation fails, show the error, give the manual link above and stop.
 
 ## 3. Build the project
 
@@ -50,4 +60,4 @@ Run `uv run pytest`, `uv run ruff check` and `uv run start`. All three must succ
 
 ## 6. Final report
 
-Tell the user, briefly and in their language: what was created, how to run it (`uv run start`, or F5 in VS Code), that Claude now follows the rules in `CLAUDE.md` by itself, and what they chose for automatic push (and that it can be changed in `CLAUDE.md` and `.claude/settings.json`).
+Tell the user, briefly and in their language: what was created, how to run it (`uv run start`, or F5 in VS Code), that Claude now follows the rules in `CLAUDE.md` by itself, and what they chose for automatic push (and that it can be changed in `CLAUDE.md` and `.claude/settings.json`). If you installed uv in this run, remind them to close and reopen the terminal (or VS Code) once so that `uv` is found everywhere.

@@ -7,7 +7,7 @@
 | Programa | Para qué | Cómo conseguirlo |
 |---|---|---|
 | **Claude Code**, en su última versión | Ejecuta el comando de inicio | Extensión de VS Code o terminal ([documentación](https://code.claude.com/docs/en/overview)) |
-| **uv** | Gestiona Python, el entorno y las dependencias | <https://docs.astral.sh/uv/getting-started/installation/> |
+| **uv** | Gestiona Python, el entorno y las dependencias | No hace falta instalarlo antes: si falta, `/python-pro:init` te pregunta y lo instala con su instalador oficial. También puedes hacerlo tú: <https://docs.astral.sh/uv/getting-started/installation/> |
 | **Git** | Guarda el historial del proyecto | <https://git-scm.com/downloads> |
 | **GitHub CLI (`gh`)** | Solo si quieres subir el proyecto a GitHub | <https://cli.github.com/> (después: `gh auth login`) |
 | **VS Code** con las extensiones *Python* y *Ruff* | Botones de Run/Debug y formato al guardar | VS Code las recomienda al abrir el proyecto |

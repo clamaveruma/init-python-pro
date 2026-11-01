@@ -8,10 +8,11 @@
 2. Abre el panel de **Claude Code**.
 3. Escribe el comando (`/python-pro:init`, o `/python-init` si instalaste sin complemento) y pulsa Enter.
 
-Claude te hará **dos preguntas** antes de tocar nada:
+Claude te hará **dos preguntas** antes de tocar nada (tres si no tienes `uv`):
 
 - **GitHub:** sin GitHub, repositorio privado o repositorio público.
 - **Subida automática (`git push`):** si Claude puede subir los cambios él solo después de cada commit. Tienes que responder sí o no de forma explícita; no hay respuesta por defecto.
+- **Instalar `uv`** (solo si no lo tienes): si quieres que lo instale con su instalador oficial. Si es así, cierra y abre la terminal (o VS Code) una vez al terminar.
 
 Después crea el proyecto, comprueba que las pruebas y el formato pasan, hace el primer commit y, si lo pediste, lo sube a GitHub.
 

@@ -3,6 +3,9 @@
 # Exit code 2 sends the problems Ruff could not fix back to Claude.
 set -u
 
+# uv installs here by default; the editor may not have it in its PATH yet
+export PATH="$HOME/.local/bin:$PATH"
+
 input="$(cat)"
 file="$(printf '%s' "$input" | python3 -c 'import json, sys; print(json.load(sys.stdin).get("tool_input", {}).get("file_path", ""))' 2>/dev/null || true)"
 
