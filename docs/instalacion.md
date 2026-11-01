@@ -6,7 +6,7 @@
 
 | Programa | Para qué | Cómo conseguirlo |
 |---|---|---|
-| **Claude Code** | Ejecuta el comando de inicio | Extensión de VS Code o terminal ([documentación](https://code.claude.com/docs/en/overview)) |
+| **Claude Code**, en su última versión | Ejecuta el comando de inicio | Extensión de VS Code o terminal ([documentación](https://code.claude.com/docs/en/overview)) |
 | **uv** | Gestiona Python, el entorno y las dependencias | <https://docs.astral.sh/uv/getting-started/installation/> |
 | **Git** | Guarda el historial del proyecto | <https://git-scm.com/downloads> |
 | **GitHub CLI (`gh`)** | Solo si quieres subir el proyecto a GitHub | <https://cli.github.com/> (después: `gh auth login`) |
@@ -20,13 +20,6 @@ En una sesión de Claude Code, escribe:
 
 ```
 /plugin install python-pro --marketplace clamaveruma/init-python-pro
-```
-
-Ese comando necesita la versión 2.1.275 de Claude Code o posterior. Con una versión anterior, hazlo en dos pasos:
-
-```
-/plugin marketplace add clamaveruma/init-python-pro
-/plugin install python-pro@init-python-pro
 ```
 
 Si el panel `/plugin` no está disponible en tu entorno, usa estos comandos en una terminal:

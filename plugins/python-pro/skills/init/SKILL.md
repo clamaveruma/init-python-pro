@@ -37,7 +37,7 @@ The script copies the templates from `${CLAUDE_SKILL_DIR}/plantillas/` into the 
 - `CLAUDE.md` (rules Claude follows every session) and `DEVELOPMENT.md` (useful commands).
 - `.claude/skills/py-tarea` and `.claude/skills/py-refactor`: the procedures for code changes and refactoring.
 - `.claude/hooks/ruff.sh` and `.claude/settings.json`: Ruff runs after every Python edit, and the allowed commands are listed there. `git push` is allowed only if the user chose automatic push.
-- `.dev-journal.md` (kept out of Git).
+- `.claude/dev-journal.md` (kept out of Git).
 
 ## 4. Verify
 

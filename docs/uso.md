@@ -22,11 +22,11 @@ mi-proyecto/
 ├── src/mi_proyecto/   código del proyecto
 ├── tests/             pruebas
 ├── .vscode/           botones de Run/Debug y formato al guardar
-├── .claude/           procedimientos de trabajo, formato automático y permisos
+├── .claude/           procedimientos de trabajo, formato automático, permisos
+│                      y diario de trabajo (dev-journal.md, no se sube a Git)
 ├── CLAUDE.md          reglas que Claude lee en cada sesión
 ├── DEVELOPMENT.md     comandos útiles
-├── pyproject.toml     configuración del proyecto
-└── .dev-journal.md    diario de trabajo (no se sube a Git)
+└── pyproject.toml     configuración del proyecto
 ```
 
 Para ejecutarlo: `uv run start` en la terminal, o **F5** en VS Code.

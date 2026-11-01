@@ -13,6 +13,6 @@ Behavior must not change. If you find a bug along the way, report it and leave i
    - **Interactive**: you propose each step, wait for approval, then apply it.
 4. **Work in small steps**, one kind of change per step. After each step run `uv run pytest` and `uv run ruff check`. If either fails, fix or undo that step before going on.
 5. **Commit each step** with a Conventional Commit (`refactor(scope): ...`), then follow the push rule in `CLAUDE.md`.
-6. **Journal and report.** Add a short entry to `.dev-journal.md` and tell the user in their language what changed and that the tests still pass.
+6. **Journal and report.** Add a short entry to `.claude/dev-journal.md` and tell the user in their language what changed and that the tests still pass.
 
 Do not add dependencies without asking (see `CLAUDE.md`).

@@ -16,5 +16,5 @@ Source code in `src/`, tests in `tests/`. Useful commands are in `DEVELOPMENT.md
 
 ## Journal
 
-- Keep a short log in `.dev-journal.md` (not tracked by Git): date, what was done, decisions, next steps. Write to it after every major piece of work.
+- Keep a short log in `.claude/dev-journal.md` (not tracked by Git): date, what was done, decisions, next steps. Write to it after every major piece of work.
 - Do not read the journal on every turn. Read it only if you lose context.

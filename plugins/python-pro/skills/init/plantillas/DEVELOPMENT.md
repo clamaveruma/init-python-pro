@@ -24,5 +24,5 @@
 
 ## Notes
 
-- `.dev-journal.md` is a personal log and is not tracked by Git.
+- `.claude/dev-journal.md` is a personal log and is not tracked by Git.
 - The rules Claude follows are in `CLAUDE.md`; the procedures are in `.claude/skills/`.

@@ -76,11 +76,11 @@ testpaths = ["tests"]
 EOF
 
 # Journal (kept out of Git)
-[ -f .dev-journal.md ] || printf '# Project Development Journal\n' > .dev-journal.md
+[ -f .claude/dev-journal.md ] || printf '# Project Development Journal\n' > .claude/dev-journal.md
 cat >> .gitignore <<'EOF'
 
 # Personal notes and local Claude settings
-.dev-journal.md
+.claude/dev-journal.md
 .claude/settings.local.json
 EOF
 
