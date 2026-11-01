@@ -100,6 +100,10 @@ a:hover { text-decoration-thickness: 2px; }
   white-space: nowrap;
   font-size: 0.98rem;
 }
+.marca { display: inline-flex; align-items: center; gap: 8px; }
+.serpiente { width: 26px; height: 26px; flex: none; }
+.serpiente.grande { width: 72px; height: 72px; }
+.hero-serpiente { margin-bottom: 10px; }
 .marca span { color: var(--acento); }
 .camino {
   display: flex;
