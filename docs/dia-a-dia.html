@@ -170,7 +170,7 @@ tests/test_main.py .                                        [100%]
     <p>Los marcados con <code>[*]</code> se arreglan solos con <code>uv run ruff check --fix</code>.</p>
 
     <h2>4. Cómo trabaja Claude en tu proyecto</h2>
-    <p>Cuando abres el proyecto y le pides algo a Claude, él lee un archivo llamado <code>CLAUDE.md</code>: las <strong>reglas de la casa</strong>. Además hay dos <strong>procedimientos</strong> que aplica según lo que le pidas, un <strong>gancho</strong> y una lista de <strong>permisos</strong>.</p>
+    <p>Cuando abres el proyecto y le pides algo a Claude, él lee un archivo llamado <code>CLAUDE.md</code>: las <strong>reglas de la casa</strong>, incluida una <strong>guía de estilo</strong> (Zen de Python, nombres y comentarios en inglés, Python sencillo, funciones cortas). Además hay dos <strong>procedimientos</strong> que aplica según lo que le pidas, un <strong>gancho</strong> y una lista de <strong>permisos</strong>.</p>
 
     <figure class="ilustracion">
       <svg viewBox="0 0 940 340" role="img" aria-labelledby="d3-t d3-d">
@@ -214,9 +214,9 @@ tests/test_main.py .                                        [100%]
     <table>
       <thead><tr><th>Cuando pides…</th><th>Claude sigue…</th><th>Y hace…</th></tr></thead>
       <tbody>
-        <tr><td>Código nuevo o un arreglo</td><td><code>py-tarea</code></td><td>Diseña en el chat → escribe una prueba que falla → escribe el código → comprueba pruebas y Ruff → commit → apunta en el diario → te cuenta qué hizo.</td></tr>
+        <tr><td>Código nuevo o un arreglo</td><td><code>py-tarea</code></td><td>Diseña y lo documenta en <code>docs/design.md</code> (validándolo contra casos de uso) → escribe una prueba que falla → escribe el código → comprueba pruebas y Ruff → commit → apunta en el diario → te cuenta qué hizo.</td></tr>
         <tr><td>Refactorizar o limpiar</td><td><code>py-refactor</code></td><td>Explica qué mejoraría → comprueba que hay pruebas (si no, las escribe primero) → te deja elegir entre <strong>modo automático</strong> o <strong>interactivo</strong> → trabaja en pasos pequeños con un commit por cada uno.</td></tr>
-        <tr><td>Instalar una librería</td><td><code>CLAUDE.md</code></td><td>Te pregunta antes de ejecutar <code>uv add</code>.</td></tr>
+        <tr><td>Instalar una librería</td><td><code>CLAUDE.md</code></td><td>Investiga si la librería de verdad ayuda y, si cree que sí, te pide permiso explicando por qué antes de ejecutar <code>uv add</code>.</td></tr>
         <tr><td>Subir a GitHub</td><td><code>CLAUDE.md</code></td><td>Solo hace <code>git push</code> si se lo pides o si lo autorizaste al crear el proyecto.</td></tr>
       </tbody>
     </table>

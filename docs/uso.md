@@ -22,6 +22,7 @@ Después crea el proyecto, comprueba que las pruebas y el formato pasan, hace el
 mi-proyecto/
 ├── src/mi_proyecto/   código del proyecto
 ├── tests/             pruebas
+├── docs/design.md     diseño documentado (lo crea Claude al diseñar)
 ├── .vscode/           botones de Run/Debug y formato al guardar
 ├── .claude/           procedimientos de trabajo, formato automático, permisos
 │                      y diario de trabajo (dev-journal.md, no se sube a Git)
@@ -35,10 +36,14 @@ Para ejecutarlo: `uv run start` en la terminal, o **F5** en VS Code.
 
 No tienes que recordar ningún comando. Pide las cosas con normalidad y Claude sigue las reglas del proyecto:
 
-- **Si pides código nuevo o un arreglo** («añade una función que calcule el IVA»), sigue el procedimiento `py-tarea`: diseña primero en el chat, escribe una prueba que falle, escribe el código, comprueba pruebas y estilo, y hace el commit.
-- **Si pides refactorizar** («refactoriza el módulo de pagos»), sigue `py-refactor`: te explica qué mejoraría, comprueba que hay pruebas y te deja elegir entre **modo automático** (lo hace todo y te cuenta al final) o **modo interactivo** (te propone cada paso y espera tu visto bueno).
+- **Si pides código nuevo o un arreglo** («añade una función que calcule el IVA»), sigue el procedimiento `py-tarea`: primero una fase de **diseño documentada** en `docs/design.md` (especificación, decisiones y casos de uso, validando el diseño contra cada caso hasta que todos pasen), después una prueba que falle, el código, la comprobación de pruebas y estilo, y el commit.
+- **Si pides refactorizar** («refactoriza el módulo de pagos»), sigue `py-refactor`: te explica qué mejoraría según la guía de estilo, comprueba que hay pruebas y te deja elegir entre **modo automático** (lo hace todo y te cuenta al final) o **modo interactivo** (te propone cada paso y espera tu visto bueno).
 - **Cada vez que Claude edita un archivo Python**, Ruff lo formatea y lo revisa solo. Si queda algo que Ruff no puede arreglar, se lo devuelve a Claude para que lo corrija.
-- **Antes de instalar una dependencia nueva**, Claude te pregunta.
+- **Antes de instalar una librería externa**, Claude investiga si de verdad resuelve parte del problema y, si cree que sí, te pide permiso explicando por qué.
+
+### La guía de estilo
+
+Está en `CLAUDE.md`, en la sección *Code style*, y Claude la aplica a todo el código que escribe: Zen de Python, todo en inglés (nombres, comentarios, commits), Python básico o intermedio (si hace falta algo avanzado, te lo consulta), funciones que se lean en una pantalla, patrones de diseño solo si mejoran el código de verdad, pruebas primero y una arquitectura fácil de entender. **El código que escribas tú es tuyo**: no lo toca para cambiarle el estilo salvo que le pidas refactorizar.
 
 ### Ejemplo
 

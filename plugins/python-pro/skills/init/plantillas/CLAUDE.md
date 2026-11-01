@@ -13,14 +13,28 @@ Source code in `src/`, tests in `tests/`.
 
 ## Always
 
-- Write all code, comments, docstrings and commit messages in English. Talk to the user in the language they write in.
-- Keep Python basic or intermediate and functions short.
 - When asked to write, add, change or fix code, follow the `py-tarea` skill.
 - When asked to refactor, follow the `py-refactor` skill. Before touching any code, offer two modes: Fully Automated or Interactive.
 - A task is not done until `uv run pytest` and `uv run ruff check` both pass. Ruff formatting also runs by itself after every Python edit.
-- Ask permission before installing a new dependency with `uv add`.
 - Use Conventional Commits (for example `feat(auth): add JWT validation`). When a unit of work is finished and verified, commit without asking and tell the user in one line.
 {{PUSH_RULE}}
+
+## Code style
+
+These rules apply to all code you write. Code the user writes is theirs: do not restyle it unless the user asks you to refactor, and then follow these rules.
+
+- Follow the Zen of Python as far as possible.
+- Write everything in English: variable and function names, comments, docstrings, commit messages. Talk to the user in the language they write in.
+- Use basic or intermediate Python. If something advanced seems necessary, ask the user first.
+- Keep functions short enough to read on one screen.
+- Use well-known design patterns only when they really improve the code.
+- Use test-driven development. The goal is robust code.
+- Aim for an architecture that is easy to understand.
+
+## Design first
+
+- Before coding a new feature, do a documented design phase (see the `py-tarea` skill). The design must be clear and validated against scenarios before any code is written.
+- Before adding an external package, find out whether it really solves part of the problem. If it may help, ask the user for permission before `uv add` and explain why it seems necessary. Prefer the standard library.
 
 ## Journal
 

@@ -45,6 +45,8 @@ for mode in manual auto; do
   python3 -m json.tool .claude/settings.json > /dev/null || fail "invalid .claude/settings.json"
   python3 -m json.tool .vscode/launch.json > /dev/null || fail "invalid launch.json"
 
+  grep -q "## Code style" CLAUDE.md && grep -q "docs/design.md" .claude/skills/py-tarea/SKILL.md || fail "style guide or design phase missing"
+
   if [ "$mode" = auto ]; then
     grep -q 'git push' .claude/settings.json || fail "auto mode must allow git push"
     grep -q 'run `git push` without asking' CLAUDE.md || fail "auto rule missing"
