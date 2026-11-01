@@ -17,10 +17,10 @@ Talk to the user in the language they write in. Do the steps in order and do not
 Ask the questions together, with the question tool if you have one, otherwise in plain text. Do not suggest an answer, do not mark any option as recommended, and do not assume anything.
 
 1. **GitHub**: no GitHub / private repository / public repository.
-2. **Automatic push**: after each commit Claude makes, should it run `git push` by itself without asking? Yes / No.
+2. **Automatic push, only if the user chose a GitHub repository**: after each commit Claude makes, should it run `git push` by itself without asking? Yes / No. (Without GitHub there is nowhere to push, so do not ask.)
 3. **Only if uv is missing**: "uv is not installed. Do you want me to install it with its official installer?" Yes / No.
 
-The user must answer the push question explicitly. If the answer is missing, unclear or ambiguous, ask again and do not continue until it is clear. If the user chose "no GitHub", the push setting is still recorded (as the user answered), but nothing is pushed.
+When the push question is asked, the user must answer it explicitly. If the answer is missing, unclear or ambiguous, ask again and do not continue until it is clear. If the user chose "no GitHub", use the safe setting (`manual`: Claude never pushes unless asked) without asking.
 
 If the user does not want uv installed, tell them where to install it themselves (https://docs.astral.sh/uv/getting-started/installation/) and stop.
 
@@ -37,7 +37,7 @@ Run these in the current folder, in this order:
 
 1. `uv init --package` (creates `pyproject.toml`, `src/<package>/`, the Git repository and `.gitignore`).
 2. `uv add --dev pytest ruff`
-3. `bash "${CLAUDE_SKILL_DIR}/scripts/montar.sh" <auto|manual>`, where `auto` means the user said yes to automatic push and `manual` means no.
+3. `bash "${CLAUDE_SKILL_DIR}/scripts/montar.sh" <auto|manual>`, where `auto` means the user said yes to automatic push, and `manual` means they said no or chose no GitHub.
 
 The script copies the templates from `${CLAUDE_SKILL_DIR}/plantillas/` into the project and fills them in. It adds:
 

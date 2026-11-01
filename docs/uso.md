@@ -6,12 +6,12 @@
 
 1. Crea una **carpeta vacía** con el nombre de tu proyecto y ábrela en VS Code (*Archivo → Abrir carpeta…*).
 2. Abre el panel de **Claude Code**.
-3. Escribe el comando (`/python-pro:init`, o `/python-init` si instalaste sin complemento) y pulsa Enter.
+3. Escribe `/python-pro:init` y pulsa Enter.
 
-Claude te hará **dos preguntas** antes de tocar nada (tres si no tienes `uv`):
+Claude te hará unas pocas preguntas antes de tocar nada:
 
 - **GitHub:** sin GitHub, repositorio privado o repositorio público.
-- **Subida automática (`git push`):** si Claude puede subir los cambios él solo después de cada commit. Tienes que responder sí o no de forma explícita; no hay respuesta por defecto.
+- **Subida automática (`git push`)** (solo si eliges GitHub): si Claude puede subir los cambios él solo después de cada commit. Tienes que responder sí o no de forma explícita; no hay respuesta por defecto.
 - **Instalar `uv`** (solo si no lo tienes): si quieres que lo instale con su instalador oficial. Si es así, cierra y abre la terminal (o VS Code) una vez al terminar.
 
 Después crea el proyecto, comprueba que las pruebas y el formato pasan, hace el primer commit y, si lo pediste, lo sube a GitHub.
@@ -48,7 +48,7 @@ No tienes que recordar ningún comando. Pide las cosas con normalidad y Claude s
 
 ## La decisión sobre `git push`
 
-- Si dijiste **no**, Claude nunca sube nada por su cuenta: cuando quieras subir, díselo o hazlo tú con `git push`.
+- Si dijiste **no**, o no usas GitHub, Claude nunca sube nada por su cuenta: cuando quieras subir, díselo o hazlo tú con `git push`.
 - Si dijiste **sí**, sube tras cada commit y te avisa en el chat.
 
 Puedes cambiarlo cuando quieras editando dos sitios del proyecto: la regla del `git push` en `CLAUDE.md` y la línea `"Bash(git push *)"` de `.claude/settings.json` (quítala si no quieres subida automática).

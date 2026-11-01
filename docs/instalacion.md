@@ -14,7 +14,7 @@
 
 Funciona en Linux, macOS y Windows con WSL. En Windows sin WSL no está probado.
 
-## Opción A: complemento de Claude Code (recomendada)
+## Instalar el complemento
 
 En una sesión de Claude Code, escribe:
 
@@ -33,20 +33,10 @@ Al instalar, Claude Code te pide el alcance: *usuario* (todos tus proyectos) es 
 
 El comando que tendrás es **`/python-pro:init`**.
 
-## Opción B: sin complemento
-
-```bash
-git clone https://github.com/clamaveruma/init-python-pro.git
-cd init-python-pro
-./install.sh
-```
-
-El script copia la habilidad a `~/.claude/skills/python-init`. El comando que tendrás es **`/python-init`**.
-
 ## Actualizar y desinstalar
 
-- **Complemento:** `/plugin marketplace update init-python-pro` para actualizar, y `/plugin uninstall python-pro@init-python-pro` para quitarlo.
-- **Sin complemento:** vuelve a ejecutar `./install.sh` para actualizar, o borra la carpeta `~/.claude/skills/python-init`.
+- **Actualizar:** `/plugin marketplace update init-python-pro`.
+- **Desinstalar:** `/plugin uninstall python-pro@init-python-pro`.
 
 Los proyectos que ya creaste no cambian: sus reglas viven en el propio proyecto.
 

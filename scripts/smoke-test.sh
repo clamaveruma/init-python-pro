@@ -16,7 +16,7 @@ while IFS= read -r f; do
 done < <(find "$repo/.claude-plugin" "$repo/plugins" -name '*.json' ! -path '*/plantillas/*')
 
 echo "== Shell scripts have valid syntax"
-for f in "$skill/scripts/montar.sh" "$skill/plantillas/claude/hooks/ruff.sh" "$repo/install.sh" "$repo/scripts/smoke-test.sh"; do
+for f in "$skill/scripts/montar.sh" "$skill/plantillas/claude/hooks/ruff.sh" "$repo/scripts/smoke-test.sh"; do
   bash -n "$f" || fail "syntax error: $f"
 done
 
@@ -83,12 +83,5 @@ for mode in manual auto; do
   cd "$repo"
 done
 
-echo "== install.sh copies the skill"
-home="$work/home"
-mkdir "$home"
-HOME="$home" CLAUDE_CONFIG_DIR="$home/.claude" bash "$repo/install.sh" > /dev/null
-[ -f "$home/.claude/skills/python-init/SKILL.md" ] || fail "install.sh did not install the skill"
-[ -f "$home/.claude/skills/python-init/scripts/montar.sh" ] || fail "install.sh did not copy scripts"
-[ -f "$home/.claude/skills/python-init/plantillas/CLAUDE.md" ] || fail "install.sh did not copy templates"
 
 echo "All checks passed."
