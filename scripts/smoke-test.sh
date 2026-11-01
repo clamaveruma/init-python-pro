@@ -61,14 +61,16 @@ for mode in manual auto; do
   uv run python -m "$pkg" | grep -q Hello || fail "python -m $pkg failed"
 
   echo "   hook: formats a file and reports what Ruff cannot fix"
-  printf 'import os\nx   =  1\n' > "src/$pkg/messy.py"
+  printf 'import sys\nimport os\n\nx   =  1\n' > "src/$pkg/messy.py"
   json="{\"tool_input\": {\"file_path\": \"$proj/src/$pkg/messy.py\"}}"
   set +e
   printf '%s' "$json" | CLAUDE_PROJECT_DIR="$proj" .claude/hooks/ruff.sh > /dev/null 2> "$work/hook.err"
   code=$?
   set -e
-  [ "$code" -eq 0 ] || fail "hook should fix the unused import and succeed, got exit $code: $(cat "$work/hook.err")"
+  [ "$code" -eq 0 ] || fail "hook should sort imports, keep unused ones and succeed, got exit $code: $(cat "$work/hook.err")"
   grep -q 'x = 1' "src/$pkg/messy.py" || fail "hook did not format the file"
+  [ "$(head -n 1 "src/$pkg/messy.py")" = "import os" ] || fail "hook did not sort the imports"
+  grep -q '^import sys' "src/$pkg/messy.py" || fail "hook must not remove an unused import"
   printf 'def f():\n    return undefined_name\n' > "src/$pkg/broken.py"
   json="{\"tool_input\": {\"file_path\": \"$proj/src/$pkg/broken.py\"}}"
   set +e
@@ -78,6 +80,9 @@ for mode in manual auto; do
   [ "$code" -eq 2 ] || fail "hook should exit 2 when Ruff finds a problem, got $code"
   [ -s "$work/hook.err" ] || fail "hook should print the problem on stderr"
   rm "src/$pkg/messy.py" "src/$pkg/broken.py"
+
+  grep -qxF '__pycache__/' .gitignore && grep -qxF '.venv' .gitignore || fail ".gitignore misses the basics"
+  if bash "$skill/scripts/montar.sh" "$mode" > /dev/null 2>&1; then fail "a second run of montar.sh must be refused"; fi
 
   git add -A
   git commit -q -m "chore: initial project scaffold"

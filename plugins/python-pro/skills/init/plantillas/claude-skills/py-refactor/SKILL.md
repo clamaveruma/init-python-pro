@@ -12,7 +12,7 @@ Behavior must not change. The goal is to bring the code in line with the code st
    - **Fully Automated**: you do all the steps without asking and report at the end.
    - **Interactive**: before changing the code you propose each suggestion, wait for approval, then apply it.
 4. **Work in small steps**, one kind of change per step. After each step run `uv run pytest` and `uv run ruff check`. If either fails, fix or undo that step before going on.
-5. **Commit each step** with a Conventional Commit (`refactor(scope): ...`), then follow the push rule in `CLAUDE.md`.
+5. **Commit each step**, staging only the files you changed, with a Conventional Commit (`refactor(scope): ...`), then follow the push rule in `CLAUDE.md`.
 6. **Journal and report.** Add a short entry to `.claude/dev-journal.md` and tell the user in their language what changed and that the tests still pass.
 
 Do not add dependencies without asking (see `CLAUDE.md`).

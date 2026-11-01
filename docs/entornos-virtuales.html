@@ -16,14 +16,14 @@
     <div class="barra-interior">
       <a class="marca" href="index.html"><img class="serpiente" src="img/python-logo.svg" alt="" width="26" height="26">De script <span>→</span> proyecto</a>
       <nav class="camino" aria-label="Pasos de la guía">
-        <a href="entornos-virtuales.html" aria-current="page" title="1. Entornos virtuales">1</a>
-        <a href="preparar-vscode.html" title="2. Preparar VS Code">2</a>
-        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno">3</a>
-        <a href="librerias-uv.html" title="4. Librerías y versiones">4</a>
-        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro">5</a>
-        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa">6</a>
-        <a href="git-github.html" title="7. Git y GitHub">7</a>
-        <a href="dia-a-dia.html" title="8. El día a día">8</a>
+        <a href="entornos-virtuales.html" aria-current="page" title="1. Entornos virtuales" aria-label="Paso 1: Entornos virtuales">1</a>
+        <a href="preparar-vscode.html" title="2. Preparar VS Code" aria-label="Paso 2: Preparar VS Code">2</a>
+        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno" aria-label="Paso 3: Carpeta, proyecto, intérprete y entorno">3</a>
+        <a href="librerias-uv.html" title="4. Librerías y versiones" aria-label="Paso 4: Librerías y versiones">4</a>
+        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro" aria-label="Paso 5: pyproject.toml por dentro">5</a>
+        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa" aria-label="Paso 6: Cómo arrancar tu programa">6</a>
+        <a href="git-github.html" title="7. Git y GitHub" aria-label="Paso 7: Git y GitHub">7</a>
+        <a href="dia-a-dia.html" title="8. El día a día" aria-label="Paso 8: El día a día">8</a>
       </nav>
     </div>
   </header>
@@ -145,6 +145,11 @@ include-system-site-packages = false
 version = 3.13.18
 executable = /usr/local/bin/python3.13
 command = /usr/local/bin/python3 -m venv /home/ana/mi-proyecto/.venv</pre>
+    </div>
+
+    <div class="recuadro ojo">
+      <span class="etiqueta">⚠️ Ojo: en Linux Mint, Ubuntu y Debian</span>
+      Si <code>python3 -m venv .venv</code> falla con un mensaje como <em>«ensurepip is not available»</em>, falta un paquete del sistema. Instálalo con <code>sudo apt install python3-venv</code> y repite. Con <code>uv</code> (paso 4) no lo necesitas: <code>uv</code> crea los entornos por su cuenta.
     </div>
 
     <p>Eso es un entorno virtual. Una carpeta con tres cosas que importan:</p>
@@ -301,7 +306,7 @@ urllib3            2.8.0
 certifi  charset_normalizer  idna  pip  requests  urllib3  <span class="c">(y las carpetas .dist-info)</span></pre>
     </div>
 
-    <p>Fíjate en que pediste <code>requests</code> y llegaron <strong>seis</strong> paquetes: <code>requests</code> necesita otras librerías para funcionar y <code>pip</code> las trae todas. Esas «librerías de tus librerías» se llaman <em>dependencias</em>, y son una de las razones por las que conviene que alguien (<code>uv</code>) lleve la cuenta de ellas.</p>
+    <p>Fíjate en que pediste <code>requests</code> y llegaron <strong>cinco</strong> paquetes nuevos: <code>requests</code> necesita otras librerías para funcionar y <code>pip</code> las trae todas. Esas «librerías de tus librerías» se llaman <em>dependencias</em>, y son una de las razones por las que conviene que alguien (<code>uv</code>) lleve la cuenta de ellas.</p>
 
     <p>Y si algo sale mal, no pasa nada: se borra la carpeta y se crea otra vez.</p>
 <pre class="terminal"><span class="p">$</span> rm -rf .venv

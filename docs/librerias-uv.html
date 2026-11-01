@@ -16,14 +16,14 @@
     <div class="barra-interior">
       <a class="marca" href="index.html"><img class="serpiente" src="img/python-logo.svg" alt="" width="26" height="26">De script <span>→</span> proyecto</a>
       <nav class="camino" aria-label="Pasos de la guía">
-        <a href="entornos-virtuales.html" title="1. Entornos virtuales">1</a>
-        <a href="preparar-vscode.html" title="2. Preparar VS Code">2</a>
-        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno">3</a>
-        <a href="librerias-uv.html" aria-current="page" title="4. Librerías y versiones">4</a>
-        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro">5</a>
-        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa">6</a>
-        <a href="git-github.html" title="7. Git y GitHub">7</a>
-        <a href="dia-a-dia.html" title="8. El día a día">8</a>
+        <a href="entornos-virtuales.html" title="1. Entornos virtuales" aria-label="Paso 1: Entornos virtuales">1</a>
+        <a href="preparar-vscode.html" title="2. Preparar VS Code" aria-label="Paso 2: Preparar VS Code">2</a>
+        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno" aria-label="Paso 3: Carpeta, proyecto, intérprete y entorno">3</a>
+        <a href="librerias-uv.html" aria-current="page" title="4. Librerías y versiones" aria-label="Paso 4: Librerías y versiones">4</a>
+        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro" aria-label="Paso 5: pyproject.toml por dentro">5</a>
+        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa" aria-label="Paso 6: Cómo arrancar tu programa">6</a>
+        <a href="git-github.html" title="7. Git y GitHub" aria-label="Paso 7: Git y GitHub">7</a>
+        <a href="dia-a-dia.html" title="8. El día a día" aria-label="Paso 8: El día a día">8</a>
       </nav>
     </div>
   </header>
@@ -48,7 +48,7 @@
     <p>Imagina que haces un programa que usa <code>requests</code>. Lo instalas con <code>pip install requests</code> y funciona. Se lo pasas a un compañero, o lo abres en otro ordenador seis meses después.</p>
     <ul>
       <li>Tu compañero escribe <code>pip install requests</code> y recibe <strong>la versión de ese día</strong>, que puede ser otra.</li>
-      <li>Además, <code>requests</code> trae sus propias dependencias (viste seis paquetes en el paso 1), y cada una puede haber cambiado también.</li>
+      <li>Además, <code>requests</code> trae sus propias dependencias (viste en el paso 1 que llegaron cinco paquetes), y cada una puede haber cambiado también.</li>
       <li>Ni siquiera sabe que necesita <code>requests</code>, si no se lo has apuntado en algún sitio.</li>
     </ul>
     <p>Cualquier cambio de versión puede romper algo, y encontrar cuál es lo más tedioso. La solución es doble: <strong>anotar qué necesitas</strong> y <strong>anotar qué versiones exactas funcionaron</strong>.</p>
@@ -102,6 +102,7 @@ Installed 6 packages in 4ms
  + certifi==2026.10.23
  + charset-normalizer==3.5.2
  + idna==3.20
+ ~ mi-proyecto==0.1.0 <span class="c">(tu propio proyecto, reinstalado)</span>
  + <span class="h">requests==2.34.2</span>
  + urllib3==2.8.0</pre>
       Esa única orden hizo tres cosas: apuntó <code>requests</code> en <code>pyproject.toml</code>, anotó las versiones exactas en <code>uv.lock</code> e instaló todo en <code>.venv</code>.
@@ -190,7 +191,7 @@ Installed 12 packages in 8ms
     <p>Por eso no hace falta copiar <code>.venv</code> (ya viste en el paso 1 que no se puede): se vuelve a construir en segundos, porque <code>uv</code> guarda las librerías descargadas en una caché y las enlaza en lugar de descargarlas otra vez.</p>
 
     <h2>5. Los comandos que usarás de verdad</h2>
-    <table>
+    <div class="tabla"><table>
       <thead><tr><th>Quieres…</th><th>Escribes</th></tr></thead>
       <tbody>
         <tr><td>Añadir una librería</td><td><code>uv add requests</code></td></tr>
@@ -200,7 +201,7 @@ Installed 12 packages in 8ms
         <tr><td>Ver qué librerías hay y quién depende de quién</td><td><code>uv tree</code></td></tr>
         <tr><td>Ejecutar algo con el entorno del proyecto</td><td><code>uv run …</code> (paso 6)</td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <div class="recuadro dato">
       <span class="etiqueta">💡 ¿Y <code>requirements.txt</code> y <code>pip freeze</code>?</span>

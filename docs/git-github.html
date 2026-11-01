@@ -16,14 +16,14 @@
     <div class="barra-interior">
       <a class="marca" href="index.html"><img class="serpiente" src="img/python-logo.svg" alt="" width="26" height="26">De script <span>→</span> proyecto</a>
       <nav class="camino" aria-label="Pasos de la guía">
-        <a href="entornos-virtuales.html" title="1. Entornos virtuales">1</a>
-        <a href="preparar-vscode.html" title="2. Preparar VS Code">2</a>
-        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno">3</a>
-        <a href="librerias-uv.html" title="4. Librerías y versiones">4</a>
-        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro">5</a>
-        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa">6</a>
-        <a href="git-github.html" aria-current="page" title="7. Git y GitHub">7</a>
-        <a href="dia-a-dia.html" title="8. El día a día">8</a>
+        <a href="entornos-virtuales.html" title="1. Entornos virtuales" aria-label="Paso 1: Entornos virtuales">1</a>
+        <a href="preparar-vscode.html" title="2. Preparar VS Code" aria-label="Paso 2: Preparar VS Code">2</a>
+        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno" aria-label="Paso 3: Carpeta, proyecto, intérprete y entorno">3</a>
+        <a href="librerias-uv.html" title="4. Librerías y versiones" aria-label="Paso 4: Librerías y versiones">4</a>
+        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro" aria-label="Paso 5: pyproject.toml por dentro">5</a>
+        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa" aria-label="Paso 6: Cómo arrancar tu programa">6</a>
+        <a href="git-github.html" aria-current="page" title="7. Git y GitHub" aria-label="Paso 7: Git y GitHub">7</a>
+        <a href="dia-a-dia.html" title="8. El día a día" aria-label="Paso 8: El día a día">8</a>
       </nav>
     </div>
   </header>
@@ -65,13 +65,13 @@
         <text x="115" y="66" text-anchor="middle" class="sv-titulo">Tu carpeta</text>
         <text x="115" y="92" text-anchor="middle" class="sv-pequeno">Editas archivos.</text>
         <text x="115" y="112" text-anchor="middle" class="sv-pequeno">Es tu mesa de trabajo.</text>
-        <text x="115" y="170" text-anchor="middle" class="sv-mono">M  impuestos.py</text>
+        <text x="115" y="170" text-anchor="middle" class="sv-mono">M  taxes.py</text>
 
         <rect x="265" y="30" width="190" height="170" rx="16" class="sv-naranja"/>
         <text x="360" y="66" text-anchor="middle" class="sv-titulo">Preparación</text>
         <text x="360" y="92" text-anchor="middle" class="sv-pequeno">Eliges qué cambios</text>
         <text x="360" y="112" text-anchor="middle" class="sv-pequeno">entran en la próxima foto.</text>
-        <text x="360" y="170" text-anchor="middle" class="sv-mono">A  impuestos.py</text>
+        <text x="360" y="170" text-anchor="middle" class="sv-mono">A  taxes.py</text>
 
         <rect x="510" y="30" width="190" height="170" rx="16" class="sv-azul"/>
         <text x="605" y="66" text-anchor="middle" class="sv-titulo">Historial</text>
@@ -109,7 +109,8 @@ nothing to commit, working tree clean
 <span class="v">M</span>  README.md                  <span class="c"># preparado para la foto</span>
 <span class="p">$</span> git commit -m "docs: explain how to run"
 <span class="p">$</span> git log --oneline
-<span class="h">f416792</span> feat(impuestos): add VAT calculation
+<span class="h">a3c9e10</span> docs: explain how to run
+<span class="h">f416792</span> feat(taxes): add VAT calculation
 <span class="h">2fb119e</span> chore: initial project scaffold</pre>
     </div>
 
@@ -151,16 +152,16 @@ __pycache__/            <span class="c"># archivos temporales de Python</span>
 
     <h2>4. Los mensajes de commit</h2>
     <p>Cada foto lleva una frase. Una buena costumbre son los <strong>Conventional Commits</strong>: empezar con una etiqueta que diga de qué tipo es el cambio. Es lo que sigue Claude en estos proyectos.</p>
-    <table>
+    <div class="tabla"><table>
       <thead><tr><th>Etiqueta</th><th>Cuándo</th><th>Ejemplo</th></tr></thead>
       <tbody>
-        <tr><td><code>feat</code></td><td>Una función nueva</td><td><code>feat(impuestos): add VAT calculation</code></td></tr>
-        <tr><td><code>fix</code></td><td>Un arreglo</td><td><code>fix(impuestos): round to two decimals</code></td></tr>
-        <tr><td><code>refactor</code></td><td>Reordenar sin cambiar el resultado</td><td><code>refactor(pagos): split long function</code></td></tr>
-        <tr><td><code>test</code></td><td>Solo pruebas</td><td><code>test(pagos): cover negative prices</code></td></tr>
+        <tr><td><code>feat</code></td><td>Una función nueva</td><td><code>feat(taxes): add VAT calculation</code></td></tr>
+        <tr><td><code>fix</code></td><td>Un arreglo</td><td><code>fix(taxes): round to two decimals</code></td></tr>
+        <tr><td><code>refactor</code></td><td>Reordenar sin cambiar el resultado</td><td><code>refactor(payments): split long function</code></td></tr>
+        <tr><td><code>test</code></td><td>Solo pruebas</td><td><code>test(payments): cover negative prices</code></td></tr>
         <tr><td><code>docs</code> / <code>chore</code></td><td>Documentación / tareas de mantenimiento</td><td><code>chore: initial project scaffold</code></td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <h2>5. Git en VS Code</h2>
     <p>No tienes que memorizar los comandos. El tercer icono de la barra lateral (un nudo de ramas) es <strong>Control de código fuente</strong>:</p>

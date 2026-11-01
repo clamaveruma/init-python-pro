@@ -16,14 +16,14 @@
     <div class="barra-interior">
       <a class="marca" href="index.html"><img class="serpiente" src="img/python-logo.svg" alt="" width="26" height="26">De script <span>→</span> proyecto</a>
       <nav class="camino" aria-label="Pasos de la guía">
-        <a href="entornos-virtuales.html" title="1. Entornos virtuales">1</a>
-        <a href="preparar-vscode.html" title="2. Preparar VS Code">2</a>
-        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno">3</a>
-        <a href="librerias-uv.html" title="4. Librerías y versiones">4</a>
-        <a href="pyproject-toml.html" aria-current="page" title="5. pyproject.toml por dentro">5</a>
-        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa">6</a>
-        <a href="git-github.html" title="7. Git y GitHub">7</a>
-        <a href="dia-a-dia.html" title="8. El día a día">8</a>
+        <a href="entornos-virtuales.html" title="1. Entornos virtuales" aria-label="Paso 1: Entornos virtuales">1</a>
+        <a href="preparar-vscode.html" title="2. Preparar VS Code" aria-label="Paso 2: Preparar VS Code">2</a>
+        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno" aria-label="Paso 3: Carpeta, proyecto, intérprete y entorno">3</a>
+        <a href="librerias-uv.html" title="4. Librerías y versiones" aria-label="Paso 4: Librerías y versiones">4</a>
+        <a href="pyproject-toml.html" aria-current="page" title="5. pyproject.toml por dentro" aria-label="Paso 5: pyproject.toml por dentro">5</a>
+        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa" aria-label="Paso 6: Cómo arrancar tu programa">6</a>
+        <a href="git-github.html" title="7. Git y GitHub" aria-label="Paso 7: Git y GitHub">7</a>
+        <a href="dia-a-dia.html" title="8. El día a día" aria-label="Paso 8: El día a día">8</a>
       </nav>
     </div>
   </header>
@@ -109,7 +109,7 @@ lista = ["a", "b"]        <span class="c"># una lista entre corchetes</span></pr
     </figure>
 
     <h3>Sección por sección</h3>
-    <table>
+    <div class="tabla"><table>
       <thead><tr><th>Sección</th><th>Qué dice</th></tr></thead>
       <tbody>
         <tr><td><code>[project]</code></td><td><strong>La ficha.</strong> <code>name</code> es el nombre del paquete; <code>requires-python = "&gt;=3.13"</code> dice que hace falta Python 3.13 o superior (si alguien intenta usar uno más antiguo, <code>uv</code> avisa); <code>dependencies</code> son las librerías que tu programa necesita para funcionar. El <code>&gt;=2.34.2</code> significa «esa versión o una posterior».</td></tr>
@@ -119,7 +119,7 @@ lista = ["a", "b"]        <span class="c"># una lista entre corchetes</span></pr
         <tr><td><code>[tool.ruff]</code></td><td>Los ajustes de Ruff. <code>line-length = 88</code> es el ancho máximo de línea, y <code>select</code> es la lista de familias de revisiones que quieres (<code>E</code>/<code>F</code> errores típicos, <code>I</code> orden de importaciones, <code>UP</code> modernizar código, <code>B</code> fallos probables).</td></tr>
         <tr><td><code>[tool.pytest.ini_options]</code></td><td>Los ajustes de pytest. <code>testpaths = ["tests"]</code> dice que las pruebas están en la carpeta <code>tests</code>.</td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <div class="recuadro dato">
       <span class="etiqueta">💡 Fíjate en el patrón <code>[tool.algo]</code></span>
@@ -130,7 +130,7 @@ lista = ["a", "b"]        <span class="c"># una lista entre corchetes</span></pr
     <ul>
       <li><strong>Reproducir el proyecto en otro sistema.</strong> En otro ordenador, <code>uv sync</code> lee <code>requires-python</code>, <code>dependencies</code> y el grupo <code>dev</code>, y monta el mismo entorno (paso 4).</li>
       <li><strong>Que todos usen las mismas reglas.</strong> Ruff y pytest leen la configuración del propio proyecto, así que te dan el mismo resultado en cualquier equipo.</li>
-      <li><strong>Que el comando de arranque sea el mismo.</strong> <code>uv run start</code> funciona igual para ti, tu compañero y la prueba automática de GitHub.</li>
+      <li><strong>Que el comando de arranque sea el mismo.</strong> <code>uv run start</code> funciona igual para ti, para tu compañero y para cualquier sistema automático que ejecute el proyecto.</li>
       <li><strong>Saber de un vistazo qué necesita tu proyecto.</strong> Es la primera cosa que abre alguien que no conoce el código.</li>
     </ul>
 

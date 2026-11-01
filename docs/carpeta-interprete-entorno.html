@@ -16,14 +16,14 @@
     <div class="barra-interior">
       <a class="marca" href="index.html"><img class="serpiente" src="img/python-logo.svg" alt="" width="26" height="26">De script <span>→</span> proyecto</a>
       <nav class="camino" aria-label="Pasos de la guía">
-        <a href="entornos-virtuales.html" title="1. Entornos virtuales">1</a>
-        <a href="preparar-vscode.html" title="2. Preparar VS Code">2</a>
-        <a href="carpeta-interprete-entorno.html" aria-current="page" title="3. Carpeta, proyecto, intérprete y entorno">3</a>
-        <a href="librerias-uv.html" title="4. Librerías y versiones">4</a>
-        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro">5</a>
-        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa">6</a>
-        <a href="git-github.html" title="7. Git y GitHub">7</a>
-        <a href="dia-a-dia.html" title="8. El día a día">8</a>
+        <a href="entornos-virtuales.html" title="1. Entornos virtuales" aria-label="Paso 1: Entornos virtuales">1</a>
+        <a href="preparar-vscode.html" title="2. Preparar VS Code" aria-label="Paso 2: Preparar VS Code">2</a>
+        <a href="carpeta-interprete-entorno.html" aria-current="page" title="3. Carpeta, proyecto, intérprete y entorno" aria-label="Paso 3: Carpeta, proyecto, intérprete y entorno">3</a>
+        <a href="librerias-uv.html" title="4. Librerías y versiones" aria-label="Paso 4: Librerías y versiones">4</a>
+        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro" aria-label="Paso 5: pyproject.toml por dentro">5</a>
+        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa" aria-label="Paso 6: Cómo arrancar tu programa">6</a>
+        <a href="git-github.html" title="7. Git y GitHub" aria-label="Paso 7: Git y GitHub">7</a>
+        <a href="dia-a-dia.html" title="8. El día a día" aria-label="Paso 8: El día a día">8</a>
       </nav>
     </div>
   </header>
@@ -72,7 +72,7 @@
       <figcaption>Cuatro ideas, una dentro de otra. Con uv, las cuatro están siempre en la misma carpeta.</figcaption>
     </figure>
 
-    <table>
+    <div class="tabla"><table>
       <thead><tr><th>Idea</th><th>Qué es</th><th>Dónde lo ves</th></tr></thead>
       <tbody>
         <tr><td><strong>Carpeta de trabajo</strong></td><td>La carpeta que has abierto en VS Code.</td><td>Arriba del Explorador, con el nombre en mayúsculas.</td></tr>
@@ -80,7 +80,7 @@
         <tr><td><strong>Entorno virtual</strong></td><td>La carpeta <code>.venv</code> con Python y librerías propias.</td><td>En el Explorador, como <code>.venv</code>.</td></tr>
         <tr><td><strong>Intérprete</strong></td><td>El programa <code>python</code> concreto con el que se ejecuta tu código. Cada entorno tiene el suyo.</td><td>Barra de estado, abajo a la derecha.</td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <h2>2. Cómo sabe VS Code qué Python usar</h2>
     <p>Cuando abres una carpeta con Python, la extensión busca un intérprete por este orden:</p>

@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(uv run *)",
+      "Bash(uv run pytest *)",
+      "Bash(uv run ruff *)",
+      "Bash(uv run start *)",
       "Bash(uv sync *)",
       "Bash(git status *)",
       "Bash(git diff *)",

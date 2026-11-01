@@ -16,14 +16,14 @@
     <div class="barra-interior">
       <a class="marca" href="index.html"><img class="serpiente" src="img/python-logo.svg" alt="" width="26" height="26">De script <span>→</span> proyecto</a>
       <nav class="camino" aria-label="Pasos de la guía">
-        <a href="entornos-virtuales.html" title="1. Entornos virtuales">1</a>
-        <a href="preparar-vscode.html" aria-current="page" title="2. Preparar VS Code">2</a>
-        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno">3</a>
-        <a href="librerias-uv.html" title="4. Librerías y versiones">4</a>
-        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro">5</a>
-        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa">6</a>
-        <a href="git-github.html" title="7. Git y GitHub">7</a>
-        <a href="dia-a-dia.html" title="8. El día a día">8</a>
+        <a href="entornos-virtuales.html" title="1. Entornos virtuales" aria-label="Paso 1: Entornos virtuales">1</a>
+        <a href="preparar-vscode.html" aria-current="page" title="2. Preparar VS Code" aria-label="Paso 2: Preparar VS Code">2</a>
+        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno" aria-label="Paso 3: Carpeta, proyecto, intérprete y entorno">3</a>
+        <a href="librerias-uv.html" title="4. Librerías y versiones" aria-label="Paso 4: Librerías y versiones">4</a>
+        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro" aria-label="Paso 5: pyproject.toml por dentro">5</a>
+        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa" aria-label="Paso 6: Cómo arrancar tu programa">6</a>
+        <a href="git-github.html" title="7. Git y GitHub" aria-label="Paso 7: Git y GitHub">7</a>
+        <a href="dia-a-dia.html" title="8. El día a día" aria-label="Paso 8: El día a día">8</a>
       </nav>
     </div>
   </header>
@@ -45,21 +45,21 @@
     </div>
 
     <h2>1. Qué es una extensión</h2>
-    <p>VS Code, tal como se instala, es un editor de texto muy bueno. Todo lo demás (entender Python, formatear el código, hablar con Claude) lo añaden las <strong>extensiones</strong>, que son pequeños complementos. Se instalan desde el icono de los cuatro cuadraditos de la barra lateral, o con <kbd>Ctrl</kbd>+<kbd>Mayús</kbd>+<kbd>X</kbd>.</p>
+    <p>VS Code, tal como se instala, es un editor de texto muy bueno. Todo lo demás (entender Python, formatear el código, hablar con Claude) lo añaden las <strong>extensiones</strong>, que son pequeños añadidos. Se instalan desde el icono de los cuatro cuadraditos de la barra lateral, o con <kbd>Ctrl</kbd>+<kbd>Mayús</kbd>+<kbd>X</kbd>.</p>
 
     <h2>2. Las extensiones recomendadas</h2>
-    <table>
+    <div class="tabla"><table>
       <thead><tr><th>Extensión</th><th>Identificador</th><th>Qué te aporta</th></tr></thead>
       <tbody>
         <tr><td><strong>Python</strong> · Microsoft</td><td><code>ms-python.python</code></td><td>Entiende tu código (autocompletado, errores al escribir), ejecuta y depura, deja elegir el intérprete y construye la vista Testing. Suele instalar sola sus acompañantes, <em>Pylance</em> y <em>Python Debugger</em>.</td></tr>
         <tr><td><strong>Ruff</strong> · Astral</td><td><code>charliermarsh.ruff</code></td><td>Da formato al código al guardar y subraya los descuidos típicos: importaciones sin usar, variables sin usar, estilo.</td></tr>
         <tr><td><strong>Claude Code</strong> · Anthropic</td><td>—</td><td>Es el panel desde el que invocarás <code>/python-pro:init</code> y le pedirás cosas a Claude. Aquí damos por hecho que ya la tienes.</td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <div class="recuadro dato">
-      <span class="etiqueta">💡 Una extra, opcional</span>
-      Microsoft ofrece también <strong>Python Environments</strong> (<code>ms-python.vscode-python-envs</code>), que añade un panel para ver y crear entornos. Según su <a href="https://devblogs.microsoft.com/python/python-in-visual-studio-code-february-2026-release/">anuncio de febrero de 2026</a>, si <code>uv</code> está instalado la usa sola para crear entornos e instalar paquetes. No hace falta para seguir esta guía.
+      <span class="etiqueta">💡 Python Environments</span>
+      Microsoft ofrece también <strong>Python Environments</strong> (<code>ms-python.vscode-python-envs</code>), que añade un panel para ver y crear entornos. En versiones recientes puede instalarse junto con la extensión Python, así que quizá ya la tengas. Según su <a href="https://devblogs.microsoft.com/python/python-in-visual-studio-code-february-2026-release/">anuncio de febrero de 2026</a>, si <code>uv</code> está instalado la usa sola para crear entornos e instalar paquetes. No hace falta para seguir esta guía.
     </div>
 
     <p>Cuando abras un proyecto creado con <code>/python-pro:init</code>, VS Code verá el archivo <code>.vscode/extensions.json</code> y te propondrá instalar Python y Ruff con una ventanita en la esquina inferior derecha. Basta con aceptar.</p>
@@ -146,7 +146,7 @@
     "source.organizeImports.ruff": "explicit"
   }
 }</pre>
-    <p>En cristiano: <em>«para archivos Python, el formateador es Ruff; al guardar, formatea, arregla lo que se pueda arreglar solo y ordena las importaciones»</em>.</p>
+    <p>Dicho en palabras: <em>«para archivos Python, el formateador es Ruff; al guardar, formatea, arregla lo que se pueda arreglar solo y ordena las importaciones»</em>.</p>
 
     <h2>❓ Compruébalo</h2>
     <details>
@@ -159,7 +159,7 @@
     </details>
     <details>
       <summary>¿Hace falta Ruff si ya uso otro formateador, como Black?</summary>
-      <p>No son compatibles a la vez: elige uno. Este proyecto usa Ruff porque hace las dos cosas (formatear y revisar) y está configurado en un único archivo, <code>pyproject.toml</code>.</p>
+      <p>Usa solo uno a la vez, para que no se peleen al guardar. El estilo de Ruff es prácticamente el mismo que el de Black. Este proyecto usa Ruff porque hace las dos cosas (formatear y revisar) y está configurado en un único archivo, <code>pyproject.toml</code>.</p>
     </details>
 
     <nav class="navegacion" aria-label="Navegación entre páginas">

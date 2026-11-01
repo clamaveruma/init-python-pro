@@ -465,8 +465,7 @@ footer.pie {
 @media (max-width: 720px) {
   body { font-size: 16px; }
   .dos-columnas { grid-template-columns: 1fr; }
-  .marca { display: none; }
-  table { display: block; overflow-x: auto; }
+  .marca { font-size: 0; gap: 0; }
   figure.ilustracion { overflow-x: auto; }
   figure.ilustracion svg { width: 720px; max-width: none; }
   figure.ilustracion figcaption { position: sticky; left: 0; }
@@ -490,3 +489,6 @@ kbd {
   padding: 1px 6px;
   white-space: nowrap;
 }
+
+.tabla { overflow-x: auto; margin: 1.2em 0; }
+.tabla table { margin: 0; }

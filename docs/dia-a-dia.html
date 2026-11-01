@@ -16,14 +16,14 @@
     <div class="barra-interior">
       <a class="marca" href="index.html"><img class="serpiente" src="img/python-logo.svg" alt="" width="26" height="26">De script <span>→</span> proyecto</a>
       <nav class="camino" aria-label="Pasos de la guía">
-        <a href="entornos-virtuales.html" title="1. Entornos virtuales">1</a>
-        <a href="preparar-vscode.html" title="2. Preparar VS Code">2</a>
-        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno">3</a>
-        <a href="librerias-uv.html" title="4. Librerías y versiones">4</a>
-        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro">5</a>
-        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa">6</a>
-        <a href="git-github.html" title="7. Git y GitHub">7</a>
-        <a href="dia-a-dia.html" aria-current="page" title="8. El día a día">8</a>
+        <a href="entornos-virtuales.html" title="1. Entornos virtuales" aria-label="Paso 1: Entornos virtuales">1</a>
+        <a href="preparar-vscode.html" title="2. Preparar VS Code" aria-label="Paso 2: Preparar VS Code">2</a>
+        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno" aria-label="Paso 3: Carpeta, proyecto, intérprete y entorno">3</a>
+        <a href="librerias-uv.html" title="4. Librerías y versiones" aria-label="Paso 4: Librerías y versiones">4</a>
+        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro" aria-label="Paso 5: pyproject.toml por dentro">5</a>
+        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa" aria-label="Paso 6: Cómo arrancar tu programa">6</a>
+        <a href="git-github.html" title="7. Git y GitHub" aria-label="Paso 7: Git y GitHub">7</a>
+        <a href="dia-a-dia.html" aria-current="page" title="8. El día a día" aria-label="Paso 8: El día a día">8</a>
       </nav>
     </div>
   </header>
@@ -57,9 +57,9 @@
         <rect x="32" y="254" width="476" height="30" rx="8" class="sv-rosa"/>
         <text x="44" y="44" class="sv-mono-b">mi-proyecto/</text>
         <text x="60" y="84" class="sv-mono-b">src/mi_proyecto/</text>
-        <text x="76" y="108" class="sv-mono">__init__.py   __main__.py   impuestos.py</text>
+        <text x="76" y="108" class="sv-mono">__init__.py   __main__.py   taxes.py</text>
         <text x="60" y="148" class="sv-mono-b">tests/</text>
-        <text x="76" y="172" class="sv-mono">test_main.py   test_impuestos.py</text>
+        <text x="76" y="172" class="sv-mono">test_main.py   test_taxes.py</text>
         <text x="60" y="212" class="sv-mono-b">.vscode/    <tspan class="sv-mono">botón F5, formato al guardar</tspan></text>
         <text x="60" y="244" class="sv-mono-b">.claude/    <tspan class="sv-mono">procedimientos y permisos</tspan></text>
         <text x="60" y="276" class="sv-mono-b">CLAUDE.md   <tspan class="sv-mono">reglas para Claude</tspan></text>
@@ -117,54 +117,56 @@
     </figure>
 
     <h3>Un ejemplo real, paso a paso</h3>
-    <p>Queremos una función que calcule el IVA. <strong>Rojo:</strong> escribimos la prueba antes que la función.</p>
-<pre class="terminal"><span class="c"># tests/test_impuestos.py</span>
-from mi_proyecto.impuestos import calcular_iva
+    <p>Queremos una función que calcule el IVA. Fíjate en que, siguiendo la guía de estilo, los nombres van en inglés (<em>VAT</em> es IVA; <em>taxes</em>, impuestos). <strong>Rojo:</strong> escribimos la prueba antes que la función.</p>
+<pre class="terminal"><span class="c"># tests/test_taxes.py</span>
+from mi_proyecto.taxes import calculate_vat
 
 
-def test_iva_general_del_21_por_ciento():
-    assert calcular_iva(100) == 21
+def test_standard_vat_is_21_percent():
+    assert calculate_vat(100) == 21
 
 <span class="p">$</span> uv run pytest
 ...
-E   <span class="r">ModuleNotFoundError: No module named 'mi_proyecto.impuestos'</span>
-<span class="r">1 error in 0.09s</span></pre>
+E   <span class="r">ModuleNotFoundError: No module named 'mi_proyecto.taxes'</span>
+<span class="r">1 error in 0.08s</span></pre>
     <p>Falla, y por la razón correcta: el módulo todavía no existe. <strong>Verde:</strong> escribimos lo mínimo.</p>
-<pre class="terminal"><span class="c"># src/mi_proyecto/impuestos.py</span>
-def calcular_iva(precio: float, tipo: float = 0.21) -&gt; float:
-    return round(precio * tipo, 2)
+<pre class="terminal"><span class="c"># src/mi_proyecto/taxes.py</span>
+def calculate_vat(price: float, rate: float = 0.21) -&gt; float:
+    return round(price * rate, 2)
 
 <span class="p">$</span> uv run pytest
-tests/test_impuestos.py .                                   [ 50%]
-tests/test_main.py .                                        [100%]
+tests/test_main.py .                                        [ 50%]
+tests/test_taxes.py .                                       [100%]
 <span class="v">2 passed in 0.02s</span></pre>
     <p><strong>Guardar:</strong> un commit con una frase clara. Ya lo sabes hacer (paso 7).</p>
-<pre class="terminal"><span class="p">$</span> git add -A
-<span class="p">$</span> git commit -m "feat(impuestos): add VAT calculation"</pre>
+<pre class="terminal"><span class="p">$</span> git add src/mi_proyecto/taxes.py tests/test_taxes.py
+<span class="p">$</span> git commit -m "feat(taxes): add VAT calculation"</pre>
 
     <div class="recuadro pruebalo">
       <span class="etiqueta">🧪 Pruébalo tú: míralo en la vista Testing</span>
       <ol>
-        <li>Abre el matraz de la barra lateral (paso 2). Verás <code>test_main.py</code> y <code>test_impuestos.py</code>.</li>
+        <li>Abre el matraz de la barra lateral (paso 2). Verás <code>test_main.py</code> y <code>test_taxes.py</code>. (Con VS Code en español, la vista puede llamarse <em>Pruebas</em>.)</li>
         <li>Cambia en tu prueba el <code>21</code> por <code>22</code> y pulsa el triángulo: aparece ✘ y la diferencia entre lo esperado y lo obtenido.</li>
-        <li>Haz clic derecho sobre la prueba y elige <em>Debug Test</em>: se detiene en un punto y puedes ver las variables.</li>
+        <li>Haz clic derecho sobre la prueba y elige <em>Debug Test</em>. Si antes pones un punto de parada (clic a la izquierda del número de línea en <code>taxes.py</code>), se detendrá ahí y podrás ver las variables.</li>
         <li>Devuélvelo a <code>21</code>.</li>
       </ol>
     </div>
 
     <h2>3. Ruff trabaja solo</h2>
-    <p>Además de formatear al guardar (paso 2), en este proyecto Ruff se ejecuta <strong>cada vez que Claude edita un archivo Python</strong>. Es un «gancho» del proyecto (<em>hook</em>): una orden que se dispara tras cada edición. Si queda algo que Ruff no sabe arreglar, se lo devuelve a Claude para que lo corrija. Así es como se ve un aviso real:</p>
+    <p>Además de formatear al guardar (paso 2), en este proyecto Ruff se ejecuta <strong>cada vez que Claude edita un archivo Python</strong>. Es un «gancho» del proyecto (<em>hook</em>): una orden que se dispara tras cada edición. Si queda algo que Ruff no sabe arreglar, se lo devuelve a Claude para que lo corrija. (Las importaciones y variables sin usar no se tocan mientras edita, porque quizá las use en la siguiente edición; las detecta la comprobación final de cada tarea.) Así es como se ve un aviso real:</p>
 <pre class="terminal"><span class="p">$</span> uv run ruff check
 <span class="r">F401</span> [*] `os` imported but unused
- --&gt; src/mi_proyecto/malo.py:1:8
+ --&gt; src/mi_proyecto/messy.py:1:8
   |
 1 | import os
   |        ^^
-<span class="r">I001</span> [*] Import block is un-sorted or un-formatted</pre>
+help: Remove unused import: `os`</pre>
     <p>Y esto es lo que cambiaría el formateador (<code>uv run ruff format --diff</code>) en una función mal escrita:</p>
-<pre class="terminal">-def f( x ):
+<pre class="terminal"> import os
+
+
+-def f( x ):
 -    return x+1
-+
 +def f(x):
 +    return x + 1</pre>
     <p>Los marcados con <code>[*]</code> se arreglan solos con <code>uv run ruff check --fix</code>.</p>
@@ -211,7 +213,7 @@ tests/test_main.py .                                        [100%]
       <figcaption>Todo son archivos de texto dentro de tu proyecto. Si no te gusta una regla, la cambias.</figcaption>
     </figure>
 
-    <table>
+    <div class="tabla"><table>
       <thead><tr><th>Cuando pides…</th><th>Claude sigue…</th><th>Y hace…</th></tr></thead>
       <tbody>
         <tr><td>Código nuevo o un arreglo</td><td><code>py-tarea</code></td><td>Diseña y lo documenta en <code>docs/design.md</code> (validándolo contra casos de uso) → escribe una prueba que falla → escribe el código → comprueba pruebas y Ruff → commit → apunta en el diario → te cuenta qué hizo.</td></tr>
@@ -219,7 +221,7 @@ tests/test_main.py .                                        [100%]
         <tr><td>Instalar una librería</td><td><code>CLAUDE.md</code></td><td>Investiga si la librería de verdad ayuda y, si cree que sí, te pide permiso explicando por qué antes de ejecutar <code>uv add</code>.</td></tr>
         <tr><td>Subir a GitHub</td><td><code>CLAUDE.md</code></td><td>Solo hace <code>git push</code> si se lo pides o si lo autorizaste al crear el proyecto.</td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <div class="recuadro dato">
       <span class="etiqueta">💡 El diario de trabajo</span>
@@ -231,7 +233,7 @@ tests/test_main.py .                                        [100%]
       <span class="etiqueta">🧪 Pruébalo tú</span>
       Abre el panel de Claude Code en tu proyecto y escribe:
 <pre class="terminal"><span class="p">tú:</span> añade una función que calcule el IVA de un precio</pre>
-      Observa cómo, sin que se lo pidas: te cuenta el diseño en unas líneas, escribe la prueba, la ve fallar, escribe el código, la ve pasar y hace el commit con un mensaje del tipo <code>feat(impuestos): add VAT calculation</code>. Después prueba con <em>«refactoriza la función»</em> y verás cómo te pregunta si prefieres modo automático o interactivo.
+      Observa cómo, sin que se lo pidas: te cuenta el diseño en unas líneas, escribe la prueba, la ve fallar, escribe el código, la ve pasar y hace el commit con un mensaje del tipo <code>feat(taxes): add VAT calculation</code>. Después prueba con <em>«refactoriza la función»</em> y verás cómo te pregunta si prefieres modo automático o interactivo.
     </div>
 
     <div class="recuadro ojo">

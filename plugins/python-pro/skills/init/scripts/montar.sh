@@ -23,6 +23,24 @@ pkg_dir="$(find src -mindepth 1 -maxdepth 1 -type d ! -name '__pycache__' | head
 [ -n "$pkg_dir" ] || { echo "no package found in src/" >&2; exit 1; }
 pkg="$(basename "$pkg_dir")"
 
+# Refuse to run twice: a second run would duplicate entries in pyproject.toml
+if [ -f CLAUDE.md ] || grep -q '^\[tool\.ruff\]' pyproject.toml; then
+  echo "this project is already set up (CLAUDE.md or [tool.ruff] exists)" >&2
+  exit 1
+fi
+
+# The package name must be a valid Python name and must not hide a tool or the start command
+if ! printf '%s' "$pkg" | grep -Eq '^[A-Za-z_][A-Za-z0-9_]*$'; then
+  echo "package name '$pkg' is not a valid Python identifier" >&2
+  exit 1
+fi
+case "$pkg" in
+  start | pytest | ruff | tests | test)
+    echo "package name '$pkg' is reserved, choose another name" >&2
+    exit 1
+    ;;
+esac
+
 # fill <file> <placeholder> <value>: replaces every occurrence of the placeholder
 fill() {
   local content
@@ -61,7 +79,10 @@ else
 fi
 
 # pyproject.toml: short command and tool settings
-sed -i "/^\[project.scripts\]/a start = \"$pkg:main\"" pyproject.toml
+# (awk instead of sed -i, so it also works on macOS)
+awk -v line="start = \"$pkg:main\"" '{ print } /^\[project\.scripts\]$/ { print line }' pyproject.toml > pyproject.toml.tmp
+mv pyproject.toml.tmp pyproject.toml
+grep -q '^start = ' pyproject.toml || { echo "could not add the start command to pyproject.toml" >&2; exit 1; }
 cat >> pyproject.toml <<'EOF'
 
 [tool.ruff]
@@ -76,11 +97,13 @@ EOF
 
 # Journal (kept out of Git)
 [ -f .claude/dev-journal.md ] || printf '# Project Development Journal\n' > .claude/dev-journal.md
-cat >> .gitignore <<'EOF'
-
-# Personal notes and local Claude settings
-.claude/dev-journal.md
-.claude/settings.local.json
-EOF
+# uv only writes .gitignore when it creates the Git repository, so make sure the basics are there
+touch .gitignore
+add_ignore() { grep -qxF "$1" .gitignore || printf '%s\n' "$1" >> .gitignore; }
+add_ignore '__pycache__/'
+add_ignore '*.py[oc]'
+add_ignore '.venv'
+add_ignore '.claude/dev-journal.md'
+add_ignore '.claude/settings.local.json'
 
 echo "Project files created for package '$pkg' (push mode: $push_mode)."

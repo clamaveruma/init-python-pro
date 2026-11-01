@@ -16,8 +16,15 @@ esac
 
 cd "${CLAUDE_PROJECT_DIR:-.}" || exit 0
 
+if ! command -v uv > /dev/null 2>&1; then
+  echo "ruff hook: uv not found, skipping format and lint" >&2
+  exit 0
+fi
+
 uv run ruff format "$file" > /dev/null 2>&1
-if ! output="$(uv run ruff check --fix "$file" 2>&1)"; then
+# Unused imports and variables are ignored here (they may be used in the next edit);
+# the final `uv run ruff check` of each task still reports them.
+if ! output="$(uv run ruff check --fix --ignore F401,F841 "$file" 2>&1)"; then
   printf '%s\n' "$output" >&2
   exit 2
 fi

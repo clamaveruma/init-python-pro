@@ -16,14 +16,14 @@
     <div class="barra-interior">
       <a class="marca" href="index.html"><img class="serpiente" src="img/python-logo.svg" alt="" width="26" height="26">De script <span>→</span> proyecto</a>
       <nav class="camino" aria-label="Pasos de la guía">
-        <a href="entornos-virtuales.html" title="1. Entornos virtuales">1</a>
-        <a href="preparar-vscode.html" title="2. Preparar VS Code">2</a>
-        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno">3</a>
-        <a href="librerias-uv.html" title="4. Librerías y versiones">4</a>
-        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro">5</a>
-        <a href="arrancar-programa.html" aria-current="page" title="6. Cómo arrancar tu programa">6</a>
-        <a href="git-github.html" title="7. Git y GitHub">7</a>
-        <a href="dia-a-dia.html" title="8. El día a día">8</a>
+        <a href="entornos-virtuales.html" title="1. Entornos virtuales" aria-label="Paso 1: Entornos virtuales">1</a>
+        <a href="preparar-vscode.html" title="2. Preparar VS Code" aria-label="Paso 2: Preparar VS Code">2</a>
+        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno" aria-label="Paso 3: Carpeta, proyecto, intérprete y entorno">3</a>
+        <a href="librerias-uv.html" title="4. Librerías y versiones" aria-label="Paso 4: Librerías y versiones">4</a>
+        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro" aria-label="Paso 5: pyproject.toml por dentro">5</a>
+        <a href="arrancar-programa.html" aria-current="page" title="6. Cómo arrancar tu programa" aria-label="Paso 6: Cómo arrancar tu programa">6</a>
+        <a href="git-github.html" title="7. Git y GitHub" aria-label="Paso 7: Git y GitHub">7</a>
+        <a href="dia-a-dia.html" title="8. El día a día" aria-label="Paso 8: El día a día">8</a>
       </nav>
     </div>
   </header>
@@ -68,7 +68,7 @@ start = "mi_proyecto:main"</pre>
 Hello from mi-proyecto!</pre>
     <p>Funciona siempre, desde una terminal sin ningún entorno activo.</p>
 
-    <h3>B. <code>python3 -m mi_proyecto</code> a pelo</h3>
+    <h3>B. <code>python3 -m mi_proyecto</code>, sin entorno</h3>
 <pre class="terminal"><span class="p">$</span> python3 -m mi_proyecto
 /usr/local/bin/python3: <span class="r">No module named mi_proyecto</span></pre>
     <p>El <code>python3</code> del sistema no sabe que tu proyecto existe: no está instalado en <strong>su</strong> carpeta de librerías, sino en la de <code>.venv</code>. Si usas el de <code>.venv</code>, sí funciona:</p>
@@ -77,9 +77,8 @@ Hello from mi-proyecto!</pre>
     <p>O con el entorno activo (<code>source .venv/bin/activate</code>), porque entonces <code>python</code> es el de <code>.venv</code>.</p>
 
     <h3>C. El script directo, con <em>shebang</em></h3>
-    <p>La primera línea de un script puede empezar con <code>#!</code>, el <strong><em>shebang</em></strong>: le dice al sistema con qué programa ejecutarlo. Lo normal es <code>#!/usr/bin/env python3</code>, que significa «busca <code>python3</code> en el <code>PATH</code>». Un ejemplo:</p>
-<pre class="terminal"><span class="c"># hola.py</span>
-#!/usr/bin/env python3
+    <p>La primera línea de un script puede empezar con <code>#!</code>, el <strong><em>shebang</em></strong>: le dice al sistema con qué programa ejecutarlo. Lo normal es <code>#!/usr/bin/env python3</code>, que significa «busca <code>python3</code> en el <code>PATH</code>». Un ejemplo, el archivo <code>hola.py</code>:</p>
+<pre class="terminal">#!/usr/bin/env python3
 import sys
 print(sys.executable)
 
@@ -126,7 +125,7 @@ print(sys.executable)
     </figure>
 
     <h2>4. Pros y contras</h2>
-    <table>
+    <div class="tabla"><table>
       <thead><tr><th>Forma</th><th>A favor</th><th>En contra</th></tr></thead>
       <tbody>
         <tr><td><code>uv run start</code></td><td>Funciona en cualquier terminal, sin activar nada. Deja el entorno al día antes de arrancar. Mismo comando para todos.</td><td>Necesitas <code>uv</code> instalado. Escribes algo más largo.</td></tr>
@@ -135,7 +134,7 @@ print(sys.executable)
         <tr><td><code>.venv/bin/python -m mi_proyecto</code></td><td>No depende de <code>uv</code>. Funciona sin activar.</td><td>Es largo y distinto en Windows (<code>.venv\Scripts\python</code>). Si falta una librería, no la instala.</td></tr>
         <tr><td>F5 en VS Code</td><td>Permite puntos de parada y ver variables.</td><td>Depende de que el intérprete elegido sea el correcto.</td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <div class="recuadro dato">
       <span class="etiqueta">💡 Entonces, ¿cuál uso?</span>
