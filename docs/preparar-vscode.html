@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Preparar VS Code: extensiones y la vista Testing · De script a proyecto</title>
+  <meta name="description" content="Dos extensiones y un icono escondido.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧭%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="vscode">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="barra">
+    <div class="barra-interior">
+      <a class="marca" href="index.html"><svg class="serpiente" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 50 C4 50 4 36 16 36 L40 36 C50 36 50 22 40 22 L26 22 C20 22 20 12 28 12 L40 12" fill="none" stroke="#12b886" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="46" cy="12" r="9" fill="#12b886"/><circle cx="48" cy="10" r="2.6" fill="#fff"/><circle cx="48.6" cy="10" r="1.2" fill="#1b1b2f"/><path d="M54 14 l7 2 m-7 -2 l6 5" stroke="#f03e3e" stroke-width="2" stroke-linecap="round" fill="none"/></svg>De script <span>→</span> proyecto</a>
+      <nav class="camino" aria-label="Pasos de la guía">
+        <a href="entornos-virtuales.html" title="1. Entornos virtuales">1</a>
+        <a href="preparar-vscode.html" aria-current="page" title="2. Preparar VS Code">2</a>
+        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno">3</a>
+        <a href="librerias-uv.html" title="4. Librerías y versiones">4</a>
+        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro">5</a>
+        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa">6</a>
+        <a href="git-github.html" title="7. Git y GitHub">7</a>
+        <a href="dia-a-dia.html" title="8. El día a día">8</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <div class="cabecera-pagina">
+      <span class="paso">Paso 2 de 8</span>
+      <h1>Preparar VS Code: extensiones y la vista Testing</h1>
+      <p>Dos extensiones y un icono escondido.</p>
+    </div>
+
+    <div class="recuadro esencial">
+      <span class="etiqueta">⭐ Lo esencial</span>
+      <ul>
+        <li>Instala dos extensiones: <strong>Python</strong> (de Microsoft) y <strong>Ruff</strong> (de Astral, los creadores de <code>uv</code>).</li>
+        <li>Saca a la vista el icono del matraz: la vista <strong>Testing</strong>. Viene con VS Code, pero suele estar oculta.</li>
+        <li>En esta guía damos por hecho que ya tienes instalada la extensión <strong>Claude Code</strong>.</li>
+      </ul>
+    </div>
+
+    <h2>1. Qué es una extensión</h2>
+    <p>VS Code, tal como se instala, es un editor de texto muy bueno. Todo lo demás (entender Python, formatear el código, hablar con Claude) lo añaden las <strong>extensiones</strong>, que son pequeños complementos. Se instalan desde el icono de los cuatro cuadraditos de la barra lateral, o con <kbd>Ctrl</kbd>+<kbd>Mayús</kbd>+<kbd>X</kbd>.</p>
+
+    <h2>2. Las extensiones recomendadas</h2>
+    <table>
+      <thead><tr><th>Extensión</th><th>Identificador</th><th>Qué te aporta</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Python</strong> · Microsoft</td><td><code>ms-python.python</code></td><td>Entiende tu código (autocompletado, errores al escribir), ejecuta y depura, deja elegir el intérprete y construye la vista Testing. Suele instalar sola sus acompañantes, <em>Pylance</em> y <em>Python Debugger</em>.</td></tr>
+        <tr><td><strong>Ruff</strong> · Astral</td><td><code>charliermarsh.ruff</code></td><td>Da formato al código al guardar y subraya los descuidos típicos: importaciones sin usar, variables sin usar, estilo.</td></tr>
+        <tr><td><strong>Claude Code</strong> · Anthropic</td><td>—</td><td>Es el panel desde el que invocarás <code>/python-pro:init</code> y le pedirás cosas a Claude. Aquí damos por hecho que ya la tienes.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="recuadro dato">
+      <span class="etiqueta">💡 Una extra, opcional</span>
+      Microsoft ofrece también <strong>Python Environments</strong> (<code>ms-python.vscode-python-envs</code>), que añade un panel para ver y crear entornos. Según su <a href="https://devblogs.microsoft.com/python/python-in-visual-studio-code-february-2026-release/">anuncio de febrero de 2026</a>, si <code>uv</code> está instalado la usa sola para crear entornos e instalar paquetes. No hace falta para seguir esta guía.
+    </div>
+
+    <p>Cuando abras un proyecto creado con <code>/python-pro:init</code>, VS Code verá el archivo <code>.vscode/extensions.json</code> y te propondrá instalar Python y Ruff con una ventanita en la esquina inferior derecha. Basta con aceptar.</p>
+
+    <div class="recuadro pruebalo">
+      <span class="etiqueta">🧪 Pruébalo tú</span>
+      <ol>
+        <li>Pulsa <kbd>Ctrl</kbd>+<kbd>Mayús</kbd>+<kbd>X</kbd> para abrir las extensiones.</li>
+        <li>Escribe <code>Python</code> en el buscador. Busca la de <em>Microsoft</em> con muchísimas descargas y pulsa <strong>Instalar</strong>.</li>
+        <li>Repite con <code>Ruff</code>; la buena es la de <em>Astral Software</em>.</li>
+      </ol>
+    </div>
+
+    <div class="recuadro ojo">
+      <span class="etiqueta">⚠️ Ojo: si trabajas con WSL, SSH o un contenedor</span>
+      VS Code funciona en dos mitades: la ventana, en tu ordenador, y un pequeño servidor donde está la carpeta del proyecto (WSL, otra máquina…). Python y Ruff trabajan sobre los archivos, así que deben instalarse <strong>en el lado donde está la carpeta</strong>. Si ves un botón como <em>«Instalar en WSL»</em> o <em>«Install Workspace Extension»</em>, púlsalo: es justo eso. En Linux o macOS sin nada remoto, no verás ese botón.
+    </div>
+
+    <h2>3. La vista Testing, ese icono escondido</h2>
+    <p>En la barra de la izquierda de VS Code hay una columna de iconos. Cada icono abre una vista distinta. Para trabajar con pruebas necesitas la del <strong>matraz</strong> (<em>Testing</em>). No es una extensión: viene con VS Code, pero solo aparece cuando hay pruebas que mostrar, y a veces queda oculta.</p>
+
+    <figure class="ilustracion">
+      <svg viewBox="0 0 940 380" role="img" aria-labelledby="g1-t g1-d">
+        <title id="g1-t">La barra de iconos de VS Code con la vista Testing destacada</title>
+        <desc id="g1-d">Una ventana de VS Code simplificada. A la izquierda, la barra de iconos: Explorador, Búsqueda, Control de código fuente, Ejecutar y depurar, Extensiones y Testing, que aparece resaltada con un matraz. A la derecha, la vista Testing con una prueba aprobada.</desc>
+        <rect x="20" y="16" width="900" height="348" rx="14" class="sv-caja"/>
+        <rect x="20" y="16" width="900" height="34" rx="14" class="sv-gris"/>
+        <circle cx="46" cy="33" r="6" class="sv-s-rojo"/><circle cx="66" cy="33" r="6" class="sv-s-naranja"/><circle cx="86" cy="33" r="6" class="sv-s-verde"/>
+        <text x="470" y="38" text-anchor="middle" class="sv-pequeno">mi-proyecto — Visual Studio Code</text>
+
+        <rect x="20" y="50" width="64" height="272" class="sv-gris"/>
+        <g fill="none" stroke="var(--muted)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M42 62 h12 l6 6 v16 h-18 z"/>
+          <circle cx="50" cy="112" r="7"/><path d="M55 117 l7 7"/>
+          <circle cx="44" cy="152" r="3.5"/><circle cx="44" cy="174" r="3.5"/><circle cx="60" cy="160" r="3.5"/><path d="M44 156 v14 M46 170 c8 0 13 -4 13 -10"/>
+          <path d="M42 196 l16 9 l-16 9 z"/>
+          <rect x="40" y="244" width="8" height="8"/><rect x="50" y="244" width="8" height="8"/><rect x="40" y="254" width="8" height="8"/><rect x="52" y="250" width="8" height="8"/>
+        </g>
+        <rect x="26" y="272" width="52" height="46" rx="8" class="sv-s-verde"/>
+        <path d="M44 280 h14 M46 280 v10 l-8 14 a3 3 0 0 0 3 4 h20 a3 3 0 0 0 3 -4 l-8 -14 v-10" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="84" y="50" width="250" height="272" class="sv-caja"/>
+        <text x="100" y="78" class="sv-pequeno">EXPLORADOR</text>
+        <text x="100" y="106" class="sv-mono">▾ mi-proyecto</text>
+        <text x="116" y="130" class="sv-mono">▸ src</text>
+        <text x="116" y="154" class="sv-mono">▸ tests</text>
+        <text x="116" y="178" class="sv-mono">pyproject.toml</text>
+
+        <!-- Testing resaltado -->
+        <rect x="350" y="62" width="540" height="248" rx="12" class="sv-verde"/>
+        <text x="370" y="92" class="sv-titulo">TESTING</text>
+        <text x="370" y="124" class="sv-mono-b">▾ ✔ tests</text>
+        <text x="390" y="150" class="sv-mono">✔ test_main.py</text>
+        <text x="410" y="174" class="sv-mono">✔ test_main_prints_a_greeting</text>
+        <text x="370" y="214" class="sv-pequeno">El triángulo ▶ ejecuta todas las pruebas.</text>
+        <text x="370" y="236" class="sv-pequeno">Un triángulo junto a cada prueba ejecuta solo esa.</text>
+        <text x="370" y="258" class="sv-pequeno">La rueda con un bicho 🐞 la ejecuta paso a paso (depurar).</text>
+
+        <rect x="20" y="322" width="900" height="42" class="sv-azul"/>
+        <text x="40" y="348" class="sv-pequeno">Barra de estado</text>
+        <text x="130" y="296" class="sv-text" style="fill:#12b886">◀ Testing</text>
+      </svg>
+      <figcaption>La vista Testing es el matraz de la barra lateral. Cada prueba aparece con ✔ si pasa y ✘ si falla.</figcaption>
+    </figure>
+
+    <div class="recuadro pruebalo">
+      <span class="etiqueta">🧪 Pruébalo tú: si no ves el matraz</span>
+      <ol>
+        <li>Haz <strong>clic derecho</strong> sobre la barra de iconos de la izquierda y marca <strong>Testing</strong> en la lista.</li>
+        <li>Si no aparece en esa lista, pulsa <kbd>Ctrl</kbd>+<kbd>Mayús</kbd>+<kbd>P</kbd>, escribe <code>Python: Configure Tests</code>, elige <strong>pytest</strong> y después la carpeta <strong>tests</strong>.</li>
+        <li>Abre el matraz y pulsa el triángulo de arriba para ejecutar todas las pruebas.</li>
+      </ol>
+      Un proyecto creado con <code>/python-pro:init</code> ya viene con pytest configurado en <code>.vscode/settings.json</code>, así que este paso es solo por si falta algo.
+    </div>
+
+    <h2>4. Qué hace Ruff por ti</h2>
+    <p>Ruff es dos herramientas en una: un <strong>formateador</strong> (deja el código con un estilo uniforme: espacios, comillas, saltos de línea) y un <strong>revisor</strong> (avisa de descuidos: importaciones que no usas, errores típicos). Va mucho más rápido que sus predecesoras, y por eso se ha hecho tan popular.</p>
+    <p>El proyecto lo deja activado al guardar, con estas líneas de <code>.vscode/settings.json</code>:</p>
+<pre class="terminal"><span class="c"># .vscode/settings.json (fragmento)</span>
+"[python]": {
+  "editor.defaultFormatter": "charliermarsh.ruff",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.ruff": "explicit",
+    "source.organizeImports.ruff": "explicit"
+  }
+}</pre>
+    <p>En cristiano: <em>«para archivos Python, el formateador es Ruff; al guardar, formatea, arregla lo que se pueda arreglar solo y ordena las importaciones»</em>.</p>
+
+    <h2>❓ Compruébalo</h2>
+    <details>
+      <summary>¿Qué diferencia hay entre Python y Pylance?</summary>
+      <p>Pylance es el motor que entiende tu código (autocompletado, avisos de tipo). Viene con la extensión Python, así que no tienes que instalarlo aparte.</p>
+    </details>
+    <details>
+      <summary>Instalé la extensión pero VS Code sigue sin ejecutar pruebas.</summary>
+      <p>Lo más habitual es que VS Code esté usando otro intérprete de Python, no el de tu <code>.venv</code>. Lo vemos en el paso 3.</p>
+    </details>
+    <details>
+      <summary>¿Hace falta Ruff si ya uso otro formateador, como Black?</summary>
+      <p>No son compatibles a la vez: elige uno. Este proyecto usa Ruff porque hace las dos cosas (formatear y revisar) y está configurado en un único archivo, <code>pyproject.toml</code>.</p>
+    </details>
+
+    <nav class="navegacion" aria-label="Navegación entre páginas">
+      <a href="entornos-virtuales.html"><small>← Paso 1</small>Entornos virtuales</a>
+      <a class="sig" href="carpeta-interprete-entorno.html"><small>Paso 3</small>Carpeta, proyecto, intérprete y entorno →</a>
+    </nav>
+  </main>
+
+  <footer class="pie">
+    Guía del proyecto <a href="https://github.com/clamaveruma/init-python-pro">init-python-pro</a> · Licencia MIT
+  </footer>
+</body>
+</html>

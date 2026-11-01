@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Cómo arrancar tu programa · De script a proyecto</title>
+  <meta name="description" content="uv run, python3, el script directo y F5: qué hace cada uno.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧭%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="arrancar">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="barra">
+    <div class="barra-interior">
+      <a class="marca" href="index.html"><svg class="serpiente" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 50 C4 50 4 36 16 36 L40 36 C50 36 50 22 40 22 L26 22 C20 22 20 12 28 12 L40 12" fill="none" stroke="#12b886" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="46" cy="12" r="9" fill="#12b886"/><circle cx="48" cy="10" r="2.6" fill="#fff"/><circle cx="48.6" cy="10" r="1.2" fill="#1b1b2f"/><path d="M54 14 l7 2 m-7 -2 l6 5" stroke="#f03e3e" stroke-width="2" stroke-linecap="round" fill="none"/></svg>De script <span>→</span> proyecto</a>
+      <nav class="camino" aria-label="Pasos de la guía">
+        <a href="entornos-virtuales.html" title="1. Entornos virtuales">1</a>
+        <a href="preparar-vscode.html" title="2. Preparar VS Code">2</a>
+        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno">3</a>
+        <a href="librerias-uv.html" title="4. Librerías y versiones">4</a>
+        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro">5</a>
+        <a href="arrancar-programa.html" aria-current="page" title="6. Cómo arrancar tu programa">6</a>
+        <a href="git-github.html" title="7. Git y GitHub">7</a>
+        <a href="dia-a-dia.html" title="8. El día a día">8</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <div class="cabecera-pagina">
+      <span class="paso">Paso 6 de 8</span>
+      <h1>Cómo arrancar tu programa</h1>
+      <p>uv run, python3, el script directo y F5: qué hace cada uno.</p>
+    </div>
+
+    <div class="recuadro esencial">
+      <span class="etiqueta">⭐ Lo esencial</span>
+      <ul>
+        <li>Un proyecto define un <strong>punto de entrada</strong>: la función por la que empieza. Nuestro comando es <code>start</code>, que arranca <code>mi_proyecto:main</code>.</li>
+        <li><code>uv run start</code> asegura primero que el entorno está al día y <strong>después</strong> ejecuta tu programa <strong>con el Python del entorno</strong>.</li>
+        <li><code>python3 archivo.py</code> y los scripts con <em>shebang</em> usan el Python que encuentren primero. Si no es el del proyecto, fallan o, peor, usan librerías de otro sitio.</li>
+      </ul>
+    </div>
+
+    <h2>1. El punto de entrada</h2>
+    <p>Un programa necesita saber <strong>por dónde empezar</strong>. En nuestro proyecto es la función <code>main</code> del paquete <code>mi_proyecto</code>:</p>
+<pre class="terminal"><span class="c"># src/mi_proyecto/__init__.py</span>
+def main() -&gt; None:
+    print("Hello from mi-proyecto!")
+
+<span class="c"># src/mi_proyecto/__main__.py</span>
+from mi_proyecto import main
+
+main()
+
+<span class="c"># pyproject.toml</span>
+[project.scripts]
+start = "mi_proyecto:main"</pre>
+    <p>Dicho de otro modo: <code>start = "mi_proyecto:main"</code> significa <em>«el comando <code>start</code> es la función <code>main</code> que está dentro de <code>mi_proyecto</code>»</em>. Y el archivo <code>__main__.py</code> sirve para que también se pueda arrancar con <code>python -m mi_proyecto</code>.</p>
+
+    <h2>2. Cinco formas de arrancar, una al lado de otra</h2>
+    <p>Partimos de la misma carpeta, con el mismo proyecto. Estas son las formas habituales y lo que pasa con cada una.</p>
+
+    <h3>A. <code>uv run start</code></h3>
+<pre class="terminal"><span class="p">$</span> uv run start
+Hello from mi-proyecto!</pre>
+    <p>Funciona siempre, desde una terminal sin ningún entorno activo.</p>
+
+    <h3>B. <code>python3 -m mi_proyecto</code> a pelo</h3>
+<pre class="terminal"><span class="p">$</span> python3 -m mi_proyecto
+/usr/local/bin/python3: <span class="r">No module named mi_proyecto</span></pre>
+    <p>El <code>python3</code> del sistema no sabe que tu proyecto existe: no está instalado en <strong>su</strong> carpeta de librerías, sino en la de <code>.venv</code>. Si usas el de <code>.venv</code>, sí funciona:</p>
+<pre class="terminal"><span class="p">$</span> .venv/bin/python -m mi_proyecto
+Hello from mi-proyecto!</pre>
+    <p>O con el entorno activo (<code>source .venv/bin/activate</code>), porque entonces <code>python</code> es el de <code>.venv</code>.</p>
+
+    <h3>C. El script directo, con <em>shebang</em></h3>
+    <p>La primera línea de un script puede empezar con <code>#!</code>, el <strong><em>shebang</em></strong>: le dice al sistema con qué programa ejecutarlo. Lo normal es <code>#!/usr/bin/env python3</code>, que significa «busca <code>python3</code> en el <code>PATH</code>». Un ejemplo:</p>
+<pre class="terminal"><span class="c"># hola.py</span>
+#!/usr/bin/env python3
+import sys
+print(sys.executable)
+
+<span class="p">$</span> chmod +x hola.py
+<span class="p">$</span> ./hola.py
+<span class="h">/usr/local/bin/python3</span>        <span class="c"># el Python del sistema</span>
+<span class="p">$</span> uv run hola.py
+<span class="h">/…/mi-proyecto/.venv/bin/python3</span>   <span class="c"># el del entorno del proyecto</span></pre>
+    <p>El mismo archivo, dos Python distintos. Con el shebang obtienes el primero que encuentre el <code>PATH</code>, y eso depende de lo que tenga activado cada persona en su terminal.</p>
+
+    <h3>D. F5 en VS Code</h3>
+    <p>El botón de ejecutar y depurar usa el intérprete que tienes elegido abajo a la derecha (paso 3) y el archivo <code>.vscode/launch.json</code>, que dice: <code>"module": "mi_proyecto"</code>. Es equivalente a la forma B con el entorno correcto, más la posibilidad de poner puntos de parada.</p>
+
+    <h3>E. Un script suelto con <code>uv run archivo.py</code></h3>
+    <p>Sirve también para pruebas rápidas: <code>uv run archivo.py</code> ejecuta el archivo con el Python del entorno del proyecto.</p>
+
+    <h2>3. Qué hace <code>uv run</code> por dentro</h2>
+    <figure class="ilustracion">
+      <svg viewBox="0 0 940 280" role="img" aria-labelledby="a1-t a1-d">
+        <title id="a1-t">Los tres pasos de uv run</title>
+        <desc id="a1-d">Primero uv lee pyproject.toml y uv.lock. Después comprueba que el entorno .venv existe y coincide, y si hace falta lo crea o lo actualiza. Por último ejecuta el comando con el Python del .venv.</desc>
+        <defs><marker id="a1-f" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto"><path d="M1 1 L11 6 L1 11 z" fill="var(--muted)"/></marker></defs>
+        <rect x="20" y="40" width="270" height="170" rx="16" class="sv-rosa"/>
+        <text x="40" y="76" class="sv-titulo">1. Lee la receta</text>
+        <text x="40" y="104" class="sv-pequeno">pyproject.toml y uv.lock:</text>
+        <text x="40" y="124" class="sv-pequeno">qué Python y qué librerías</text>
+        <text x="40" y="144" class="sv-pequeno">hacen falta.</text>
+        <rect x="335" y="40" width="270" height="170" rx="16" class="sv-naranja"/>
+        <text x="355" y="76" class="sv-titulo">2. Pone al día el entorno</text>
+        <text x="355" y="104" class="sv-pequeno">Si falta .venv, lo crea.</text>
+        <text x="355" y="124" class="sv-pequeno">Si no coincide con el uv.lock,</text>
+        <text x="355" y="144" class="sv-pequeno">lo arregla. Si ya está bien,</text>
+        <text x="355" y="164" class="sv-pequeno">no hace nada (tarda ms).</text>
+        <rect x="650" y="40" width="270" height="170" rx="16" class="sv-verde"/>
+        <text x="670" y="76" class="sv-titulo">3. Ejecuta tu programa</text>
+        <text x="670" y="104" class="sv-pequeno">Con el Python de .venv,</text>
+        <text x="670" y="124" class="sv-pequeno">aunque no hayas activado</text>
+        <text x="670" y="144" class="sv-pequeno">nada en la terminal.</text>
+        <path d="M292 125 L333 125" class="sv-linea" marker-end="url(#a1-f)"/>
+        <path d="M607 125 L648 125" class="sv-linea" marker-end="url(#a1-f)"/>
+        <text x="470" y="250" text-anchor="middle" class="sv-text">Todo en un solo comando: no hay nada que recordar antes.</text>
+      </svg>
+      <figcaption>Entre tú y tu programa, <code>uv run</code> se asegura de que el entorno es el correcto.</figcaption>
+    </figure>
+
+    <h2>4. Pros y contras</h2>
+    <table>
+      <thead><tr><th>Forma</th><th>A favor</th><th>En contra</th></tr></thead>
+      <tbody>
+        <tr><td><code>uv run start</code></td><td>Funciona en cualquier terminal, sin activar nada. Deja el entorno al día antes de arrancar. Mismo comando para todos.</td><td>Necesitas <code>uv</code> instalado. Escribes algo más largo.</td></tr>
+        <tr><td><code>python3 archivo.py</code></td><td>Nada que instalar. Es lo que ya conoces.</td><td>Usa el Python que encuentre primero. Si no es el del entorno, no ve tus librerías ni tu paquete.</td></tr>
+        <tr><td>Script con shebang <code>./archivo.py</code></td><td>Cómodo para pequeñas herramientas personales.</td><td>Usa el Python que diga el <code>PATH</code> de cada persona. Con un Python escrito a mano (<code>#!/home/ana/…/python</code>) no funciona en otro ordenador.</td></tr>
+        <tr><td><code>.venv/bin/python -m mi_proyecto</code></td><td>No depende de <code>uv</code>. Funciona sin activar.</td><td>Es largo y distinto en Windows (<code>.venv\Scripts\python</code>). Si falta una librería, no la instala.</td></tr>
+        <tr><td>F5 en VS Code</td><td>Permite puntos de parada y ver variables.</td><td>Depende de que el intérprete elegido sea el correcto.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="recuadro dato">
+      <span class="etiqueta">💡 Entonces, ¿cuál uso?</span>
+      Para <strong>uso diario</strong> y para compartir, <code>uv run start</code>. Para <strong>depurar</strong>, F5. Los demás conviene conocerlos para entender qué pasa cuando alguien te dice «a mí me falla con <code>python3</code>…».
+    </div>
+
+    <div class="recuadro pruebalo">
+      <span class="etiqueta">🧪 Pruébalo tú</span>
+      <ol>
+        <li>En una terminal <strong>sin entorno activo</strong>, ejecuta <code>python3 -m mi_proyecto</code>. Verás el error.</li>
+        <li>Ejecuta ahora <code>uv run start</code>. Funciona.</li>
+        <li>Ejecuta <code>source .venv/bin/activate</code> y luego <code>python -m mi_proyecto</code>. También funciona: acabas de recrear a mano lo que hace <code>uv run</code>.</li>
+      </ol>
+    </div>
+
+    <h2>❓ Compruébalo</h2>
+    <details>
+      <summary>¿Por qué <code>uv run</code> a veces dice «Building…» o «Installed 1 package»?</summary>
+      <p>Porque ha detectado que algo ha cambiado (por ejemplo, tu proyecto) y ha puesto al día el entorno antes de arrancar. Si no hay cambios, no sale nada.</p>
+    </details>
+    <details>
+      <summary>¿Existe un shebang que use <code>uv</code>?</summary>
+      <p>Sí, para scripts sueltos: <code>#!/usr/bin/env -S uv run --script</code> más un comentario especial con sus librerías. Es una función de <code>uv</code> para scripts de un solo archivo, y queda fuera de esta guía, que trata de proyectos.</p>
+    </details>
+    <details>
+      <summary>Mi compañero ejecuta con <code>python3</code> y funciona. ¿Entonces no hace falta <code>uv run</code>?</summary>
+      <p>Le funciona porque en su equipo hay, por casualidad, un Python con tus librerías. Es justo lo que los entornos intentan evitar. Con <code>uv run</code> se garantiza que ambos usáis lo mismo.</p>
+    </details>
+
+    <nav class="navegacion" aria-label="Navegación entre páginas">
+      <a href="pyproject-toml.html"><small>← Paso 5</small>pyproject.toml por dentro</a>
+      <a class="sig" href="git-github.html"><small>Paso 7</small>Git y GitHub →</a>
+    </nav>
+  </main>
+
+  <footer class="pie">
+    Guía del proyecto <a href="https://github.com/clamaveruma/init-python-pro">init-python-pro</a> · Licencia MIT
+  </footer>
+</body>
+</html>

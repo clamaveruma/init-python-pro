@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Librerías y versiones: uv y pyproject.toml · De script a proyecto</title>
+  <meta name="description" content="Cómo hacer que tu proyecto funcione igual en cualquier ordenador.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧭%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="librerias">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="barra">
+    <div class="barra-interior">
+      <a class="marca" href="index.html"><svg class="serpiente" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 50 C4 50 4 36 16 36 L40 36 C50 36 50 22 40 22 L26 22 C20 22 20 12 28 12 L40 12" fill="none" stroke="#12b886" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="46" cy="12" r="9" fill="#12b886"/><circle cx="48" cy="10" r="2.6" fill="#fff"/><circle cx="48.6" cy="10" r="1.2" fill="#1b1b2f"/><path d="M54 14 l7 2 m-7 -2 l6 5" stroke="#f03e3e" stroke-width="2" stroke-linecap="round" fill="none"/></svg>De script <span>→</span> proyecto</a>
+      <nav class="camino" aria-label="Pasos de la guía">
+        <a href="entornos-virtuales.html" title="1. Entornos virtuales">1</a>
+        <a href="preparar-vscode.html" title="2. Preparar VS Code">2</a>
+        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno">3</a>
+        <a href="librerias-uv.html" aria-current="page" title="4. Librerías y versiones">4</a>
+        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro">5</a>
+        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa">6</a>
+        <a href="git-github.html" title="7. Git y GitHub">7</a>
+        <a href="dia-a-dia.html" title="8. El día a día">8</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <div class="cabecera-pagina">
+      <span class="paso">Paso 4 de 8</span>
+      <h1>Librerías y versiones: uv y pyproject.toml</h1>
+      <p>Cómo hacer que tu proyecto funcione igual en cualquier ordenador.</p>
+    </div>
+
+    <div class="recuadro esencial">
+      <span class="etiqueta">⭐ Lo esencial</span>
+      <ul>
+        <li>Las librerías cambian de versión con el tiempo. Un <code>pip install requests</code> de hoy no es el de dentro de un año.</li>
+        <li><strong><code>pyproject.toml</code></strong> dice <em>qué</em> librerías necesitas. <strong><code>uv.lock</code></strong> apunta <em>exactamente qué versiones</em> se instalaron.</li>
+        <li>Con esos dos archivos, otra persona (o tú en otro ordenador) recrea el mismo entorno con un solo comando: <code>uv sync</code>.</li>
+      </ul>
+    </div>
+
+    <h2>1. El problema de siempre: «en mi ordenador funciona»</h2>
+    <p>Imagina que haces un programa que usa <code>requests</code>. Lo instalas con <code>pip install requests</code> y funciona. Se lo pasas a un compañero, o lo abres en otro ordenador seis meses después.</p>
+    <ul>
+      <li>Tu compañero escribe <code>pip install requests</code> y recibe <strong>la versión de ese día</strong>, que puede ser otra.</li>
+      <li>Además, <code>requests</code> trae sus propias dependencias (viste seis paquetes en el paso 1), y cada una puede haber cambiado también.</li>
+      <li>Ni siquiera sabe que necesita <code>requests</code>, si no se lo has apuntado en algún sitio.</li>
+    </ul>
+    <p>Cualquier cambio de versión puede romper algo, y encontrar cuál es lo más tedioso. La solución es doble: <strong>anotar qué necesitas</strong> y <strong>anotar qué versiones exactas funcionaron</strong>.</p>
+
+    <h2>2. Los dos archivos</h2>
+    <figure class="ilustracion">
+      <svg viewBox="0 0 940 360" role="img" aria-labelledby="l1-t l1-d">
+        <title id="l1-t">Dos archivos que describen las librerías del proyecto</title>
+        <desc id="l1-d">pyproject.toml lo escribes tú o uv lo escribe por ti y dice qué librerías necesitas, por ejemplo requests. uv.lock lo genera uv y apunta las versiones exactas de requests y de todas sus dependencias. Ambos se suben a Git.</desc>
+        <defs><marker id="l1-f" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto"><path d="M1 1 L11 6 L1 11 z" fill="var(--muted)"/></marker></defs>
+
+        <rect x="30" y="24" width="400" height="260" rx="16" class="sv-rosa"/>
+        <text x="54" y="58" class="sv-titulo">pyproject.toml</text>
+        <text x="54" y="80" class="sv-pequeno">La lista de la compra: qué quieres.</text>
+        <rect x="54" y="100" width="352" height="110" rx="10" class="sv-caja"/>
+        <text x="72" y="130" class="sv-mono">dependencies = [</text>
+        <text x="90" y="154" class="sv-mono-b">"requests&gt;=2.34.2",</text>
+        <text x="72" y="178" class="sv-mono">]</text>
+        <text x="54" y="238" class="sv-pequeno">Pocas líneas, legibles. Es lo que editas</text>
+        <text x="54" y="258" class="sv-pequeno">(o lo hace uv add por ti).</text>
+
+        <rect x="510" y="24" width="400" height="260" rx="16" class="sv-naranja"/>
+        <text x="534" y="58" class="sv-titulo">uv.lock</text>
+        <text x="534" y="80" class="sv-pequeno">El ticket de compra: qué se instaló, exacto.</text>
+        <rect x="534" y="100" width="352" height="110" rx="10" class="sv-caja"/>
+        <text x="552" y="124" class="sv-mono">certifi 2026.10.23</text>
+        <text x="552" y="144" class="sv-mono">charset-normalizer 3.5.2</text>
+        <text x="552" y="164" class="sv-mono">idna 3.20</text>
+        <text x="552" y="184" class="sv-mono-b">requests 2.34.2</text>
+        <text x="552" y="204" class="sv-mono">urllib3 2.8.0</text>
+        <text x="534" y="238" class="sv-pequeno">Largo, para máquinas. Nunca lo editas:</text>
+        <text x="534" y="258" class="sv-pequeno">lo escribe uv solo.</text>
+
+        <path d="M430 150 L508 150" class="sv-linea" marker-end="url(#l1-f)"/>
+        <text x="469" y="138" text-anchor="middle" class="sv-pequeno">uv lock</text>
+
+        <rect x="30" y="308" width="880" height="40" rx="10" class="sv-verde"/>
+        <text x="470" y="334" text-anchor="middle" class="sv-text">Los dos viajan con tu proyecto en Git. La carpeta .venv, no.</text>
+      </svg>
+      <figcaption>Uno dice qué quieres; el otro, qué obtuviste exactamente.</figcaption>
+    </figure>
+
+    <h2>3. Verlo funcionar</h2>
+    <p>Partimos de un proyecto recién creado, con <code>uv</code>. Añadimos <code>requests</code>:</p>
+    <div class="recuadro pruebalo">
+      <span class="etiqueta">🧪 Pruébalo tú</span>
+<pre class="terminal"><span class="p">$</span> uv add requests
+Resolved 13 packages in 1.00s
+Prepared 6 packages in 426ms
+Installed 6 packages in 4ms
+ + certifi==2026.10.23
+ + charset-normalizer==3.5.2
+ + idna==3.20
+ + <span class="h">requests==2.34.2</span>
+ + urllib3==2.8.0</pre>
+      Esa única orden hizo tres cosas: apuntó <code>requests</code> en <code>pyproject.toml</code>, anotó las versiones exactas en <code>uv.lock</code> e instaló todo en <code>.venv</code>.
+    </div>
+
+    <p>Con <code>uv tree</code> ves cómo se relacionan las librerías (cuáles necesitan a cuáles):</p>
+<pre class="terminal"><span class="p">$</span> uv tree
+mi-proyecto v0.1.0
+├── requests v2.34.2
+│   ├── certifi v2026.10.23
+│   ├── charset-normalizer v3.5.2
+│   ├── idna v3.20
+│   └── urllib3 v2.8.0
+├── pytest v9.2.0 (group: dev)
+│   ├── iniconfig v2.3.1
+│   ├── packaging v26.3
+│   ├── pluggy v1.7.0
+│   └── pygments v2.21.0
+└── ruff v0.17.3 (group: dev)</pre>
+    <p>Las que dicen <code>(group: dev)</code> son herramientas de desarrollo (pruebas, estilo). Tu programa no las necesita para funcionar; las usas tú mientras lo escribes.</p>
+
+    <h2>4. Llevarlo a otro ordenador</h2>
+    <p>Aquí está la gracia. En otro equipo (que tenga <code>uv</code> y Git) solo hay que traer el proyecto y sincronizar:</p>
+    <figure class="ilustracion">
+      <svg viewBox="0 0 940 300" role="img" aria-labelledby="l2-t l2-d">
+        <title id="l2-t">Del ordenador A al ordenador B con git y uv sync</title>
+        <desc id="l2-d">En el ordenador A, el proyecto con pyproject.toml, uv.lock y el código se sube a GitHub. En el ordenador B se clona y uv sync crea un entorno idéntico instalando las versiones exactas del uv.lock.</desc>
+        <defs><marker id="l2-f" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto"><path d="M1 1 L11 6 L1 11 z" fill="var(--muted)"/></marker></defs>
+        <rect x="20" y="30" width="250" height="200" rx="16" class="sv-azul"/>
+        <text x="44" y="64" class="sv-titulo">💻 Tu ordenador</text>
+        <text x="44" y="96" class="sv-mono">src/  tests/</text>
+        <text x="44" y="118" class="sv-mono">pyproject.toml</text>
+        <text x="44" y="140" class="sv-mono">uv.lock</text>
+        <text x="44" y="162" class="sv-mono">.python-version</text>
+        <text x="44" y="196" class="sv-pequeno">.venv (se queda aquí)</text>
+
+        <rect x="345" y="70" width="250" height="120" rx="16" class="sv-gris"/>
+        <text x="470" y="110" text-anchor="middle" class="sv-titulo">GitHub</text>
+        <text x="470" y="136" text-anchor="middle" class="sv-pequeno">el proyecto, sin .venv</text>
+        <text x="470" y="156" text-anchor="middle" class="sv-pequeno">(los archivos de la izquierda)</text>
+
+        <rect x="670" y="30" width="250" height="200" rx="16" class="sv-verde"/>
+        <text x="694" y="64" class="sv-titulo">🖥️ Otro ordenador</text>
+        <text x="694" y="96" class="sv-mono">src/  tests/</text>
+        <text x="694" y="118" class="sv-mono">pyproject.toml</text>
+        <text x="694" y="140" class="sv-mono">uv.lock</text>
+        <text x="694" y="170" class="sv-mono-b">.venv  ← lo crea uv sync</text>
+        <text x="694" y="196" class="sv-pequeno">con las versiones del uv.lock</text>
+
+        <path d="M272 130 L343 130" class="sv-linea" marker-end="url(#l2-f)"/>
+        <text x="308" y="118" text-anchor="middle" class="sv-pequeno">git push</text>
+        <path d="M597 130 L668 130" class="sv-linea" marker-end="url(#l2-f)"/>
+        <text x="632" y="118" text-anchor="middle" class="sv-pequeno">git clone</text>
+
+        <rect x="670" y="244" width="250" height="40" rx="10" class="sv-s-verde"/>
+        <text x="795" y="270" text-anchor="middle" class="sv-mono-b" style="fill:#fff">uv sync</text>
+        <path d="M795 244 L795 232" class="sv-linea" marker-end="url(#l2-f)"/>
+      </svg>
+      <figcaption>Se viaja con los archivos de texto. El entorno se reconstruye en destino.</figcaption>
+    </figure>
+
+    <div class="recuadro pruebalo">
+      <span class="etiqueta">🧪 Pruébalo tú</span>
+<pre class="terminal"><span class="p">$</span> git clone https://github.com/tu-usuario/mi-proyecto
+<span class="p">$</span> cd mi-proyecto
+<span class="p">$</span> uv sync
+Using CPython 3.13.18 interpreter at: /usr/local/bin/python3.13
+Creating virtual environment at: .venv
+Resolved 13 packages in 1ms
+Installed 12 packages in 8ms
+ + certifi==2026.10.23
+ + charset-normalizer==3.5.2
+ + idna==3.20
+ + iniconfig==2.3.1
+ + mi-proyecto==0.1.0 (from file:///…/mi-proyecto)
+ + packaging==26.3
+ + pluggy==1.7.0
+ + pygments==2.21.0
+ + pytest==9.2.0
+ + requests==2.34.2
+ + ruff==0.17.3
+ + urllib3==2.8.0</pre>
+      Mismas versiones que en el ordenador original, hasta el último decimal. <strong>No instaló lo más reciente: instaló lo que decía el <code>uv.lock</code>.</strong>
+    </div>
+
+    <p>Por eso no hace falta copiar <code>.venv</code> (ya viste en el paso 1 que no se puede): se vuelve a construir en segundos, porque <code>uv</code> guarda las librerías descargadas en una caché y las enlaza en lugar de descargarlas otra vez.</p>
+
+    <h2>5. Los comandos que usarás de verdad</h2>
+    <table>
+      <thead><tr><th>Quieres…</th><th>Escribes</th></tr></thead>
+      <tbody>
+        <tr><td>Añadir una librería</td><td><code>uv add requests</code></td></tr>
+        <tr><td>Añadir una herramienta solo para desarrollar</td><td><code>uv add --dev pytest</code></td></tr>
+        <tr><td>Quitar una librería</td><td><code>uv remove requests</code></td></tr>
+        <tr><td>Dejar el entorno igual que el <code>uv.lock</code></td><td><code>uv sync</code></td></tr>
+        <tr><td>Ver qué librerías hay y quién depende de quién</td><td><code>uv tree</code></td></tr>
+        <tr><td>Ejecutar algo con el entorno del proyecto</td><td><code>uv run …</code> (paso 6)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="recuadro dato">
+      <span class="etiqueta">💡 ¿Y <code>requirements.txt</code> y <code>pip freeze</code>?</span>
+      Es la forma clásica de hacer algo parecido: <code>pip freeze &gt; requirements.txt</code> guarda las versiones instaladas y <code>pip install -r requirements.txt</code> las recupera. Funciona, pero lo apuntas a mano, mezcla lo que pediste con lo que vino de rebote y no distingue las herramientas de desarrollo. <code>uv</code> lleva esa cuenta él solo.
+    </div>
+
+    <h2>❓ Compruébalo</h2>
+    <details>
+      <summary>Si borro <code>.venv</code> por error, ¿pierdo las librerías?</summary>
+      <p>No. Ejecuta <code>uv sync</code> y se reconstruye igual, porque la receta (<code>pyproject.toml</code> y <code>uv.lock</code>) sigue ahí.</p>
+    </details>
+    <details>
+      <summary>¿Qué pasa si edito <code>pyproject.toml</code> a mano y añado una librería?</summary>
+      <p>La próxima vez que ejecutes <code>uv run</code> o <code>uv sync</code>, <code>uv</code> actualiza el <code>uv.lock</code> y el entorno. Pero lo más cómodo es usar <code>uv add</code>, que lo hace todo de golpe.</p>
+    </details>
+    <details>
+      <summary>¿Y si quiero actualizar una librería a su última versión?</summary>
+      <p>Con <code>uv lock --upgrade-package requests</code> pides que se busque una versión nueva de esa librería y se anote en el <code>uv.lock</code>. Después, <code>uv sync</code> la instala.</p>
+    </details>
+
+    <nav class="navegacion" aria-label="Navegación entre páginas">
+      <a href="carpeta-interprete-entorno.html"><small>← Paso 3</small>Carpeta, proyecto, intérprete y entorno</a>
+      <a class="sig" href="pyproject-toml.html"><small>Paso 5</small>pyproject.toml por dentro →</a>
+    </nav>
+  </main>
+
+  <footer class="pie">
+    Guía del proyecto <a href="https://github.com/clamaveruma/init-python-pro">init-python-pro</a> · Licencia MIT
+  </footer>
+</body>
+</html>

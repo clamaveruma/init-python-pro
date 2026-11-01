@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Carpeta, proyecto, intérprete y entorno · De script a proyecto</title>
+  <meta name="description" content="Cuatro palabras casi iguales, y cómo se ve cada una en VS Code.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧭%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="conceptos">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="barra">
+    <div class="barra-interior">
+      <a class="marca" href="index.html"><svg class="serpiente" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 50 C4 50 4 36 16 36 L40 36 C50 36 50 22 40 22 L26 22 C20 22 20 12 28 12 L40 12" fill="none" stroke="#12b886" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="46" cy="12" r="9" fill="#12b886"/><circle cx="48" cy="10" r="2.6" fill="#fff"/><circle cx="48.6" cy="10" r="1.2" fill="#1b1b2f"/><path d="M54 14 l7 2 m-7 -2 l6 5" stroke="#f03e3e" stroke-width="2" stroke-linecap="round" fill="none"/></svg>De script <span>→</span> proyecto</a>
+      <nav class="camino" aria-label="Pasos de la guía">
+        <a href="entornos-virtuales.html" title="1. Entornos virtuales">1</a>
+        <a href="preparar-vscode.html" title="2. Preparar VS Code">2</a>
+        <a href="carpeta-interprete-entorno.html" aria-current="page" title="3. Carpeta, proyecto, intérprete y entorno">3</a>
+        <a href="librerias-uv.html" title="4. Librerías y versiones">4</a>
+        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro">5</a>
+        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa">6</a>
+        <a href="git-github.html" title="7. Git y GitHub">7</a>
+        <a href="dia-a-dia.html" title="8. El día a día">8</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <div class="cabecera-pagina">
+      <span class="paso">Paso 3 de 8</span>
+      <h1>Carpeta, proyecto, intérprete y entorno</h1>
+      <p>Cuatro palabras casi iguales, y cómo se ve cada una en VS Code.</p>
+    </div>
+
+    <div class="recuadro esencial">
+      <span class="etiqueta">⭐ Lo esencial</span>
+      <ul>
+        <li>En un proyecto normal, <strong>carpeta de trabajo, proyecto y entorno</strong> son lo mismo: una carpeta, con el entorno (<code>.venv</code>) dentro.</li>
+        <li>El <strong>intérprete</strong> es el programa <code>python</code> de ese entorno. VS Code lo elige solo y te lo dice abajo a la derecha.</li>
+        <li>Si algo «no encuentra» una librería, casi siempre es que VS Code usa <strong>otro intérprete</strong>. Se arregla en dos clics.</li>
+      </ul>
+    </div>
+
+    <h2>1. Cuatro palabras que parecen lo mismo</h2>
+    <p>Al empezar se mezclan cuatro ideas. Es normal: en la práctica viven juntas. Pero conviene distinguirlas, porque los mensajes de error y los menús de VS Code las usan por separado.</p>
+
+    <figure class="ilustracion">
+      <svg viewBox="0 0 940 360" role="img" aria-labelledby="h1-t h1-d">
+        <title id="h1-t">Carpeta, proyecto, entorno e intérprete, una dentro de otra</title>
+        <desc id="h1-d">Un rectángulo grande, la carpeta de trabajo que abres en VS Code, contiene el proyecto con sus archivos, que a su vez contiene el entorno .venv, que contiene el intérprete python.</desc>
+        <rect x="20" y="16" width="900" height="330" rx="20" class="sv-amarillo"/>
+        <text x="44" y="48" class="sv-titulo">📁 Carpeta de trabajo</text>
+        <text x="44" y="70" class="sv-pequeno">Lo que abres en VS Code con «Archivo → Abrir carpeta».</text>
+
+        <rect x="52" y="90" width="836" height="236" rx="16" class="sv-azul"/>
+        <text x="76" y="122" class="sv-titulo">📦 Proyecto</text>
+        <text x="76" y="144" class="sv-pequeno">Tu código y el archivo que lo describe: src/, tests/, pyproject.toml.</text>
+
+        <rect x="84" y="164" width="772" height="146" rx="14" class="sv-verde"/>
+        <text x="108" y="194" class="sv-titulo">🫧 Entorno virtual: .venv</text>
+        <text x="108" y="216" class="sv-pequeno">La carpeta con su Python y sus librerías (paso 1).</text>
+        <rect x="108" y="236" width="360" height="58" rx="12" class="sv-s-verde"/>
+        <text x="128" y="262" fill="#fff" class="sv-text" style="fill:#fff">⚙️ Intérprete</text>
+        <text x="128" y="282" fill="#fff" class="sv-pequeno" style="fill:#fff">.venv/bin/python, el programa que ejecuta tu código</text>
+        <rect x="496" y="236" width="336" height="58" rx="12" class="sv-caja"/>
+        <text x="514" y="262" class="sv-text">Librerías</text>
+        <text x="514" y="282" class="sv-pequeno">las de este proyecto, en site-packages</text>
+      </svg>
+      <figcaption>Cuatro ideas, una dentro de otra. Con uv, las cuatro están siempre en la misma carpeta.</figcaption>
+    </figure>
+
+    <table>
+      <thead><tr><th>Idea</th><th>Qué es</th><th>Dónde lo ves</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Carpeta de trabajo</strong></td><td>La carpeta que has abierto en VS Code.</td><td>Arriba del Explorador, con el nombre en mayúsculas.</td></tr>
+        <tr><td><strong>Proyecto</strong></td><td>Esa carpeta, cuando tiene <code>pyproject.toml</code> y estructura (<code>src/</code>, <code>tests/</code>). VS Code no tiene un «proyecto» como tal: es una idea tuya y de <code>uv</code>.</td><td>El archivo <code>pyproject.toml</code> en la raíz.</td></tr>
+        <tr><td><strong>Entorno virtual</strong></td><td>La carpeta <code>.venv</code> con Python y librerías propias.</td><td>En el Explorador, como <code>.venv</code>.</td></tr>
+        <tr><td><strong>Intérprete</strong></td><td>El programa <code>python</code> concreto con el que se ejecuta tu código. Cada entorno tiene el suyo.</td><td>Barra de estado, abajo a la derecha.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>2. Cómo sabe VS Code qué Python usar</h2>
+    <p>Cuando abres una carpeta con Python, la extensión busca un intérprete por este orden:</p>
+    <ol>
+      <li>Si el proyecto lo indica en <code>.vscode/settings.json</code> (la línea <code>python.defaultInterpreterPath</code>), usa ese. Nuestro proyecto lo hace: apunta a <code>.venv/bin/python</code>.</li>
+      <li>Si no, busca entornos dentro de la carpeta, como <code>.venv</code>, y suele elegir ese.</li>
+      <li>Si no encuentra nada, usa el Python del sistema.</li>
+    </ol>
+    <p>Dónde mirar qué ha elegido: <strong>la barra de estado</strong>, la franja de abajo de la ventana, a la derecha. Verás algo como <code>3.13.18 (.venv)</code>. El texto exacto cambia un poco entre versiones, pero siempre aparece el número de Python y el nombre del entorno.</p>
+
+    <figure class="ilustracion">
+      <svg viewBox="0 0 940 400" role="img" aria-labelledby="h2-t h2-d">
+        <title id="h2-t">Dónde ver el intérprete y el entorno activo en VS Code</title>
+        <desc id="h2-d">Una ventana de VS Code simplificada. En la barra de estado, abajo a la derecha, se lee la versión de Python y el entorno .venv. En el panel de terminal se ve un indicador con (.venv) delante del símbolo de la terminal.</desc>
+        <defs>
+          <marker id="h2-f" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto"><path d="M1 1 L11 6 L1 11 z" fill="var(--muted)"/></marker>
+        </defs>
+        <rect x="20" y="14" width="900" height="372" rx="14" class="sv-caja"/>
+        <rect x="20" y="14" width="900" height="32" rx="14" class="sv-gris"/>
+        <circle cx="44" cy="30" r="6" class="sv-s-rojo"/><circle cx="64" cy="30" r="6" class="sv-s-naranja"/><circle cx="84" cy="30" r="6" class="sv-s-verde"/>
+
+        <rect x="34" y="58" width="390" height="150" rx="8" class="sv-gris"/>
+        <text x="50" y="86" class="sv-mono"><tspan fill="#7950f2">from</tspan> mi_proyecto <tspan fill="#7950f2">import</tspan> main</text>
+        <text x="50" y="112" class="sv-mono">main()</text>
+        <text x="50" y="150" class="sv-pequeno">(el editor de código)</text>
+
+        <rect x="34" y="218" width="880" height="118" rx="8" fill="#16162a"/>
+        <text x="50" y="242" style="fill:#9aa0c3;font:600 12px system-ui,sans-serif">TERMINAL</text>
+        <text x="50" y="270" class="sv-mono" style="fill:#e6e8ff"><tspan style="fill:#69db7c;font-weight:700">(.venv)</tspan> ana@equipo:~/mi-proyecto$ python -V</text>
+        <text x="50" y="294" class="sv-mono" style="fill:#e6e8ff">Python 3.13.18</text>
+        <text x="50" y="318" class="sv-mono" style="fill:#e6e8ff"><tspan style="fill:#69db7c;font-weight:700">(.venv)</tspan> ana@equipo:~/mi-proyecto$ <tspan style="fill:#9aa0c3">▌</tspan></text>
+
+        <rect x="20" y="346" width="900" height="40" class="sv-azul"/>
+        <text x="40" y="371" class="sv-pequeno">main · 0 ⚠ 0 ✘</text>
+        <rect x="690" y="352" width="214" height="28" rx="8" class="sv-s-azul"/>
+        <text x="797" y="371" text-anchor="middle" class="sv-mono-b" style="fill:#fff">3.13.18 (.venv)</text>
+
+        <rect x="620" y="58" width="290" height="70" rx="12" class="sv-amarillo"/>
+        <text x="636" y="84" class="sv-text">1. Aquí se ve el intérprete</text>
+        <text x="636" y="106" class="sv-pequeno">Haz clic para cambiarlo (más abajo).</text>
+        <path d="M860 128 L860 346" fill="none" stroke="#f59f00" stroke-width="2.5" marker-end="url(#h2-f)"/>
+
+        <rect x="440" y="150" width="330" height="56" rx="12" class="sv-verde"/>
+        <text x="456" y="174" class="sv-text">2. (.venv) delante del prompt</text>
+        <text x="456" y="194" class="sv-pequeno">La terminal tiene el entorno activo.</text>
+        <path d="M440 190 C400 205 260 225 100 254" fill="none" stroke="#12b886" stroke-width="2.5" marker-end="url(#h2-f)"/>
+      </svg>
+      <figcaption>Dos sitios para comprobar de un vistazo qué entorno está en uso: la barra de estado y el prompt de la terminal.</figcaption>
+    </figure>
+
+    <div class="recuadro pruebalo">
+      <span class="etiqueta">🧪 Pruébalo tú</span>
+      <ol>
+        <li>Abre la carpeta de un proyecto con <code>.venv</code> y un archivo <code>.py</code>.</li>
+        <li>Mira abajo a la derecha: ¿qué Python dice? ¿Aparece <code>.venv</code>?</li>
+        <li>Abre una terminal nueva (<em>Terminal → Nueva terminal</em>) y comprueba que el prompt empieza con <code>(.venv)</code>.</li>
+        <li>Escribe <code>which python</code> (en Windows, <code>where python</code>) y comprueba que apunta a una ruta que termina en <code>.venv/bin/python</code>.</li>
+      </ol>
+    </div>
+
+    <h2>3. El prompt: cómo «suele» marcarse el entorno activo</h2>
+    <p>Cuando un entorno está activo en una terminal, lo habitual es que el prompt (el texto que aparece antes de lo que escribes) lleve su nombre entre paréntesis:</p>
+<pre class="terminal"><span class="p">ana@equipo:~/mi-proyecto$</span> which python
+<span class="c"># ninguno activo: Python del sistema o nada</span>
+<span class="p">ana@equipo:~/mi-proyecto$</span> source .venv/bin/activate
+<span class="v">(.venv)</span> <span class="p">ana@equipo:~/mi-proyecto$</span> which python
+<span class="h">/home/ana/mi-proyecto/.venv/bin/python</span></pre>
+    <p>Esa es la señal que ya viste en el paso 1. VS Code hace el <code>source …/activate</code> por ti cada vez que abres una terminal <strong>nueva</strong> dentro de la ventana, si hay un intérprete elegido. Las terminales que ya estaban abiertas no cambian, así que si cambias de intérprete, abre una terminal nueva.</p>
+
+    <h3>Y con el entorno activo, las herramientas son las del entorno</h3>
+    <p>Esto explica el comportamiento que parecía magia. Con el entorno activo, <code>pytest</code>, <code>ruff</code> o <code>pip</code> se buscan primero en <code>.venv/bin</code> (recuerda el orden del <code>PATH</code> del paso 1). Por eso ejecutan la versión instalada en <strong>este</strong> proyecto, y no otra.</p>
+
+    <h2>4. Cambiar de entorno</h2>
+    <h3>Desde VS Code (a mano)</h3>
+    <ol>
+      <li>Haz clic en el intérprete de la barra de estado, o pulsa <kbd>Ctrl</kbd>+<kbd>Mayús</kbd>+<kbd>P</kbd> y escribe <code>Python: Select Interpreter</code>.</li>
+      <li>Elige un intérprete de la lista. Los entornos del proyecto aparecen con su nombre (<code>.venv</code>).</li>
+      <li>Si el que buscas no sale, elige <em>Enter interpreter path…</em> y apunta a su <code>python</code>.</li>
+      <li>Abre una terminal nueva para que se active el nuevo.</li>
+    </ol>
+    <h3>Con uv (el camino cómodo)</h3>
+    <p>Con <code>uv</code> casi nunca cambias de entorno a mano, porque cada proyecto tiene uno solo. Lo que sí puedes cambiar es <strong>qué versión de Python</strong> usa:</p>
+<pre class="terminal"><span class="p">$</span> cat .python-version
+3.13
+<span class="p">$</span> uv python list --only-installed
+<span class="c"># muestra los Python que uv encuentra en tu equipo</span></pre>
+    <p>El archivo <code>.python-version</code> dice la versión que quiere el proyecto, y <code>pyproject.toml</code> dice cuál es la mínima (<code>requires-python</code>). Para cambiarla, <code>uv python pin 3.12</code> actualiza ese archivo, y <code>uv sync</code> reconstruye el entorno con ella. Si <code>pyproject.toml</code> pide una versión más alta, <code>uv</code> te lo dice con un error.</p>
+
+    <div class="recuadro ojo">
+      <span class="etiqueta">⚠️ Ojo: el síntoma típico</span>
+      Si en el editor ves el subrayado <em>«Import "requests" could not be resolved»</em>, pero en la terminal con <code>uv run</code> el programa funciona, VS Code está usando <strong>otro intérprete</strong> (probablemente el del sistema). Mira la barra de estado y elige el de <code>.venv</code>.
+    </div>
+
+    <h2>❓ Compruébalo</h2>
+    <details>
+      <summary>¿Puedo tener dos entornos en la misma carpeta?</summary>
+      <p>Técnicamente sí, pero con <code>uv</code> no tiene sentido: cada proyecto tiene uno, el <code>.venv</code>. Si necesitas probar otra versión de Python, cambia la versión del proyecto, o crea otra carpeta de proyecto.</p>
+    </details>
+    <details>
+      <summary>Abrí una terminal nueva y no sale <code>(.venv)</code>. ¿Por qué?</summary>
+      <p>Probablemente VS Code no tiene elegido el intérprete del proyecto, o el entorno aún no existe (ejecuta <code>uv sync</code>). Elige el intérprete en la barra de estado y abre otra terminal.</p>
+    </details>
+    <details>
+      <summary>¿Hace falta activar el entorno para usar <code>uv</code>?</summary>
+      <p>No. <code>uv run</code> usa el entorno del proyecto sin que lo actives. Lo verás en el paso 6.</p>
+    </details>
+
+    <nav class="navegacion" aria-label="Navegación entre páginas">
+      <a href="preparar-vscode.html"><small>← Paso 2</small>Preparar VS Code</a>
+      <a class="sig" href="librerias-uv.html"><small>Paso 4</small>Librerías y versiones →</a>
+    </nav>
+  </main>
+
+  <footer class="pie">
+    Guía del proyecto <a href="https://github.com/clamaveruma/init-python-pro">init-python-pro</a> · Licencia MIT
+  </footer>
+</body>
+</html>

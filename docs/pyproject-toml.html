@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>pyproject.toml por dentro · De script a proyecto</title>
+  <meta name="description" content="La ficha de tu proyecto, sección por sección.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧭%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="toml">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="barra">
+    <div class="barra-interior">
+      <a class="marca" href="index.html"><svg class="serpiente" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 50 C4 50 4 36 16 36 L40 36 C50 36 50 22 40 22 L26 22 C20 22 20 12 28 12 L40 12" fill="none" stroke="#12b886" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="46" cy="12" r="9" fill="#12b886"/><circle cx="48" cy="10" r="2.6" fill="#fff"/><circle cx="48.6" cy="10" r="1.2" fill="#1b1b2f"/><path d="M54 14 l7 2 m-7 -2 l6 5" stroke="#f03e3e" stroke-width="2" stroke-linecap="round" fill="none"/></svg>De script <span>→</span> proyecto</a>
+      <nav class="camino" aria-label="Pasos de la guía">
+        <a href="entornos-virtuales.html" title="1. Entornos virtuales">1</a>
+        <a href="preparar-vscode.html" title="2. Preparar VS Code">2</a>
+        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno">3</a>
+        <a href="librerias-uv.html" title="4. Librerías y versiones">4</a>
+        <a href="pyproject-toml.html" aria-current="page" title="5. pyproject.toml por dentro">5</a>
+        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa">6</a>
+        <a href="git-github.html" title="7. Git y GitHub">7</a>
+        <a href="dia-a-dia.html" title="8. El día a día">8</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <div class="cabecera-pagina">
+      <span class="paso">Paso 5 de 8</span>
+      <h1>pyproject.toml por dentro</h1>
+      <p>La ficha de tu proyecto, sección por sección.</p>
+    </div>
+
+    <div class="recuadro esencial">
+      <span class="etiqueta">⭐ Lo esencial</span>
+      <ul>
+        <li><code>pyproject.toml</code> es <strong>un archivo de texto</strong> con la ficha de tu proyecto: nombre, versión de Python, librerías, cómo arrancarlo y cómo se comportan Ruff y pytest.</li>
+        <li>Está dividido en <strong>secciones</strong> entre corchetes. Cada herramienta lee solo la suya.</li>
+        <li>Casi todo lo rellena <code>uv</code>. Tú lo lees, y de vez en cuando cambias algo pequeño.</li>
+      </ul>
+    </div>
+
+    <h2>1. Qué es TOML</h2>
+    <p><strong>TOML</strong> es un formato de texto pensado para configurar cosas. Tiene tres ideas y ya lo sabes leer:</p>
+<pre class="terminal"><span class="c"># Esto es un comentario</span>
+<span class="h">[seccion]</span>                 <span class="c"># un título entre corchetes</span>
+clave = "valor"           <span class="c"># texto entre comillas</span>
+numero = 88               <span class="c"># un número, sin comillas</span>
+lista = ["a", "b"]        <span class="c"># una lista entre corchetes</span></pre>
+    <p>Lo de <code>pyproject</code> es porque el archivo es <em>«el proyecto de Python»</em> (<em>py</em> + <em>project</em>), y <code>.toml</code> porque está escrito en TOML.</p>
+
+    <h2>2. Recorrido por un archivo real</h2>
+    <p>Este es el <code>pyproject.toml</code> de un proyecto creado con <code>/python-pro:init</code> y con <code>requests</code> añadido. Cada color es una sección y debajo verás qué hace:</p>
+
+    <figure class="ilustracion">
+      <svg viewBox="0 0 940 640" role="img" aria-labelledby="t1-t t1-d">
+        <title id="t1-t">El archivo pyproject.toml dividido en secciones de colores</title>
+        <desc id="t1-d">El archivo se divide en seis bloques: la ficha del proyecto, el comando de arranque, el sistema de construcción, las herramientas de desarrollo, la configuración de Ruff y la de pytest. A la derecha, una etiqueta dice qué programa lee cada bloque.</desc>
+        <rect x="20" y="10" width="560" height="620" rx="14" class="sv-caja"/>
+
+        <rect x="32" y="22" width="536" height="148" rx="10" class="sv-rosa"/>
+        <text x="48" y="48" class="sv-mono-b">[project]</text>
+        <text x="48" y="66" class="sv-mono">name = "mi-proyecto"</text>
+        <text x="48" y="84" class="sv-mono">version = "0.1.0"</text>
+        <text x="48" y="102" class="sv-mono">requires-python = "&gt;=3.13"</text>
+        <text x="48" y="120" class="sv-mono">dependencies = [</text>
+        <text x="66" y="138" class="sv-mono-b">"requests&gt;=2.34.2",</text>
+        <text x="48" y="156" class="sv-mono">]</text>
+
+        <rect x="32" y="178" width="536" height="74" rx="10" class="sv-amarillo"/>
+        <text x="48" y="204" class="sv-mono-b">[project.scripts]</text>
+        <text x="48" y="226" class="sv-mono">start = "mi_proyecto:main"</text>
+
+        <rect x="32" y="260" width="536" height="86" rx="10" class="sv-gris"/>
+        <text x="48" y="286" class="sv-mono-b">[build-system]</text>
+        <text x="48" y="308" class="sv-mono">requires = ["uv_build&gt;=0.11.32,&lt;0.12.0"]</text>
+        <text x="48" y="328" class="sv-mono">build-backend = "uv_build"</text>
+
+        <rect x="32" y="354" width="536" height="108" rx="10" class="sv-naranja"/>
+        <text x="48" y="380" class="sv-mono-b">[dependency-groups]</text>
+        <text x="48" y="400" class="sv-mono">dev = [</text>
+        <text x="66" y="418" class="sv-mono">"pytest&gt;=9.2.0",</text>
+        <text x="66" y="436" class="sv-mono">"ruff&gt;=0.17.3",</text>
+        <text x="48" y="454" class="sv-mono">]</text>
+
+        <rect x="32" y="470" width="536" height="86" rx="10" class="sv-violeta"/>
+        <text x="48" y="496" class="sv-mono-b">[tool.ruff]</text>
+        <text x="48" y="518" class="sv-mono">line-length = 88</text>
+        <text x="48" y="540" class="sv-mono-b">[tool.ruff.lint]  <tspan class="sv-mono">select = ["E","F","I","UP","B"]</tspan></text>
+
+        <rect x="32" y="564" width="536" height="56" rx="10" class="sv-verde"/>
+        <text x="48" y="590" class="sv-mono-b">[tool.pytest.ini_options]</text>
+        <text x="48" y="610" class="sv-mono">testpaths = ["tests"]</text>
+
+        <g class="sv-pequeno">
+          <text x="610" y="48" class="sv-text">La ficha</text><text x="610" y="70" class="sv-pequeno">La leen uv y pip. Nombre, versión,</text><text x="610" y="88" class="sv-pequeno">qué Python hace falta y qué librerías.</text>
+          <text x="610" y="200" class="sv-text">El comando de arranque</text><text x="610" y="222" class="sv-pequeno">Lo lee uv al hacer «uv run start».</text>
+          <text x="610" y="282" class="sv-text">La construcción</text><text x="610" y="304" class="sv-pequeno">Qué herramienta empaqueta tu código.</text><text x="610" y="322" class="sv-pequeno">No hace falta tocarlo.</text>
+          <text x="610" y="380" class="sv-text">Herramientas de desarrollo</text><text x="610" y="402" class="sv-pequeno">uv las instala con «uv sync», pero</text><text x="610" y="420" class="sv-pequeno">no son parte de tu programa.</text>
+          <text x="610" y="496" class="sv-text">Ruff</text><text x="610" y="518" class="sv-pequeno">Lo lee Ruff: ancho de línea y qué</text><text x="610" y="536" class="sv-pequeno">revisiones aplicar.</text>
+          <text x="610" y="590" class="sv-text">pytest</text><text x="610" y="610" class="sv-pequeno">Lo lee pytest: dónde están las pruebas.</text>
+        </g>
+      </svg>
+      <figcaption>Un solo archivo, varias herramientas: cada una busca su sección y no se mete en las demás.</figcaption>
+    </figure>
+
+    <h3>Sección por sección</h3>
+    <table>
+      <thead><tr><th>Sección</th><th>Qué dice</th></tr></thead>
+      <tbody>
+        <tr><td><code>[project]</code></td><td><strong>La ficha.</strong> <code>name</code> es el nombre del paquete; <code>requires-python = "&gt;=3.13"</code> dice que hace falta Python 3.13 o superior (si alguien intenta usar uno más antiguo, <code>uv</code> avisa); <code>dependencies</code> son las librerías que tu programa necesita para funcionar. El <code>&gt;=2.34.2</code> significa «esa versión o una posterior».</td></tr>
+        <tr><td><code>[project.scripts]</code></td><td><strong>Los comandos de tu programa.</strong> <code>start = "mi_proyecto:main"</code> crea el comando <code>start</code>, que ejecuta la función <code>main</code> del paquete <code>mi_proyecto</code>. Lo ves en acción en el paso 6.</td></tr>
+        <tr><td><code>[build-system]</code></td><td>Quién empaqueta tu código para que quede instalado en el entorno. <code>uv</code> trae el suyo (<code>uv_build</code>). Puedes ignorarla.</td></tr>
+        <tr><td><code>[dependency-groups]</code></td><td>Grupos de librerías. El grupo <code>dev</code> son las de desarrollo: <code>pytest</code> y <code>ruff</code>. Se añaden con <code>uv add --dev</code>.</td></tr>
+        <tr><td><code>[tool.ruff]</code></td><td>Los ajustes de Ruff. <code>line-length = 88</code> es el ancho máximo de línea, y <code>select</code> es la lista de familias de revisiones que quieres (<code>E</code>/<code>F</code> errores típicos, <code>I</code> orden de importaciones, <code>UP</code> modernizar código, <code>B</code> fallos probables).</td></tr>
+        <tr><td><code>[tool.pytest.ini_options]</code></td><td>Los ajustes de pytest. <code>testpaths = ["tests"]</code> dice que las pruebas están en la carpeta <code>tests</code>.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="recuadro dato">
+      <span class="etiqueta">💡 Fíjate en el patrón <code>[tool.algo]</code></span>
+      Cualquier herramienta puede guardar su configuración aquí, en una sección <code>[tool.su-nombre]</code>. Antes cada herramienta tenía su archivo (<code>.flake8</code>, <code>pytest.ini</code>, <code>setup.cfg</code>…). Ahora, uno solo.
+    </div>
+
+    <h2>3. Para qué sirve todo junto</h2>
+    <ul>
+      <li><strong>Reproducir el proyecto en otro sistema.</strong> En otro ordenador, <code>uv sync</code> lee <code>requires-python</code>, <code>dependencies</code> y el grupo <code>dev</code>, y monta el mismo entorno (paso 4).</li>
+      <li><strong>Que todos usen las mismas reglas.</strong> Ruff y pytest leen la configuración del propio proyecto, así que te dan el mismo resultado en cualquier equipo.</li>
+      <li><strong>Que el comando de arranque sea el mismo.</strong> <code>uv run start</code> funciona igual para ti, tu compañero y la prueba automática de GitHub.</li>
+      <li><strong>Saber de un vistazo qué necesita tu proyecto.</strong> Es la primera cosa que abre alguien que no conoce el código.</li>
+    </ul>
+
+    <div class="recuadro pruebalo">
+      <span class="etiqueta">🧪 Pruébalo tú: cambia algo pequeño</span>
+      <ol>
+        <li>Abre <code>pyproject.toml</code> y cambia <code>line-length = 88</code> por <code>line-length = 60</code>.</li>
+        <li>En la terminal: <code>uv run ruff check</code>. Si hay líneas largas, Ruff las marcará.</li>
+        <li>Vuelve a poner 88. Has cambiado el comportamiento de una herramienta tocando solo una línea de texto.</li>
+      </ol>
+    </div>
+
+    <div class="recuadro ojo">
+      <span class="etiqueta">⚠️ Ojo</span>
+      Si <strong>cambias una sección de librerías</strong> a mano, pide a <code>uv</code> que ponga al día el entorno con <code>uv sync</code>. Y no edites nunca el <code>uv.lock</code>: lo escribe <code>uv</code>.
+    </div>
+
+    <h2>❓ Compruébalo</h2>
+    <details>
+      <summary>¿Qué significa <code>requests&gt;=2.34.2</code> frente a <code>requests==2.34.2</code>?</summary>
+      <p><code>&gt;=</code> admite esa versión o una más moderna; <code>==</code> exige exactamente esa. Para ver la <strong>exacta</strong> que se instaló, mira el <code>uv.lock</code>, no el <code>pyproject.toml</code>.</p>
+    </details>
+    <details>
+      <summary>¿Por qué hay dos sitios con <code>pytest</code> y <code>ruff</code> (en <code>dev</code> y en <code>[tool…]</code>)?</summary>
+      <p>Son cosas distintas: en <code>[dependency-groups]</code> dices que quieres <em>instalar</em> esas herramientas, y en <code>[tool.ruff]</code> o <code>[tool.pytest…]</code> dices <em>cómo deben comportarse</em>.</p>
+    </details>
+    <details>
+      <summary>¿Dónde está el nombre de la carpeta con mi código?</summary>
+      <p>El nombre del paquete es <code>mi-proyecto</code> en <code>[project]</code>, pero la carpeta se llama <code>mi_proyecto</code> (con guion bajo), porque Python no admite guiones en nombres de módulos. Está dentro de <code>src/</code>.</p>
+    </details>
+
+    <nav class="navegacion" aria-label="Navegación entre páginas">
+      <a href="librerias-uv.html"><small>← Paso 4</small>Librerías y versiones</a>
+      <a class="sig" href="arrancar-programa.html"><small>Paso 6</small>Cómo arrancar tu programa →</a>
+    </nav>
+  </main>
+
+  <footer class="pie">
+    Guía del proyecto <a href="https://github.com/clamaveruma/init-python-pro">init-python-pro</a> · Licencia MIT
+  </footer>
+</body>
+</html>

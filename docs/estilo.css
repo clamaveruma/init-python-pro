@@ -466,6 +466,7 @@ footer.pie {
   body { font-size: 16px; }
   .dos-columnas { grid-template-columns: 1fr; }
   .marca { display: none; }
+  table { display: block; overflow-x: auto; }
   figure.ilustracion { overflow-x: auto; }
   figure.ilustracion svg { width: 720px; max-width: none; }
   figure.ilustracion figcaption { position: sticky; left: 0; }
@@ -478,4 +479,14 @@ footer.pie {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   a.parada:hover { transform: none; }
+}
+
+kbd {
+  font: 600 0.85em ui-monospace, Menlo, Consolas, monospace;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  padding: 1px 6px;
+  white-space: nowrap;
 }

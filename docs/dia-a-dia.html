@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>El día a día: pruebas, Ruff y Claude · De script a proyecto</title>
+  <meta name="description" content="Cómo se trabaja una vez montado el proyecto.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧭%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="dia">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="barra">
+    <div class="barra-interior">
+      <a class="marca" href="index.html"><svg class="serpiente" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 50 C4 50 4 36 16 36 L40 36 C50 36 50 22 40 22 L26 22 C20 22 20 12 28 12 L40 12" fill="none" stroke="#12b886" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="46" cy="12" r="9" fill="#12b886"/><circle cx="48" cy="10" r="2.6" fill="#fff"/><circle cx="48.6" cy="10" r="1.2" fill="#1b1b2f"/><path d="M54 14 l7 2 m-7 -2 l6 5" stroke="#f03e3e" stroke-width="2" stroke-linecap="round" fill="none"/></svg>De script <span>→</span> proyecto</a>
+      <nav class="camino" aria-label="Pasos de la guía">
+        <a href="entornos-virtuales.html" title="1. Entornos virtuales">1</a>
+        <a href="preparar-vscode.html" title="2. Preparar VS Code">2</a>
+        <a href="carpeta-interprete-entorno.html" title="3. Carpeta, proyecto, intérprete y entorno">3</a>
+        <a href="librerias-uv.html" title="4. Librerías y versiones">4</a>
+        <a href="pyproject-toml.html" title="5. pyproject.toml por dentro">5</a>
+        <a href="arrancar-programa.html" title="6. Cómo arrancar tu programa">6</a>
+        <a href="git-github.html" title="7. Git y GitHub">7</a>
+        <a href="dia-a-dia.html" aria-current="page" title="8. El día a día">8</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <div class="cabecera-pagina">
+      <span class="paso">Paso 8 de 8</span>
+      <h1>El día a día: pruebas, Ruff y Claude</h1>
+      <p>Cómo se trabaja una vez montado el proyecto.</p>
+    </div>
+
+    <div class="recuadro esencial">
+      <span class="etiqueta">⭐ Lo esencial</span>
+      <ul>
+        <li>El código va en <code>src/</code> y las pruebas en <code>tests/</code>. Cada función nueva nace con su prueba.</li>
+        <li>El ciclo es: <strong>prueba que falla → código mínimo → prueba que pasa → commit</strong>.</li>
+        <li>Claude sigue las reglas del archivo <code>CLAUDE.md</code> y dos procedimientos del proyecto. Ruff revisa cada archivo que edita. Tú pides cosas con normalidad.</li>
+      </ul>
+    </div>
+
+    <h2>1. Cómo está ordenado el proyecto</h2>
+    <figure class="ilustracion">
+      <svg viewBox="0 0 940 400" role="img" aria-labelledby="d1-t d1-d">
+        <title id="d1-t">Estructura de carpetas de un proyecto creado con python-pro</title>
+        <desc id="d1-d">Un árbol de carpetas con src con el paquete del proyecto, tests con las pruebas, .vscode con la configuración del editor, .claude con las reglas y los procedimientos de Claude, CLAUDE.md, pyproject.toml, uv.lock y .python-version.</desc>
+        <rect x="20" y="14" width="500" height="372" rx="16" class="sv-caja"/>
+        <rect x="32" y="62" width="476" height="30" rx="8" class="sv-azul"/>
+        <rect x="32" y="126" width="476" height="30" rx="8" class="sv-verde"/>
+        <rect x="32" y="190" width="476" height="30" rx="8" class="sv-amarillo"/>
+        <rect x="32" y="222" width="476" height="30" rx="8" class="sv-violeta"/>
+        <rect x="32" y="254" width="476" height="30" rx="8" class="sv-rosa"/>
+        <text x="44" y="44" class="sv-mono-b">mi-proyecto/</text>
+        <text x="60" y="84" class="sv-mono-b">src/mi_proyecto/</text>
+        <text x="76" y="108" class="sv-mono">__init__.py   __main__.py   impuestos.py</text>
+        <text x="60" y="148" class="sv-mono-b">tests/</text>
+        <text x="76" y="172" class="sv-mono">test_main.py   test_impuestos.py</text>
+        <text x="60" y="212" class="sv-mono-b">.vscode/    <tspan class="sv-mono">botón F5, formato al guardar</tspan></text>
+        <text x="60" y="244" class="sv-mono-b">.claude/    <tspan class="sv-mono">procedimientos y permisos</tspan></text>
+        <text x="60" y="276" class="sv-mono-b">CLAUDE.md   <tspan class="sv-mono">reglas para Claude</tspan></text>
+        <text x="60" y="312" class="sv-mono">pyproject.toml   uv.lock</text>
+        <text x="60" y="336" class="sv-mono">.python-version  .gitignore</text>
+        <text x="60" y="360" class="sv-mono">.venv/   <tspan class="sv-pequeno">(local, no se sube)</tspan></text>
+
+        <g>
+          <rect x="560" y="62" width="360" height="86" rx="12" class="sv-azul"/>
+          <text x="578" y="90" class="sv-text">src/ → tu programa</text>
+          <text x="578" y="112" class="sv-pequeno">Todo el código que se ejecuta.</text>
+          <text x="578" y="130" class="sv-pequeno">Un paquete = una carpeta con __init__.py.</text>
+          <rect x="560" y="162" width="360" height="86" rx="12" class="sv-verde"/>
+          <text x="578" y="190" class="sv-text">tests/ → la red de seguridad</text>
+          <text x="578" y="212" class="sv-pequeno">Un archivo test_*.py por cada parte,</text>
+          <text x="578" y="230" class="sv-pequeno">con funciones que empiezan por test_.</text>
+          <rect x="560" y="262" width="360" height="86" rx="12" class="sv-violeta"/>
+          <text x="578" y="290" class="sv-text">.claude/ y CLAUDE.md → el método</text>
+          <text x="578" y="312" class="sv-pequeno">Cómo trabaja Claude en este proyecto.</text>
+          <text x="578" y="330" class="sv-pequeno">Son archivos de texto: puedes leerlos y cambiarlos.</text>
+        </g>
+      </svg>
+      <figcaption>Se llama <em>disposición «src»</em>: el código en <code>src/</code> evita que Python importe por accidente archivos sueltos de la raíz.</figcaption>
+    </figure>
+
+    <h2>2. El ciclo de trabajo: primero la prueba</h2>
+    <p>Una <strong>prueba</strong> es una función que comprueba que otra hace lo que debe. La idea (se llama <em>TDD</em>, desarrollo guiado por pruebas) es escribirla <strong>antes</strong> del código. Suena al revés, pero obliga a pensar qué quieres antes de cómo lo harás, y te deja con una red de seguridad: si más tarde algo rompe lo que ya funcionaba, la prueba lo cuenta.</p>
+
+    <figure class="ilustracion">
+      <svg viewBox="0 0 940 290" role="img" aria-labelledby="d2-t d2-d">
+        <title id="d2-t">El ciclo rojo, verde, refactor</title>
+        <desc id="d2-d">Tres pasos en círculo: escribir una prueba que falla (rojo), escribir el código mínimo para que pase (verde), mejorar el código sin cambiar su comportamiento y volver a empezar.</desc>
+        <defs><marker id="d2-f" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto"><path d="M1 1 L11 6 L1 11 z" fill="var(--muted)"/></marker></defs>
+        <rect x="20" y="40" width="270" height="150" rx="16" class="sv-rojo"/>
+        <text x="40" y="76" class="sv-titulo">🔴 1. Rojo</text>
+        <text x="40" y="104" class="sv-pequeno">Escribe una prueba de lo que</text>
+        <text x="40" y="124" class="sv-pequeno">quieres. Ejecútala: debe fallar,</text>
+        <text x="40" y="144" class="sv-pequeno">y por la razón correcta.</text>
+        <rect x="335" y="40" width="270" height="150" rx="16" class="sv-verde"/>
+        <text x="355" y="76" class="sv-titulo">🟢 2. Verde</text>
+        <text x="355" y="104" class="sv-pequeno">Escribe el código mínimo</text>
+        <text x="355" y="124" class="sv-pequeno">para que la prueba pase.</text>
+        <text x="355" y="144" class="sv-pequeno">Nada más.</text>
+        <rect x="650" y="40" width="270" height="150" rx="16" class="sv-azul"/>
+        <text x="670" y="76" class="sv-titulo">🔵 3. Mejorar y guardar</text>
+        <text x="670" y="104" class="sv-pequeno">Ordena el código sin cambiar</text>
+        <text x="670" y="124" class="sv-pequeno">lo que hace. Pruebas y Ruff</text>
+        <text x="670" y="144" class="sv-pequeno">en verde. Commit.</text>
+        <path d="M292 115 L333 115" class="sv-linea" marker-end="url(#d2-f)"/>
+        <path d="M607 115 L648 115" class="sv-linea" marker-end="url(#d2-f)"/>
+        <path d="M785 194 C785 262 155 262 155 194" fill="none" class="sv-linea" marker-end="url(#d2-f)"/>
+        <text x="470" y="278" text-anchor="middle" class="sv-pequeno">y vuelta a empezar con la siguiente función</text>
+      </svg>
+      <figcaption>Un ciclo corto, repetido muchas veces. Cada vuelta termina con algo que funciona y está guardado.</figcaption>
+    </figure>
+
+    <h3>Un ejemplo real, paso a paso</h3>
+    <p>Queremos una función que calcule el IVA. <strong>Rojo:</strong> escribimos la prueba antes que la función.</p>
+<pre class="terminal"><span class="c"># tests/test_impuestos.py</span>
+from mi_proyecto.impuestos import calcular_iva
+
+
+def test_iva_general_del_21_por_ciento():
+    assert calcular_iva(100) == 21
+
+<span class="p">$</span> uv run pytest
+...
+E   <span class="r">ModuleNotFoundError: No module named 'mi_proyecto.impuestos'</span>
+<span class="r">1 error in 0.09s</span></pre>
+    <p>Falla, y por la razón correcta: el módulo todavía no existe. <strong>Verde:</strong> escribimos lo mínimo.</p>
+<pre class="terminal"><span class="c"># src/mi_proyecto/impuestos.py</span>
+def calcular_iva(precio: float, tipo: float = 0.21) -&gt; float:
+    return round(precio * tipo, 2)
+
+<span class="p">$</span> uv run pytest
+tests/test_impuestos.py .                                   [ 50%]
+tests/test_main.py .                                        [100%]
+<span class="v">2 passed in 0.02s</span></pre>
+    <p><strong>Guardar:</strong> un commit con una frase clara. Ya lo sabes hacer (paso 7).</p>
+<pre class="terminal"><span class="p">$</span> git add -A
+<span class="p">$</span> git commit -m "feat(impuestos): add VAT calculation"</pre>
+
+    <div class="recuadro pruebalo">
+      <span class="etiqueta">🧪 Pruébalo tú: míralo en la vista Testing</span>
+      <ol>
+        <li>Abre el matraz de la barra lateral (paso 2). Verás <code>test_main.py</code> y <code>test_impuestos.py</code>.</li>
+        <li>Cambia en tu prueba el <code>21</code> por <code>22</code> y pulsa el triángulo: aparece ✘ y la diferencia entre lo esperado y lo obtenido.</li>
+        <li>Haz clic derecho sobre la prueba y elige <em>Debug Test</em>: se detiene en un punto y puedes ver las variables.</li>
+        <li>Devuélvelo a <code>21</code>.</li>
+      </ol>
+    </div>
+
+    <h2>3. Ruff trabaja solo</h2>
+    <p>Además de formatear al guardar (paso 2), en este proyecto Ruff se ejecuta <strong>cada vez que Claude edita un archivo Python</strong>. Es un «gancho» del proyecto (<em>hook</em>): una orden que se dispara tras cada edición. Si queda algo que Ruff no sabe arreglar, se lo devuelve a Claude para que lo corrija. Así es como se ve un aviso real:</p>
+<pre class="terminal"><span class="p">$</span> uv run ruff check
+<span class="r">F401</span> [*] `os` imported but unused
+ --&gt; src/mi_proyecto/malo.py:1:8
+  |
+1 | import os
+  |        ^^
+<span class="r">I001</span> [*] Import block is un-sorted or un-formatted</pre>
+    <p>Y esto es lo que cambiaría el formateador (<code>uv run ruff format --diff</code>) en una función mal escrita:</p>
+<pre class="terminal">-def f( x ):
+-    return x+1
++
++def f(x):
++    return x + 1</pre>
+    <p>Los marcados con <code>[*]</code> se arreglan solos con <code>uv run ruff check --fix</code>.</p>
+
+    <h2>4. Cómo trabaja Claude en tu proyecto</h2>
+    <p>Cuando abres el proyecto y le pides algo a Claude, él lee un archivo llamado <code>CLAUDE.md</code>: las <strong>reglas de la casa</strong>. Además hay dos <strong>procedimientos</strong> que aplica según lo que le pidas, un <strong>gancho</strong> y una lista de <strong>permisos</strong>.</p>
+
+    <figure class="ilustracion">
+      <svg viewBox="0 0 940 340" role="img" aria-labelledby="d3-t d3-d">
+        <title id="d3-t">Qué archivos del proyecto guían a Claude</title>
+        <desc id="d3-d">Cuando pides algo, Claude lee CLAUDE.md. Si pides escribir o arreglar código sigue py-tarea. Si pides refactorizar sigue py-refactor. Tras cada edición, un gancho ejecuta Ruff. Los permisos en settings.json dicen qué comandos puede ejecutar sin preguntar.</desc>
+        <defs><marker id="d3-f" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto"><path d="M1 1 L11 6 L1 11 z" fill="var(--muted)"/></marker></defs>
+        <rect x="20" y="130" width="170" height="80" rx="14" class="sv-amarillo"/>
+        <text x="105" y="162" text-anchor="middle" class="sv-titulo">Tú</text>
+        <text x="105" y="186" text-anchor="middle" class="sv-pequeno">«añade una función…»</text>
+
+        <rect x="240" y="130" width="200" height="80" rx="14" class="sv-violeta"/>
+        <text x="340" y="162" text-anchor="middle" class="sv-titulo">CLAUDE.md</text>
+        <text x="340" y="186" text-anchor="middle" class="sv-pequeno">las reglas de la casa</text>
+
+        <rect x="500" y="20" width="230" height="80" rx="14" class="sv-verde"/>
+        <text x="615" y="52" text-anchor="middle" class="sv-titulo">py-tarea</text>
+        <text x="615" y="76" text-anchor="middle" class="sv-pequeno">código nuevo o arreglos</text>
+        <rect x="500" y="130" width="230" height="80" rx="14" class="sv-azul"/>
+        <text x="615" y="162" text-anchor="middle" class="sv-titulo">py-refactor</text>
+        <text x="615" y="186" text-anchor="middle" class="sv-pequeno">limpiar sin cambiar nada</text>
+        <rect x="500" y="240" width="230" height="80" rx="14" class="sv-naranja"/>
+        <text x="615" y="272" text-anchor="middle" class="sv-titulo">gancho de Ruff</text>
+        <text x="615" y="296" text-anchor="middle" class="sv-pequeno">tras cada edición</text>
+
+        <rect x="780" y="70" width="140" height="150" rx="14" class="sv-gris"/>
+        <text x="850" y="104" text-anchor="middle" class="sv-titulo">settings.json</text>
+        <text x="850" y="130" text-anchor="middle" class="sv-pequeno">qué comandos</text>
+        <text x="850" y="148" text-anchor="middle" class="sv-pequeno">puede ejecutar</text>
+        <text x="850" y="166" text-anchor="middle" class="sv-pequeno">sin preguntar</text>
+
+        <path d="M192 170 L238 170" class="sv-linea" marker-end="url(#d3-f)"/>
+        <path d="M442 160 C470 130 470 70 498 62" fill="none" class="sv-linea" marker-end="url(#d3-f)"/>
+        <path d="M442 170 L498 170" class="sv-linea" marker-end="url(#d3-f)"/>
+        <path d="M442 180 C470 220 470 270 498 280" fill="none" class="sv-linea" marker-end="url(#d3-f)"/>
+        <path d="M732 62 C760 62 760 100 778 110" fill="none" class="sv-punteada"/>
+        <path d="M732 170 L778 170" class="sv-punteada"/>
+      </svg>
+      <figcaption>Todo son archivos de texto dentro de tu proyecto. Si no te gusta una regla, la cambias.</figcaption>
+    </figure>
+
+    <table>
+      <thead><tr><th>Cuando pides…</th><th>Claude sigue…</th><th>Y hace…</th></tr></thead>
+      <tbody>
+        <tr><td>Código nuevo o un arreglo</td><td><code>py-tarea</code></td><td>Diseña en el chat → escribe una prueba que falla → escribe el código → comprueba pruebas y Ruff → commit → apunta en el diario → te cuenta qué hizo.</td></tr>
+        <tr><td>Refactorizar o limpiar</td><td><code>py-refactor</code></td><td>Explica qué mejoraría → comprueba que hay pruebas (si no, las escribe primero) → te deja elegir entre <strong>modo automático</strong> o <strong>interactivo</strong> → trabaja en pasos pequeños con un commit por cada uno.</td></tr>
+        <tr><td>Instalar una librería</td><td><code>CLAUDE.md</code></td><td>Te pregunta antes de ejecutar <code>uv add</code>.</td></tr>
+        <tr><td>Subir a GitHub</td><td><code>CLAUDE.md</code></td><td>Solo hace <code>git push</code> si se lo pides o si lo autorizaste al crear el proyecto.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="recuadro dato">
+      <span class="etiqueta">💡 El diario de trabajo</span>
+      Claude apunta cada trabajo importante en <code>.claude/dev-journal.md</code>: fecha, qué se hizo, decisiones y próximos pasos. Es tu cuaderno de bitácora y el suyo: si una conversación se corta, Claude lo lee para retomar el hilo. No se sube a Git, porque son notas personales.
+    </div>
+
+    <h3>Una conversación típica</h3>
+    <div class="recuadro pruebalo">
+      <span class="etiqueta">🧪 Pruébalo tú</span>
+      Abre el panel de Claude Code en tu proyecto y escribe:
+<pre class="terminal"><span class="p">tú:</span> añade una función que calcule el IVA de un precio</pre>
+      Observa cómo, sin que se lo pidas: te cuenta el diseño en unas líneas, escribe la prueba, la ve fallar, escribe el código, la ve pasar y hace el commit con un mensaje del tipo <code>feat(impuestos): add VAT calculation</code>. Después prueba con <em>«refactoriza la función»</em> y verás cómo te pregunta si prefieres modo automático o interactivo.
+    </div>
+
+    <div class="recuadro ojo">
+      <span class="etiqueta">⚠️ Ojo: Claude también se equivoca</span>
+      Las pruebas y Ruff son tu seguro, pero revisa lo que hace: lee el commit (<code>git show</code>), entiende la función que escribió y mira que la prueba compruebe lo que de verdad te importa. Una prueba que siempre pasa no protege nada.
+    </div>
+
+    <h2>5. Y ahora, a trabajar</h2>
+    <p>Con esto tienes el recorrido completo: un <strong>entorno</strong> por proyecto (1), un editor que lo conoce (2 y 3), una receta reproducible con <code>uv</code> y <code>pyproject.toml</code> (4 y 5), una forma segura de arrancar (6), un historial con Git (7) y un ciclo de trabajo con pruebas (8).</p>
+    <p>El siguiente paso es el más práctico: crea tu primer proyecto con <code>/python-pro:init</code> y úsalo de verdad. Cuando algo no encaje, vuelve a la página correspondiente: cada una explica una pieza por separado.</p>
+
+    <h2>❓ Compruébalo</h2>
+    <details>
+      <summary>¿Y si mi proyecto ya tiene código y no tiene pruebas?</summary>
+      <p>Pídele a Claude que refactorice: antes de tocar nada, <code>py-refactor</code> comprueba si hay pruebas y, si no, ofrece escribir primero unas que fijen cómo se comporta el código ahora.</p>
+    </details>
+    <details>
+      <summary>¿Puedo cambiar las reglas de Claude?</summary>
+      <p>Sí. <code>CLAUDE.md</code> y los procedimientos de <code>.claude/skills/</code> son texto. Cambia lo que quieras (por ejemplo, el idioma de los comentarios) y Claude lo seguirá desde la siguiente sesión.</p>
+    </details>
+    <details>
+      <summary>¿Por qué el diario y los permisos están dentro de <code>.claude/</code>?</summary>
+      <p>Porque es la carpeta donde Claude Code guarda lo suyo. Los permisos (<code>settings.json</code>) sí se suben a Git, para que quien clone el proyecto tenga las mismas reglas; el diario (<code>dev-journal.md</code>) no.</p>
+    </details>
+
+    <nav class="navegacion" aria-label="Navegación entre páginas">
+      <a href="git-github.html"><small>← Paso 7</small>Git y GitHub</a>
+      <a class="sig" href="index.html"><small>Fin del recorrido</small>Volver al mapa →</a>
+    </nav>
+  </main>
+
+  <footer class="pie">
+    Guía del proyecto <a href="https://github.com/clamaveruma/init-python-pro">init-python-pro</a> · Licencia MIT
+  </footer>
+</body>
+</html>
