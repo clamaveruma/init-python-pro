@@ -101,7 +101,7 @@ a:hover { text-decoration-thickness: 2px; }
   font-size: 0.98rem;
 }
 .marca { display: inline-flex; align-items: center; gap: 8px; }
-.serpiente { width: 26px; height: 26px; flex: none; }
+.serpiente { width: 36px; height: 36px; flex: none; }
 .serpiente.grande { width: 88px; height: 88px; border-radius: 20px; box-shadow: var(--sombra); }
 .hero-serpiente { margin-bottom: 10px; }
 .marca span { color: var(--acento); }
