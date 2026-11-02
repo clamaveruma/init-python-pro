@@ -17,4 +17,8 @@ Te deja, listo para usar:
 - 🚀 [Uso](docs/uso.md): cómo crear un proyecto y cómo se trabaja después.
 - 💡 [**De script a proyecto: Python profesional sin magia**](https://clamaveruma.github.io/init-python-pro/): una guía ilustrada, en ocho pasos, para quien sabe Python básico y quiere dar el salto. Explica por qué existen los entornos virtuales, cómo los usa VS Code, qué es `pyproject.toml`, cómo arrancar un programa, Git y el día a día.
 
-Licencia MIT.
+## Autor y licencia
+
+Creado por **Claudio M. Martínez Velasco** ([@clamaveruma](https://github.com/clamaveruma)).
+
+© 2026 Claudio M. Martínez Velasco. Publicado con licencia **MIT** (ver [LICENSE](LICENSE)): puedes usarlo, copiarlo, modificarlo y distribuirlo, también con fines comerciales, siempre que mantengas el aviso de copyright y la licencia. Se ofrece tal cual, sin garantía.

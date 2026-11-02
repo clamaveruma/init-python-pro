@@ -2,7 +2,8 @@
   "name": "init-python-pro",
   "description": "Crea proyectos Python profesionales con un solo comando: uv, pytest, Ruff, Git y VS Code",
   "owner": {
-    "name": "clamaveruma"
+    "name": "Claudio M. Martínez Velasco",
+    "url": "https://github.com/clamaveruma"
   },
   "plugins": [
     {
