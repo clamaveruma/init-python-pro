@@ -11,6 +11,7 @@
 Claude te hará unas pocas preguntas antes de tocar nada:
 
 - **GitHub:** sin GitHub, repositorio privado o repositorio público.
+- **Cuadernos Jupyter:** si vas a usarlos en este proyecto. Si dices que sí, añade lo necesario (ver más abajo).
 - **Subida automática (`git push`)** (solo si eliges GitHub): si Claude puede subir los cambios él solo después de cada commit. Tienes que responder sí o no de forma explícita; no hay respuesta por defecto.
 - **Instalar `uv`** (solo si no lo tienes): si quieres que lo instale con su instalador oficial. Si es así, cierra y abre la terminal (o VS Code) una vez al terminar.
 
@@ -33,6 +34,14 @@ mi-proyecto/
 ```
 
 Para ejecutarlo: `uv run start` en la terminal, o **F5** en VS Code.
+
+### Si elegiste cuadernos Jupyter
+
+- Una carpeta `notebooks/` con `exploration.ipynb`, un ejemplo que importa tu paquete. La primera vez que lo abras, elige el núcleo (*kernel*) `.venv` arriba a la derecha.
+- La extensión **Jupyter** de VS Code entre las recomendadas, y `ipykernel` instalado en el entorno.
+- Ruff revisa también los cuadernos, y el gancho actúa cuando Claude edita uno.
+- Los resultados de las celdas (tablas, gráficos) **no se guardan en Git**: `nbstripout` los quita de cada commit y los deja en tu archivo. En otro ordenador, después de clonar, ejecuta una vez `uv run nbstripout --install --attributes .gitattributes`.
+- Una regla en `CLAUDE.md`: la lógica reutilizable va en `src/`, con pruebas; los cuadernos son para explorar y probar ideas.
 
 ## El día a día
 

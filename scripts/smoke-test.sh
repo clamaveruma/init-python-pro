@@ -16,7 +16,7 @@ while IFS= read -r f; do
 done < <(find "$repo/.claude-plugin" "$repo/plugins" -name '*.json' ! -path '*/plantillas/*')
 
 echo "== Shell scripts have valid syntax"
-for f in "$skill/scripts/montar.sh" "$skill/plantillas/claude/hooks/ruff.sh" "$repo/scripts/smoke-test.sh"; do
+for f in "$skill/scripts/montar.sh" "$skill/plantillas/claude/hooks/ruff.sh" "$skill/plantillas/claude/scripts/journal.sh" "$repo/scripts/smoke-test.sh"; do
   bash -n "$f" || fail "syntax error: $f"
 done
 
@@ -29,8 +29,14 @@ for mode in manual auto; do
   git config --global --get user.name > /dev/null 2>&1 || git config --global user.name "CI"
 
   uv init --package > /dev/null 2>&1
-  uv add --dev pytest ruff > /dev/null 2>&1
-  bash "$skill/scripts/montar.sh" "$mode" > /dev/null
+  # The auto project is also built with Jupyter notebooks
+  if [ "$mode" = auto ]; then extra=jupyter; else extra=""; fi
+  if [ -n "$extra" ]; then
+    uv add --dev pytest ruff ipykernel nbstripout > /dev/null 2>&1
+  else
+    uv add --dev pytest ruff > /dev/null 2>&1
+  fi
+  bash "$skill/scripts/montar.sh" "$mode" $extra > /dev/null
 
   pkg="demo_app_$mode"
   [ -f "src/$pkg/__main__.py" ] || fail "missing __main__.py"
@@ -82,11 +88,43 @@ for mode in manual auto; do
   rm "src/$pkg/messy.py" "src/$pkg/broken.py"
 
   grep -qxF '__pycache__/' .gitignore && grep -qxF '.venv' .gitignore || fail ".gitignore misses the basics"
-  if bash "$skill/scripts/montar.sh" "$mode" > /dev/null 2>&1; then fail "a second run of montar.sh must be refused"; fi
+  grep -q '{{' CLAUDE.md .vscode/extensions.json && fail "placeholder left"
+  if [ -n "$extra" ]; then
+    echo "   jupyter: notebook, extension, rules, nbstripout"
+    [ -f notebooks/exploration.ipynb ] || fail "missing example notebook"
+    python3 -m json.tool notebooks/exploration.ipynb > /dev/null || fail "invalid notebook"
+    grep -q 'ms-toolsai.jupyter' .vscode/extensions.json || fail "jupyter extension not recommended"
+    grep -q '## Jupyter notebooks' CLAUDE.md || fail "jupyter rules missing"
+    grep -q 'nbstripout' .gitattributes || fail "nbstripout not in .gitattributes"
+    uv run python -c "import json; exec(''.join(json.load(open('notebooks/exploration.ipynb'))['cells'][1]['source']))" | grep -q Hello || fail "notebook code does not run"
+    uv run python -c "import ipykernel" || fail "ipykernel not installed"
+    # notebook hook: NotebookEdit sends notebook_path
+    printf '%s' "{\"tool_input\": {\"notebook_path\": \"$proj/notebooks/exploration.ipynb\"}}" | CLAUDE_PROJECT_DIR="$proj" .claude/hooks/ruff.sh || fail "hook failed on the notebook"
+  else
+    grep -q 'ms-toolsai.jupyter' .vscode/extensions.json && fail "jupyter extension must not be added"
+    grep -q '## Jupyter notebooks' CLAUDE.md && fail "jupyter rules must not be added"
+  fi
+  if bash "$skill/scripts/montar.sh" "$mode" $extra > /dev/null 2>&1; then fail "a second run of montar.sh must be refused"; fi
 
   git add -A
   git commit -q -m "chore: initial project scaffold"
   git ls-files | grep -q '^\.claude/dev-journal\.md$' && fail "journal must not be tracked"
+  if [ -n "$extra" ]; then
+    # outputs added locally must not reach the commit
+    python3 - <<'PY'
+import json
+p = "notebooks/exploration.ipynb"
+nb = json.load(open(p))
+nb["cells"][1]["outputs"] = [{"name": "stdout", "output_type": "stream", "text": ["SECRET OUTPUT\n"]}]
+nb["cells"][1]["execution_count"] = 1
+nb["cells"][0]["source"].append("\n\nEdited.")
+json.dump(nb, open(p, "w"), indent=1)
+PY
+    git add notebooks/exploration.ipynb
+    git commit -q -m "test: notebook with output"
+    git show HEAD:notebooks/exploration.ipynb | grep -q 'SECRET OUTPUT' && fail "nbstripout did not strip the outputs"
+    grep -q 'SECRET OUTPUT' notebooks/exploration.ipynb || fail "local outputs must be kept"
+  fi
   .claude/scripts/journal.sh "Smoke test entry" "Next: nothing" || fail "journal script failed"
   grep -q '^- Smoke test entry$' .claude/dev-journal.md || fail "journal script did not write the entry"
   cd "$repo"

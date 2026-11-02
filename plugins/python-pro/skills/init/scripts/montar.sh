@@ -1,16 +1,25 @@
 #!/usr/bin/env bash
-# Usage: montar.sh <auto|manual>
+# Usage: montar.sh <auto|manual> [jupyter]
 # Run inside a project created with `uv init --package`.
 # Copies the templates next to this script into the current folder and fills in the placeholders.
 #   auto   = Claude may run `git push` by itself after each commit
 #   manual = Claude never pushes unless the user asks
+#   jupyter = also set up Jupyter notebooks (run `uv add --dev ipykernel nbstripout` first)
 set -euo pipefail
 
 push_mode="${1:-}"
+jupyter="${2:-}"
 case "$push_mode" in
   auto | manual) ;;
   *)
-    echo "usage: montar.sh <auto|manual>" >&2
+    echo "usage: montar.sh <auto|manual> [jupyter]" >&2
+    exit 1
+    ;;
+esac
+case "$jupyter" in
+  "" | jupyter) ;;
+  *)
+    echo "usage: montar.sh <auto|manual> [jupyter]" >&2
     exit 1
     ;;
 esac
@@ -80,6 +89,28 @@ else
   fill .claude/settings.json "{{PUSH_PERMISSION}}" ""
 fi
 
+# Jupyter notebooks (optional)
+if [ "$jupyter" = jupyter ]; then
+  mkdir -p notebooks
+  cp "$tpl/notebooks/exploration.ipynb" notebooks/exploration.ipynb
+  fill notebooks/exploration.ipynb "{{PKG}}" "$pkg"
+  fill .vscode/extensions.json "{{JUPYTER_EXTENSION}}" ', "ms-toolsai.jupyter"'
+  fill CLAUDE.md "{{JUPYTER_RULES}}" '
+## Jupyter notebooks
+
+- Notebooks live in `notebooks/` and are for exploring, trying ideas and plotting. Put reusable logic in `src/`, with tests, and import it in the notebook. Keep cells short.
+- Ruff checks notebooks too. Cell outputs are removed from commits automatically by `nbstripout` (a Git filter); the outputs stay in your local file.
+- After cloning the project on another computer, run `uv run nbstripout --install --attributes .gitattributes` once.'
+  if [ -d .git ]; then
+    uv run nbstripout --install --attributes .gitattributes > /dev/null
+  else
+    echo "warning: no .git folder, nbstripout filter not installed" >&2
+  fi
+else
+  fill .vscode/extensions.json "{{JUPYTER_EXTENSION}}" ""
+  fill CLAUDE.md "{{JUPYTER_RULES}}" ""
+fi
+
 # pyproject.toml: short command and tool settings
 # (awk instead of sed -i, so it also works on macOS)
 awk -v line="start = \"$pkg:main\"" '{ print } /^\[project\.scripts\]$/ { print line }' pyproject.toml > pyproject.toml.tmp
@@ -108,4 +139,4 @@ add_ignore '.venv'
 add_ignore '.claude/dev-journal.md'
 add_ignore '.claude/settings.local.json'
 
-echo "Project files created for package '$pkg' (push mode: $push_mode)."
+echo "Project files created for package '$pkg' (push mode: $push_mode${jupyter:+, with Jupyter})."

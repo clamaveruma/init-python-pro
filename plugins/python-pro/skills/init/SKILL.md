@@ -20,9 +20,10 @@ Talk to the user in the language they write in. Do the steps in order and do not
 Ask the questions together, with the question tool if you have one, otherwise in plain text. Do not suggest an answer, do not mark any option as recommended, and do not assume anything.
 
 1. **GitHub**: no GitHub / private repository / public repository.
-2. **Automatic push, only if the user chose a GitHub repository**: after each commit Claude makes, should it run `git push` by itself without asking? Yes / No. (Without GitHub there is nowhere to push, so do not ask.)
-3. **Only if uv is missing**: "uv is not installed. Do you want me to install it with its official installer?" Yes / No.
-4. **Only if the folder name is not a valid package name**: the project name to use (lowercase letters, digits and `_` or `-`).
+2. **Jupyter notebooks**: will they use Jupyter notebooks in this project? Yes / No.
+3. **Automatic push, only if the user chose a GitHub repository**: after each commit Claude makes, should it run `git push` by itself without asking? Yes / No. (Without GitHub there is nowhere to push, so do not ask.)
+4. **Only if uv is missing**: "uv is not installed. Do you want me to install it with its official installer?" Yes / No.
+5. **Only if the folder name is not a valid package name**: the project name to use (lowercase letters, digits and `_` or `-`).
 
 When the push question is asked, the user must answer it explicitly. If the answer is missing, unclear or ambiguous, ask again and do not continue until it is clear. If the user chose "no GitHub", use the safe setting (`manual`: Claude never pushes unless asked) without asking.
 
@@ -40,8 +41,8 @@ If the user said yes, install it before step 3:
 Run these in the current folder, in this order:
 
 1. `uv init --package` (add `--name <name>` if you asked for a name). It creates `pyproject.toml`, `src/<package>/` and, if there is no `.git` yet, the Git repository and `.gitignore`.
-2. `uv add --dev pytest ruff`
-3. `bash "${CLAUDE_SKILL_DIR}/scripts/montar.sh" <auto|manual>`, where `auto` means the user said yes to automatic push, and `manual` means they said no or chose no GitHub.
+2. `uv add --dev pytest ruff`, plus `ipykernel nbstripout` in the same command if the user wants Jupyter notebooks.
+3. `bash "${CLAUDE_SKILL_DIR}/scripts/montar.sh" <auto|manual> [jupyter]`, where `auto` means the user said yes to automatic push, and `manual` means they said no or chose no GitHub. Add `jupyter` as a second argument only if the user wants notebooks.
 
 The script copies the templates from `${CLAUDE_SKILL_DIR}/plantillas/` into the project and fills them in. It adds:
 
@@ -50,7 +51,8 @@ The script copies the templates from `${CLAUDE_SKILL_DIR}/plantillas/` into the 
 - `.vscode/` with the Run/Debug buttons, Ruff formatting on save and the recommended extensions.
 - `CLAUDE.md`: the rules Claude follows every session, plus the useful commands.
 - `.claude/skills/py-tarea` and `.claude/skills/py-refactor`: the procedures for code changes and refactoring.
-- `.claude/hooks/ruff.sh` and `.claude/settings.json`: Ruff runs after every Python edit, and the allowed commands are listed there. `git push` is allowed only if the user chose automatic push.
+- `.claude/hooks/ruff.sh` and `.claude/settings.json`: Ruff runs after every Python or notebook edit, and the allowed commands are listed there. `git push` is allowed only if the user chose automatic push.
+- With `jupyter`: a `notebooks/` folder with an example that imports from the package, the Jupyter extension among the recommended ones, notebook rules in `CLAUDE.md`, and the `nbstripout` Git filter (in `.gitattributes`) so cell outputs are not committed.
 - `.claude/dev-journal.md` (kept out of Git) and `.claude/scripts/journal.sh`, the allowed way for Claude to write to it without asking (files inside `.claude/` are protected).
 
 ## 4. Verify
@@ -64,4 +66,4 @@ Run `uv run pytest`, `uv run ruff check` and `uv run start`. All three must succ
 
 ## 6. Final report
 
-Tell the user, briefly and in their language: what was created, how to run it (`uv run start`, or F5 in VS Code), that Claude now follows the rules in `CLAUDE.md` by itself, and what they chose for automatic push (and that it can be changed in `CLAUDE.md` and `.claude/settings.json`). If you installed uv in this run, remind them to close and reopen the terminal (or VS Code) once so that `uv` is found everywhere. Also tell them that the project rules, skills, hook and permissions take effect in a **new conversation** opened in this folder, and that Claude Code may ask them once to trust the project settings: they should accept.
+Tell the user, briefly and in their language: what was created, how to run it (`uv run start`, or F5 in VS Code), that Claude now follows the rules in `CLAUDE.md` by itself, and what they chose for automatic push (and that it can be changed in `CLAUDE.md` and `.claude/settings.json`). If you installed uv in this run, remind them to close and reopen the terminal (or VS Code) once so that `uv` is found everywhere. If they chose notebooks, tell them to open `notebooks/exploration.ipynb` and choose the `.venv` kernel (top right of the notebook) the first time. Also tell them that the project rules, skills, hook and permissions take effect in a **new conversation** opened in this folder, and that Claude Code may ask them once to trust the project settings: they should accept.

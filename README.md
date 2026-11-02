@@ -7,6 +7,7 @@ Te deja, listo para usar:
 - **uv** para el entorno y las librerías, con un comando corto para arrancar: `uv run start`.
 - **pytest** con una primera prueba, y **Ruff** para dar formato y revisar el código.
 - **Git** (y, si quieres, un repositorio en GitHub).
+- **Cuadernos Jupyter**, si los pides: carpeta `notebooks/`, núcleo en el entorno y resultados de las celdas fuera de Git.
 - **VS Code** configurado: botones de ejecutar y depurar, formato al guardar y extensiones recomendadas.
 - **Reglas de trabajo para Claude** dentro del propio proyecto: una guía de estilo de código, diseño documentado antes de programar, pruebas primero y dos formas de refactorizar (automática o interactiva).
 

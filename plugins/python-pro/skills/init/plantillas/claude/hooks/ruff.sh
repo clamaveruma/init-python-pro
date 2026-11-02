@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Runs after Claude edits a file. Formats and lints Python files with Ruff.
+# Runs after Claude edits a file. Formats and lints Python files and Jupyter notebooks with Ruff.
 # Exit code 2 sends the problems Ruff could not fix back to Claude.
 set -u
 
@@ -7,10 +7,11 @@ set -u
 export PATH="$HOME/.local/bin:$PATH"
 
 input="$(cat)"
-file="$(printf '%s' "$input" | python3 -c 'import json, sys; print(json.load(sys.stdin).get("tool_input", {}).get("file_path", ""))' 2>/dev/null || true)"
+# Edit and Write send "file_path"; NotebookEdit sends "notebook_path"
+file="$(printf '%s' "$input" | python3 -c 'import json, sys; t = json.load(sys.stdin).get("tool_input", {}); print(t.get("file_path") or t.get("notebook_path") or "")' 2>/dev/null || true)"
 
 case "$file" in
-  *.py) ;;
+  *.py | *.ipynb) ;;
   *) exit 0 ;;
 esac
 

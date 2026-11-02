@@ -35,6 +35,7 @@ These rules apply to all code you write. Code the user writes is theirs: do not 
 
 - Before coding a new feature or a behavior change that affects more than one function, do a documented design phase in `docs/design.md` (see the `py-tarea` skill). The design must be clear and validated against scenarios before any code is written. For small fixes, state the design in one or two lines in the chat.
 - Before adding an external package, find out whether it really solves part of the problem. If it may help, ask the user for permission before `uv add` and explain why it seems necessary. Prefer the standard library.
+{{JUPYTER_RULES}}
 
 ## Journal
 

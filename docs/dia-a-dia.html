@@ -245,6 +245,11 @@ help: Remove unused import: `os`</pre>
     <p>Con esto tienes el recorrido completo: un <strong>entorno</strong> por proyecto (1), un editor que lo conoce (2 y 3), una receta reproducible con <code>uv</code> y <code>pyproject.toml</code> (4 y 5), una forma segura de arrancar (6), un historial con Git (7) y un ciclo de trabajo con pruebas (8).</p>
     <p>El siguiente paso es el más práctico: crea tu primer proyecto con <code>/python-pro:init</code> y úsalo de verdad. Cuando algo no encaje, vuelve a la página correspondiente: cada una explica una pieza por separado.</p>
 
+    <div class="recuadro dato">
+      <span class="etiqueta">💡 ¿Y los cuadernos Jupyter?</span>
+      Si al crear el proyecto dijiste que sí, tienes una carpeta <code>notebooks/</code>. La idea: la lógica va en <code>src/</code>, con sus pruebas, y el cuaderno la importa para explorar, probar ideas o hacer gráficos (<code>from mi_proyecto.taxes import calculate_vat</code>). El cuaderno usa el mismo entorno: elige el núcleo <code>.venv</code> arriba a la derecha. Los resultados de las celdas no se suben a Git, para que el historial no se llene de cambios que no son de código.
+    </div>
+
     <h2>❓ Compruébalo</h2>
     <details>
       <summary>¿Y si mi proyecto ya tiene código y no tiene pruebas?</summary>
