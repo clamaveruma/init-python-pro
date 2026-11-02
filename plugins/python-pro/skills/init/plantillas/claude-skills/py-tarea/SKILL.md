@@ -20,7 +20,7 @@ Follow these steps for every code change. Size the design to the change:
 3. **Write the minimum code** in `src/` to make it pass, following the code style in `CLAUDE.md`.
 4. **Verify.** Run `uv run pytest` and `uv run ruff check`. Do not call the task done until both pass.
 5. **Commit.** Stage only the files you changed for this task (including `docs/design.md` if you updated it) and make a Conventional Commit (for example `feat(parser): add date validation`), then follow the push rule in `CLAUDE.md`.
-6. **Journal.** Add a short entry to `.dev-journal.md`: date, what was done, decisions, next steps. Do not read the file back unless you lost context.
+6. **Journal.** Add a short entry with `.claude/scripts/journal.sh` (see `CLAUDE.md`): what was done, decisions, next steps. Do not read the file back unless you lost context.
 7. **Report** in the user's language, in one or two lines: what changed, the test result, and that the commit was made.
 
 If the change needs a new dependency, ask first (see `CLAUDE.md`).

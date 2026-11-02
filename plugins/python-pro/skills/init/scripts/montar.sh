@@ -49,7 +49,7 @@ fill() {
   printf '%s\n' "$content" > "$1"
 }
 
-mkdir -p .vscode .claude/hooks .claude/skills tests
+mkdir -p .vscode .claude/hooks .claude/scripts .claude/skills tests
 
 # Code and tests
 cp "$tpl/main.py" "$pkg_dir/__main__.py"
@@ -68,6 +68,8 @@ cp "$tpl/CLAUDE.md" CLAUDE.md
 cp -R "$tpl/claude-skills/." .claude/skills/
 cp "$tpl/claude/hooks/ruff.sh" .claude/hooks/ruff.sh
 chmod +x .claude/hooks/ruff.sh
+cp "$tpl/claude/scripts/journal.sh" .claude/scripts/journal.sh
+chmod +x .claude/scripts/journal.sh
 cp "$tpl/claude/settings.json" .claude/settings.json
 
 if [ "$push_mode" = auto ]; then
@@ -96,14 +98,14 @@ testpaths = ["tests"]
 EOF
 
 # Journal (kept out of Git)
-[ -f .dev-journal.md ] || printf '# Project Development Journal\n' > .dev-journal.md
+[ -f .claude/dev-journal.md ] || printf '# Project Development Journal\n' > .claude/dev-journal.md
 # uv only writes .gitignore when it creates the Git repository, so make sure the basics are there
 touch .gitignore
 add_ignore() { grep -qxF "$1" .gitignore || printf '%s\n' "$1" >> .gitignore; }
 add_ignore '__pycache__/'
 add_ignore '*.py[oc]'
 add_ignore '.venv'
-add_ignore '.dev-journal.md'
+add_ignore '.claude/dev-journal.md'
 add_ignore '.claude/settings.local.json'
 
 echo "Project files created for package '$pkg' (push mode: $push_mode)."

@@ -38,5 +38,5 @@ These rules apply to all code you write. Code the user writes is theirs: do not 
 
 ## Journal
 
-- Keep a short log in `.dev-journal.md` (not tracked by Git): date, what was done, decisions, next steps. Add one short entry after each finished task (each commit you make).
+- Keep a short log in `.claude/dev-journal.md` (not tracked by Git): what was done, decisions, next steps. Write it only with `.claude/scripts/journal.sh "What was done" "Decision: ..." "Next: ..."` (one argument per line, all in a single command; the script adds the date). Never edit the journal with the file editing tools: `.claude/` is protected and that would ask the user for permission. Add one short entry after each finished task (each commit you make).
 - Do not read the journal on every turn. Read it only if you lose context.
