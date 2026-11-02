@@ -1,4 +1,13 @@
+<p align="center"><img src="docs/img/logo.svg" alt="Logotipo de init-python-pro" width="120"></p>
+
 # init-python-pro
+
+<p>
+<img src="docs/img/python-logo.svg" alt="Python" height="20">
+<img src="https://img.shields.io/badge/VS%20Code-007ACC" alt="VS Code">
+<img src="https://img.shields.io/badge/Claude%20Code-D97757" alt="Claude Code">
+<img src="https://img.shields.io/badge/uv-DE5FE9" alt="uv">
+</p>
 
 Un complemento de Claude Code que crea un proyecto Python profesional con **un solo comando**: `/python-pro:init`.
 

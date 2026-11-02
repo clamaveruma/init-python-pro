@@ -102,7 +102,7 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .marca { display: inline-flex; align-items: center; gap: 8px; }
 .serpiente { width: 26px; height: 26px; flex: none; }
-.serpiente.grande { width: 72px; height: 72px; }
+.serpiente.grande { width: 88px; height: 88px; border-radius: 20px; box-shadow: var(--sombra); }
 .hero-serpiente { margin-bottom: 10px; }
 .marca span { color: var(--acento); }
 .camino {
@@ -492,3 +492,7 @@ kbd {
 
 .tabla { overflow-x: auto; margin: 1.2em 0; }
 .tabla table { margin: 0; }
+
+.funciona-con { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 18px; color: var(--muted); font-size: 0.92rem; }
+.funciona-con .chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--chip, #ffd43b); color: var(--text); font-weight: 600; }
+.funciona-con .chip img { width: 18px; height: 18px; }
