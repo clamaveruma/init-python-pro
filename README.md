@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/img/logo.svg" alt="Logotipo de init-python-pro" width="120"></p>
+<p align="center"><img src="docs/img/logo-mix-512.webp" alt="Ilustración de init-python-pro" width="200"></p>
 
 # init-python-pro
 
